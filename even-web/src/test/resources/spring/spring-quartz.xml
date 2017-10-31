@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--
+        Spring整合Quartz进行配置遵循下面的步骤：
+        1：定义工作任务的Job
+        2：定义触发器Trigger，并将触发器与工作任务绑定
+        3：定义调度器，并将Trigger注册到Scheduler
+     -->
+    <bean id="myJob" class="com.even.common.schedule.QuartzJob"/>
+    <!-- 1：定义任务的bean ，这里使用JobDetailFactoryBean,也可以使用MethodInvokingJobDetailFactoryBean ，配置类似-->
+    <bean name="quartzJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="myJob"/>
+        <property name="targetMethod" value="doJob"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!-- 2.定义触发器的trigger，一个触发器只能和一个任务进行绑定 -->
+    <!--<bean name="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">&lt;!&ndash;SimpleTrigger&ndash;&gt;-->
+    <bean name="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"><!--SimpleTrigger-->
+
+        <!--指定Tirgger绑定的Job-->
+        <property name="jobDetail" ref="quartzJob"/>
+        <!--指定Trigger的延迟时间 5s后运行-->
+        <property name="startDelay" value="5000" />
+        <!--指定Trigger的重复间隔  5s-->
+        <!--<property name="repeatInterval" value="3000"/>-->
+        <!--&lt;!&ndash;指定Trigger的重复次数&ndash;&gt;-->
+        <!--<property name="repeatCount" value="5"/>-->
+    </bean>
+
+    <!-- 3.定义调度器，并将Trigger注册到调度器中 -->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>
