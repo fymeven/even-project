@@ -2,8 +2,9 @@ package com.even.dao;
 
 import com.even.bean.SysUserRole;
 import com.even.bean.SysUserRoleExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysUserRoleMapper {
     long countByExample(SysUserRoleExample example);
@@ -27,4 +28,6 @@ public interface SysUserRoleMapper {
     int updateByPrimaryKeySelective(SysUserRole record);
 
     int updateByPrimaryKey(SysUserRole record);
+
+    int insertForeach(@Param("userId") String userId,@Param("roleArray") String[] roleArray);
 }

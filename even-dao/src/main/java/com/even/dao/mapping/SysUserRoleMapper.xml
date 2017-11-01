@@ -178,4 +178,14 @@
       role_id = #{roleId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--TODO ******************************************************************************************-->
+
+    <insert id="insertForeach">
+        insert into(user_id,role_id)
+        values
+        <foreach collection="roleArray" item="item" index="index" separator="," >
+            (#{userId},#{item})
+        </foreach>
+    </insert>
 </mapper>

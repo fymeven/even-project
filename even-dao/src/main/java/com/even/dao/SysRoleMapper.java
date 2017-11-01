@@ -34,4 +34,6 @@ public interface SysRoleMapper {
      * TODO
      * */
     Set<SysRole> selectRolesByUserName(String userName);
+
+    int updateDelForeach(String[] idArray, int delStatus);
 }

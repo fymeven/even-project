@@ -56,11 +56,11 @@ public class ResponseResult {
         this.data = data;
     }
 
-    public static ResponseResult getResult(boolean status,String msg){
+    public static ResponseResult setResult(boolean status,String msg){
         return new ResponseResult(status, version, msg, null);
     }
 
-    public static ResponseResult getResult(boolean status,String msg,Object data){
+    public static ResponseResult setResult(boolean status,String msg,Object data){
         return new ResponseResult(status, version, msg, data);
     }
 
@@ -68,7 +68,15 @@ public class ResponseResult {
         return new ResponseResult(status, version, msg, data);
     }
 
+    public static ResponseResult SUCCESS(Object data,String msg){
+        return new ResponseResult(status, version, msg, data);
+    }
+
     public static ResponseResult ERROR(String msg){
+        return new ResponseResult(status, version, msg, null);
+    }
+
+    public static ResponseResult ERROR(Object data,String msg){
         return new ResponseResult(status, version, msg, null);
     }
 

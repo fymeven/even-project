@@ -19,4 +19,6 @@ public interface ISysUserService {
     ResponseResult update(SysUserRequest sysUserRequest) throws Exception;
 
     ResponseResult delete(String id);
+
+    ResponseResult setRole(String userId, String roleList);
 }

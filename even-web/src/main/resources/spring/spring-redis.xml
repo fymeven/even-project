@@ -5,16 +5,29 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--redis 配置-->
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <property name="connectionFactory"   ref="connectionFactory" />  
-    </bean>   
-    
+        <property name="connectionFactory"   ref="connectionFactory" />
+    </bean>
+
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
      p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"  p:poolConfig-ref="poolConfig"/>
      
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
-        <property name="maxIdle" value="${redis.maxIdle}" />  
-        <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
-    </bean>  
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+
+
+    <!--rocketMq配置-->
+    <bean id="rocketMqProducer" class="com.even.common.rocketmq.SmsRocketMQProducer" init-method="init" destroy-method="destory">
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"></property>
+        <property name="producerGroup" value="${rocketmq.producerGroup}"></property>
+    </bean>
+
+    <bean id="rocketMqConsumer" class="com.even.common.rocketmq.SmsRocketMQConsumer" init-method="init" destroy-method="destory">
+        <property name="namesrvAddr" value="${rocketmq.namesrvAddr}"></property>
+        <property name="consumerGroup" value="${rocketmq.consumerGroup}"></property>
+    </bean>
      
 </beans>

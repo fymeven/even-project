@@ -228,13 +228,13 @@
 
     <!--TODO ******************************************************************************************-->
 
-<select id="selectAuthsByUserName" resultType="com.even.bean.SysAuth">
-    select a.auth_name,a.auth_desc from sys_auth a
-    left join sys_role_auth ro on ro.auth_id=a.id
-    left join sys_role r on r.id=ro.role_id
-    left join sys_user_role ur on ur.role_id=r.id
-    left join sys_user u on u.id=ur.user_id
-    where u.user_name=#{userName}
-    order by a.id
-</select>
+    <select id="selectAuthsByUserName" resultType="com.even.bean.SysAuth">
+        select a.auth_name,a.auth_desc from sys_auth a
+        left join sys_role_auth ro on ro.auth_id=a.id
+        left join sys_role r on r.id=ro.role_id
+        left join sys_user_role ur on ur.role_id=r.id
+        left join sys_user u on u.id=ur.user_id
+        where u.user_name=#{userName}
+        order by a.id
+    </select>
 </mapper>

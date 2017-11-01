@@ -36,6 +36,8 @@
 
         <!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 -->
         <setting name="jdbcTypeForNull" value="NULL"/>
+
+        <setting name="logImpl" value="LOG4J"/>
     </settings>
 
 	<typeAliases>
@@ -43,12 +45,6 @@
 
 	</typeAliases>
 	
-	<!--<plugins>-->
-		<!--<plugin interceptor="com.fh.plugin.PagePlugin">-->
-			<!--<property name="dialect" value="mysql"/>-->
-			<!--<property name="pageSqlId" value=".*listPage.*"/>-->
-		<!--</plugin>-->
-	<!--</plugins>-->
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
             <!--指明数据库 4.0.0以后不需要设置此属性-->

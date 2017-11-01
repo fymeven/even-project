@@ -288,4 +288,15 @@
       user_status = #{userStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--TODO ******************************************************************************************-->
+
+    <update id="updateDelForeach">
+        update sys_user set is_del=#{delStatus}
+        where id in
+        <foreach collection="idArray" item="item" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>

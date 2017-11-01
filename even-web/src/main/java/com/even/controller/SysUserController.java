@@ -13,7 +13,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +26,9 @@ import java.util.List;
  * Created by fymeven on 2017/10/24.
  */
 @Controller
-@RequestMapping("/user")
-public class UserController {
-    private static final Logger logger= LogManager.getLogger(UserController.class.getName());
+@RequestMapping("/sysUser")
+public class SysUserController {
+    private static final Logger logger= LogManager.getLogger(SysUserController.class.getName());
     @Resource
     private ISysUserService sysUserService;
 
@@ -81,8 +80,7 @@ public class UserController {
             //使用PageHelper.startPage只是针对接下来的一条查询语句，
             //如果又查询了一次数据，则还需要使用一次PageHelper.startPage
             //使用PageInfo封装
-            PageInfo<SysUserRequest> info = new PageInfo<SysUserRequest>(page);
-            logger.info("info.getPages:{}"+info.getPages());
+            PageInfo<SysUserRequest> info = new PageInfo(page);
             return ResponseResult.SUCCESS(info);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
@@ -90,26 +88,10 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/welcome")
-    public String welcome(){
-        return "welcome";
-    }
-
-    @RequiresRoles("boss")
-    @RequestMapping("/auth")
-    public String auth(){
-        return "welcome";
-    }
-
+    @ResponseBody
     @RequestMapping("/add")
-    public ResponseResult add(@RequestParam(value = "userName",required = true) String userName,
-                             @RequestParam(value = "userPwd",required = true) String userPwd,
-                             @RequestParam(value = "email",required = false) String email){
+    public ResponseResult add(SysUserRequest sysUserRequest){
         try {
-            SysUserRequest sysUserRequest=new SysUserRequest();
-            sysUserRequest.setUserName(userName);
-            sysUserRequest.setUserPwd(userPwd);
-            sysUserRequest.setEmail(email);
             return sysUserService.save(sysUserRequest);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
@@ -117,6 +99,7 @@ public class UserController {
         }
     }
 
+    @ResponseBody
     @RequestMapping("/update")
     public ResponseResult update(SysUserRequest sysUserRequest){
         try {
@@ -127,10 +110,23 @@ public class UserController {
         }
     }
 
+    @ResponseBody
     @RequestMapping("/delete")
-    public ResponseResult delete(@RequestParam(value = "ids",required = true) String ids){
+    public ResponseResult delete(@RequestParam(value = "idList",required = true) String idList){
         try {
-            return sysUserService.delete(ids);
+            return sysUserService.delete(idList);
+        }catch (Exception ex){
+            logger.error("异常信息:"+ex.getMessage());
+            return ResponseResult.ERROR;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/setRole")
+    public ResponseResult setRole(@RequestParam(value = "userId",required = true) String userId,
+                                    @RequestParam(value = "roleList",required = true) String roleList){
+        try {
+            return sysUserService.setRole(userId,roleList);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
             return ResponseResult.ERROR;

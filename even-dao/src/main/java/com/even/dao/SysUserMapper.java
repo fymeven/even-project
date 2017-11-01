@@ -2,8 +2,9 @@ package com.even.dao;
 
 import com.even.bean.SysUser;
 import com.even.bean.SysUserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysUserMapper {
     long countByExample(SysUserExample example);
@@ -27,4 +28,7 @@ public interface SysUserMapper {
     int updateByPrimaryKeySelective(SysUser record);
 
     int updateByPrimaryKey(SysUser record);
+
+    int updateDelForeach(@Param("idArray") String[] idArray,@Param("delStatus") int delStatus);
+
 }

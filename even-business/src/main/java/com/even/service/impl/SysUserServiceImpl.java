@@ -2,9 +2,12 @@ package com.even.service.impl;
 
 import com.even.bean.SysUser;
 import com.even.bean.SysUserExample;
+import com.even.bean.SysUserRoleExample;
 import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysUserMapper;
+import com.even.dao.SysUserRoleMapper;
+import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.io.sysUser.request.SysUserRequest;
 import com.even.service.ISysUserService;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,8 @@ import java.util.List;
 public class SysUserServiceImpl implements ISysUserService {
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public SysUser selectUserByName(String userName) {
@@ -64,11 +69,28 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public ResponseResult delete(String ids) {
-        String[] split = ids.split(",");
-        if (split.length>1){
-
+    public ResponseResult delete(String idList) {
+        String[] idArray = idList.split(",");
+        int result=sysUserMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getIntValue());
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
         }
-        return null;
+    }
+
+    @Override
+    public ResponseResult setRole(String userId, String roleList) {
+        SysUserRoleExample example=new SysUserRoleExample();
+        example.createCriteria().andIdEqualTo(Long.valueOf(userId));
+        sysUserRoleMapper.deleteByExample(example);
+        String[] roleArray = roleList.split(",");
+        example.clear();
+        int result = sysUserRoleMapper.insertForeach(userId, roleArray);
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
+        }
     }
 }
