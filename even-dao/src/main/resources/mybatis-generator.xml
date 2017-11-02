@@ -26,7 +26,7 @@
 
 		<!-- 指定javaBean生成的位置 -->
 		<javaModelGenerator targetPackage="com.even.bean"
-			targetProject="F:\even\even-project\even-project\even-dao\src\main\java">
+			targetProject="E:\Develop\IDEAWorkSpace\even-project\even-dao\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true" />
             <!-- 从数据库返回的值被清理前后的空格 -->
@@ -34,23 +34,23 @@
 		</javaModelGenerator>
 
 		<!--指定sql映射文件生成的位置 -->
-		<sqlMapGenerator targetPackage="com.even.dao.mapping" targetProject="F:\even\even-project\even-project\even-dao\src\main\java">
+		<sqlMapGenerator targetPackage="com.even.dao.mapping" targetProject="E:\Develop\IDEAWorkSpace\even-project\even-dao\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- 指定dao接口生成的位置，mapper接口 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.even.dao" targetProject="F:\even\even-project\even-project\even-dao\src\main\java">
+			targetPackage="com.even.dao" targetProject="E:\Develop\IDEAWorkSpace\even-project\even-dao\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 
-		<!-- table指定每个表的生成策略 -->
-        <!--<table tableName="SYS_USER" domainObjectName="SysUser" />-->
-		<!--<table tableName="SYS_ROLE" domainObjectName="SysRole" />-->
-        <!--<table tableName="SYS_AUTH" domainObjectName="SysAuth" />-->
-        <!--<table tableName="SYS_USER_ROLE" domainObjectName="SysUserRole" />-->
-        <!--<table tableName="SYS_ROLE_AUTH" domainObjectName="SysRoleAuth" />-->
+		 <!--table指定每个表的生成策略-->
+        <table tableName="SYS_USER" domainObjectName="SysUser" />
+		<table tableName="SYS_ROLE" domainObjectName="SysRole" />
+        <table tableName="SYS_AUTH" domainObjectName="SysAuth" />
+        <table tableName="SYS_USER_ROLE" domainObjectName="SysUserRole" />
+        <table tableName="SYS_ROLE_AUTH" domainObjectName="SysRoleAuth" />
 
 	</context>
 </generatorConfiguration>

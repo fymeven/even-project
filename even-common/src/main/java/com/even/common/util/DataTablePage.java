@@ -1,54 +1,53 @@
 package com.even.common.util;
 
+import com.github.pagehelper.PageInfo;
+
 import java.util.List;
 
 /**
  * Created by even on 2017/11/2.
  */
-public class DataTablePage {
-    private int iTotalRecords;  //实际的行数
-    private int iTotalDisplayRecords;   //过滤之后，实际的行数
-    private String sEcho;   //来自客户端 sEcho 的没有变化的复制品
-    private String sColumns;    //	可选，以逗号分隔的列名
-    private List aaData;    //数组的数组，表格中的实际数据
+public class DataTablePage<T> {
+    private int draw;  //请求
+    private int recordsTotal; //总记录数
+    private int recordsFiltered;   //过滤之后，实际的行数
+    private List<T> aaData; //返回数据
 
-    public int getiTotalRecords() {
-        return iTotalRecords;
+    public int getDraw() {
+        return draw;
     }
 
-    public void setiTotalRecords(int iTotalRecords) {
-        this.iTotalRecords = iTotalRecords;
+    public void setDraw(int draw) {
+        this.draw = draw;
     }
 
-    public int getiTotalDisplayRecords() {
-        return iTotalDisplayRecords;
+    public int getRecordsTotal() {
+        return recordsTotal;
     }
 
-    public void setiTotalDisplayRecords(int iTotalDisplayRecords) {
-        this.iTotalDisplayRecords = iTotalDisplayRecords;
+    public void setRecordsTotal(int recordsTotal) {
+        this.recordsTotal = recordsTotal;
     }
 
-    public String getsEcho() {
-        return sEcho;
+    public int getRecordsFiltered() {
+        return recordsFiltered;
     }
 
-    public void setsEcho(String sEcho) {
-        this.sEcho = sEcho;
+    public void setRecordsFiltered(int recordsFiltered) {
+        this.recordsFiltered = recordsFiltered;
     }
 
-    public String getsColumns() {
-        return sColumns;
-    }
-
-    public void setsColumns(String sColumns) {
-        this.sColumns = sColumns;
-    }
-
-    public List getAaData() {
+    public List<T> getAaData() {
         return aaData;
     }
 
-    public void setAaData(List aaData) {
+    public void setAaData(List<T> data) {
         this.aaData = aaData;
+    }
+
+    public DataTablePage(PageInfo pageInfo){
+        setRecordsTotal(Integer.valueOf(String.valueOf(pageInfo.getTotal())));
+        setRecordsTotal(recordsFiltered);
+        setAaData(pageInfo.getList());
     }
 }

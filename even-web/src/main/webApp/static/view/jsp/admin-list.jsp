@@ -196,13 +196,18 @@ function admin_start(obj,id){
 <!--/请在上方写此页面业务相关的脚本-->
 <script>
     $('.table-sort').dataTable({
-//        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
-        "bStateSave": true,//状态保存
-        "bProcessing": true,
-        "sProcessing" : "正在获取数据，请稍后...",
-        "bServerSide":false,//服务端处理分页
-        'bLengthChange': true, //是否允许自定义每页显示条数.
-        "ajaxSource":"/sysUser/page"
+        "serverSide": true,//打开后台分页
+        "ajax":{
+            url:"/sysUser/page"
+        },
+//        "columns":[
+//            {data:"userName"},
+//            {"mData":"usePwd"},
+//            {"mData":"email"},
+//            {"mData":"realName"},
+//            {"mData":"usePhoto"},
+//            {"mData":"userMobile"}
+//        ]
     });
 </script>
 </body>

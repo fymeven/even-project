@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local
+Source Server         : localDB
 Source Server Version : 50713
-Source Host           : localhost:3306
+Source Host           : 127.0.0.1:3306
 Source Database       : eventest
 
 Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-10-31 17:47:05
+Date: 2017-11-02 22:37:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,17 +24,21 @@ CREATE TABLE `sys_auth` (
   `auth_name` varchar(200) DEFAULT NULL COMMENT '权限名称',
   `auth_desc` varchar(500) DEFAULT NULL COMMENT '权限描述',
   `auth_url` varchar(500) DEFAULT NULL COMMENT '权限路径',
+  `auth_icon` varchar(200) DEFAULT NULL COMMENT '图标',
   `auth_status` int(10) DEFAULT NULL COMMENT '状态',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父级权限',
+  `is_del` tinyint(2) DEFAULT NULL COMMENT '删除标识',
+  `auth_permission` varchar(200) DEFAULT NULL COMMENT '权限代码',
+  `sort_id` int(10) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_auth
 -- ----------------------------
-INSERT INTO `sys_auth` VALUES ('1', 'auth1', 'isAuth1', '111', null, null);
-INSERT INTO `sys_auth` VALUES ('2', 'auth2', 'isAuth2', '222', null, null);
-INSERT INTO `sys_auth` VALUES ('3', 'auth3', 'isAuth3', '333', null, null);
+INSERT INTO `sys_auth` VALUES ('1', 'auth1', 'isAuth1', '111', null, null, null, null, null, null);
+INSERT INTO `sys_auth` VALUES ('2', 'auth2', 'isAuth2', '222', null, null, null, null, null, null);
+INSERT INTO `sys_auth` VALUES ('3', 'auth3', 'isAuth3', '333', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -46,14 +50,15 @@ CREATE TABLE `sys_role` (
   `role_desc` varchar(500) DEFAULT NULL COMMENT '角色描述',
   `role_status` int(10) DEFAULT NULL COMMENT '状态',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父级角色',
+  `is_del` tinyint(2) DEFAULT NULL COMMENT '删除标识',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', 'admin', 'isAdmin', null, null);
-INSERT INTO `sys_role` VALUES ('2', 'nomal', 'isNomal', null, null);
+INSERT INTO `sys_role` VALUES ('1', 'admin', 'isAdmin', null, null, null);
+INSERT INTO `sys_role` VALUES ('2', 'nomal', 'isNomal', null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role_auth
@@ -89,18 +94,14 @@ CREATE TABLE `sys_user` (
   `user_mobile` varchar(20) DEFAULT NULL COMMENT '用户电话',
   `user_status` int(10) DEFAULT NULL COMMENT '状态',
   `is_del` tinyint(2) DEFAULT NULL COMMENT '删除标识',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `create_user` bigint(20) DEFAULT NULL COMMENT '创建人id',
-  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `update_user` bigint(20) DEFAULT NULL COMMENT '修改人id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '123', null, 'ADMIN', null, null, '1', '15112341234', null, null, null, null, null, null);
-INSERT INTO `sys_user` VALUES ('2', 'even', '123', null, 'EVEN', null, null, '1', '15212345678', null, null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('1', 'admin', '123', null, 'ADMIN', null, null, '1', '15112341234', null, null);
+INSERT INTO `sys_user` VALUES ('2', 'even', '123', null, 'EVEN', null, null, '1', '15212345678', null, null);
 
 -- ----------------------------
 -- Table structure for sys_user_role

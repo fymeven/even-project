@@ -1,6 +1,5 @@
 package com.even.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.even.bean.SysUser;
 import com.even.common.util.DataTablePage;
 import com.even.common.util.ResponseResult;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -84,22 +81,8 @@ public class SysUserController {
             //如果又查询了一次数据，则还需要使用一次PageHelper.startPage
             //使用PageInfo封装
             PageInfo<SysUser> info = new PageInfo(page);
-            DataTablePage dataTablePage=new DataTablePage();
-            dataTablePage.setiTotalRecords(Integer.valueOf(String.valueOf(info.getTotal())));
-            dataTablePage.setiTotalDisplayRecords(Integer.valueOf(String.valueOf(info.getTotal())));
-            List<SysUser> list = info.getList();
-            List<List> listList=new ArrayList<>();
-            List<String> dataList=new ArrayList<>();
-            for (SysUser sysUserResponse : list) {
-                dataList.add(sysUserResponse.getUserName());
-                dataList.add(sysUserResponse.getUserMobile());
-                dataList.add(sysUserResponse.getEmail());
-                dataList.add(sysUserResponse.getRealName());
-                listList.add(dataList);
-            }
-            dataTablePage.setAaData(listList);
-            System.out.println("dataTablePage:"+ JSONObject.toJSON(dataTablePage));
-
+            DataTablePage<SysUser> dataTablePage=new DataTablePage<>(info);
+            System.out.println("dataPage:"+dataTablePage);
             return dataTablePage;
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());

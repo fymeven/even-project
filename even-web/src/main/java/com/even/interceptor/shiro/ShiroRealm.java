@@ -64,8 +64,8 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         Set<String> roleSet=sysRoleService.selectRolesByUserName(userName);
         info.addRoles(roleSet);
-        Set<String> permisssions=sysAuthService.selectAuthsByUserName(userName);
-        info.addStringPermissions(permisssions);
+        Set<String> permisssionSet=sysAuthService.selectAuthsByUserName(userName);
+        info.addStringPermissions(permisssionSet);
         return info;
 	}
 
