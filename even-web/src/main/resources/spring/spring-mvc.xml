@@ -12,9 +12,11 @@
 
 	<mvc:annotation-driven/>
 	<mvc:default-servlet-handler/>
+
+    <mvc:view-controller path="/"   view-name="index"/>
 	
 	<context:component-scan base-package="com.even.controller" />
-
+    
 	<!-- 访问拦截  -->
   	<!--<mvc:interceptors>-->
 		<!--<mvc:interceptor>-->
@@ -43,12 +45,39 @@
     </bean>
 
 	<!-- 配置SpringMVC的视图解析器 -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/view/jsp/"/>
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/static/view/jsp/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
-	
-	<!--<bean id="exceptionResolver" class="com.even.exception.MyExceptionResolver"></bean>-->
+
+    <!-- 配置velocity引擎 -->
+    <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath"  value="WEB-INF/velocity/" /><!-- 設置模板位置-->
+        <property name="velocityProperties">
+            <props>
+                <prop key="directive.foreach.counter.name">loopCounter</prop>
+                <prop key="directive.foreach.counter.initial.value">0</prop>
+                <prop key="input.encoding">UTF-8</prop><!-- 指定模板引擎进行模板处理的编码 -->
+                <prop key="output.encoding">UTF-8</prop><!-- 指定输出流的编码 -->
+            </props>
+        </property>
+    </bean>
+
+    <!-- 配置视图的显示 -->
+    <bean id="VelocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="prefix" value="/" /><!-- 视图文件的前缀，即存放的路径 -->
+        <property name="suffix" value=".html" /><!-- 视图文件的后缀名 -->
+        <!--<property name="toolboxConfigLocation" value="/tools.xml" />&lt;!&ndash;toolbox配置文件路径&ndash;&gt;-->
+        <property name="dateToolAttribute" value="date" /><!--日期函数名称-->
+        <property name="numberToolAttribute" value="number" /><!--数字函数名称-->
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="exposeSpringMacroHelpers" value="true" /><!--是否使用spring对宏定义的支持-->
+        <property name="exposeRequestAttributes" value="true" /><!--是否开放request属性-->
+        <property name="requestContextAttribute" value="rc"/><!--request属性引用名称-->
+        <!--<property name="layoutUrl" value="layout/default.vm"/>&lt;!&ndash;指定layout文件&ndash;&gt;-->
+    </bean>
+
+    <!--<bean id="exceptionResolver" class="com.even.exception.MyExceptionResolver"></bean>-->
 	<!-- 上传拦截，如最大上传值及最小上传值 -->
 	  <bean id="multipartResolver"   class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >   
 		  <property name="maxUploadSize">    

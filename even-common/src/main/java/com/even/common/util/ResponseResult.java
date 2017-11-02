@@ -73,11 +73,11 @@ public class ResponseResult {
     }
 
     public static ResponseResult ERROR(String msg){
-        return new ResponseResult(status, version, msg, null);
+        return new ResponseResult(false, version, msg, null);
     }
 
     public static ResponseResult ERROR(Object data,String msg){
-        return new ResponseResult(status, version, msg, null);
+        return new ResponseResult(false, version, msg, null);
     }
 
 }
