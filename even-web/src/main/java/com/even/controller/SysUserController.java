@@ -1,6 +1,8 @@
 package com.even.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.even.bean.SysUser;
+import com.even.common.util.DataTablePage;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
 import com.even.service.ISysUserService;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,21 +73,37 @@ public class SysUserController {
 
     @ResponseBody
     @RequestMapping("/page")
-    public ResponseResult page(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
+    public DataTablePage page(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
                               @RequestParam(value = "pageSize",required = false,defaultValue = "3") Integer pageSize){
         try {
-            Page<SysUserRequest> page = PageHelper.startPage(pageNum, pageSize);
+            Page<SysUser> page = PageHelper.startPage(pageNum, pageSize);
             //selectAll查询出的List即为上面定义的page
-            List<SysUser> list= sysUserService.selectAllUser();
+            sysUserService.selectAllUser();
             //注意：
             //使用PageHelper.startPage只是针对接下来的一条查询语句，
             //如果又查询了一次数据，则还需要使用一次PageHelper.startPage
             //使用PageInfo封装
-            PageInfo<SysUserRequest> info = new PageInfo(page);
-            return ResponseResult.SUCCESS(info);
+            PageInfo<SysUser> info = new PageInfo(page);
+            DataTablePage dataTablePage=new DataTablePage();
+            dataTablePage.setiTotalRecords(Integer.valueOf(String.valueOf(info.getTotal())));
+            dataTablePage.setiTotalDisplayRecords(Integer.valueOf(String.valueOf(info.getTotal())));
+            List<SysUser> list = info.getList();
+            List<List> listList=new ArrayList<>();
+            List<String> dataList=new ArrayList<>();
+            for (SysUser sysUserResponse : list) {
+                dataList.add(sysUserResponse.getUserName());
+                dataList.add(sysUserResponse.getUserMobile());
+                dataList.add(sysUserResponse.getEmail());
+                dataList.add(sysUserResponse.getRealName());
+                listList.add(dataList);
+            }
+            dataTablePage.setAaData(listList);
+            System.out.println("dataTablePage:"+ JSONObject.toJSON(dataTablePage));
+
+            return dataTablePage;
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR("系统繁忙!列表查询失败");
+            return null;
         }
     }
 
