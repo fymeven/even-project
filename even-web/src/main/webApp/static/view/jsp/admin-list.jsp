@@ -61,79 +61,29 @@
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr>
-						<th scope="col" colspan="9">员工列表</th>
+						<th scope="col" colspan="8">员工列表</th>
 					</tr>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" name="" value=""></th>
-						<th width="40">ID</th>
-						<th width="150">登录名</th>
-						<th width="90">手机</th>
-						<th width="150">邮箱</th>
-						<th>角色</th>
-						<th width="100">是否已启用</th>
-						<th width="100">操作</th>
+						<th><input type="checkbox" name="" value=""></th>
+						<th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="text-c">
-						<td><input type="checkbox" value="1" name=""></td>
-						<td>1</td>
-						<td>admin</td>
-						<td>13000000000</td>
-						<td>admin@mail.com</td>
-						<td>超级管理员23</td>
-						<td class="td-status"><span class="label label-success radius">已启用</span></td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="admin_stop(this,'10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-					</tr>
-                    <tr class="text-c">
-                        <td><input type="checkbox" value="2" name=""></td>
-                        <td>2</td>
-                        <td>zhangsan</td>
-                        <td>13000000000</td>
-                        <td>admin@mail.com</td>
-                        <td>栏目编辑</td>
-                        <td class="td-status"><span class="label radius">已停用</span></td>
-                        <td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this,'10001')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-                    </tr>
-                    <tr class="text-c">
-                        <td><input type="checkbox" value="2" name=""></td>
-                        <td>2</td>
-                        <td>zhangsan</td>
-                        <td>13000000000</td>
-                        <td>admin@mail.com</td>
-                        <td>栏目编辑</td>
-                        <td class="td-status"><span class="label radius">已停用</span></td>
-                        <td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this,'10001')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-                    </tr>
-                    <tr class="text-c">
-                        <td><input type="checkbox" value="2" name=""></td>
-                        <td>2</td>
-                        <td>zhangsan</td>
-                        <td>13000000000</td>
-                        <td>admin@mail.com</td>
-                        <td>栏目编辑</td>
-                        <td class="td-status"><span class="label radius">已停用</span></td>
-                        <td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this,'10001')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-                    </tr>
-                    <tr class="text-c">
-                        <td><input type="checkbox" value="2" name=""></td>
-                        <td>2</td>
-                        <td>zhangsan</td>
-                        <td>13000000000</td>
-                        <td>admin@mail.com</td>
-                        <td>栏目编辑</td>
-                        <td class="td-status"><span class="label radius">已停用</span></td>
-                        <td class="td-manage"><a style="text-decoration:none" onClick="admin_start(this,'10001')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a> <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-                    </tr>
 				</tbody>
 			</table>
             </div>
 		</article>
 	</div>
 </section>
-
-<!--_footer 作为公共模版分离出去--> 
+<!--_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/static/h-ui.admin/js/H-ui.admin.page.js"></script>
@@ -196,19 +146,33 @@ function admin_start(obj,id){
 <!--/请在上方写此页面业务相关的脚本-->
 <script>
     $('.table-sort').dataTable({
+        "aaSorting": [[ 3, "asc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
         "serverSide": true,//打开后台分页
-        "ajax":{
-            url:"/sysUser/page"
-        },
-//        "columns":[
-//            {data:"userName"},
-//            {"mData":"usePwd"},
-//            {"mData":"email"},
-//            {"mData":"realName"},
-//            {"mData":"usePhoto"},
-//            {"mData":"userMobile"}
-//        ]
+        "bPaginate" : true, //是否显示（应用）分页器
+        "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
+        "bFilter" : true, //是否启动过滤、搜索功能
+        "ajax":"/sysUser/page",
+        "columns":[
+            {
+                "sClass": "text-c",
+                "render": function (data, type, full, meta) {
+                    return '<input type="checkbox"  class="checkchild"  value="' + data + '" />';
+                },
+                "width":"5%",
+                "orderable": false
+            },
+            { "title":"ID","data": "id","defaultContent":'',"width":"5%","className": "text-c" },
+            { "title":"姓名","data": "realName","defaultContent":'',"width":"15%","className": "text-c" },
+            { "title":"用户名","data": "userName","defaultContent":'',"width":"15%","className": "text-c" },
+            { "title":"手机","data": "userMobile","defaultContent":'',"width":"15%","className": "text-c" },
+            { "title":"邮箱","data": "email","defaultContent":'',"width":"15%","className": "text-c" },
+            { "title":"状态","data": "userStatus","defaultContent":'',"orderable": false,"width":"10%","className": "text-c" },
+            { "title":"操作","data": "sex","defaultContent":'',"orderable": false,"className": "text-c" }
+        ]
     });
+
+    //columns.type:数据类型（ string, numeric, date ， html ）
 </script>
 </body>
 </html>

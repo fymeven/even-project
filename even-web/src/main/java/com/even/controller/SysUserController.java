@@ -1,13 +1,12 @@
 package com.even.controller;
 
-import com.even.bean.SysUser;
 import com.even.common.util.DataTablePage;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
+import com.even.io.sysUser.response.SysUserResponse;
 import com.even.service.ISysUserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -73,17 +72,9 @@ public class SysUserController {
     public DataTablePage page(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
                               @RequestParam(value = "pageSize",required = false,defaultValue = "3") Integer pageSize){
         try {
-            Page<SysUser> page = PageHelper.startPage(pageNum, pageSize);
-            //selectAll查询出的List即为上面定义的page
+            Page<SysUserResponse> page = PageHelper.startPage(pageNum, pageSize);
             sysUserService.selectAllUser();
-            //注意：
-            //使用PageHelper.startPage只是针对接下来的一条查询语句，
-            //如果又查询了一次数据，则还需要使用一次PageHelper.startPage
-            //使用PageInfo封装
-            PageInfo<SysUser> info = new PageInfo(page);
-            DataTablePage<SysUser> dataTablePage=new DataTablePage<>(info);
-            System.out.println("dataPage:"+dataTablePage);
-            return dataTablePage;
+            return new DataTablePage(page);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
             return null;
