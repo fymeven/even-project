@@ -68,7 +68,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public ResponseResult delete(String idList) {
         String[] idArray = idList.split(",");
-        int result=sysRoleMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getIntValue());
+        int result=sysRoleMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getByteValue());
         if (result>0){
             return ResponseResult.SUCCESS;
         }else {

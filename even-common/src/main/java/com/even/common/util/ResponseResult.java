@@ -9,11 +9,11 @@ public class ResponseResult {
 
 	private static String version = "1.0.0";    //版本
 	
-	private static String msg =null;  // 描述
+	private static String msg;  // 描述
 
 	private Object data;//返回数据
 
-    public static ResponseResult SUCCESS=new ResponseResult(status, version,  "操作成功", null);//成功
+    public static ResponseResult SUCCESS=new ResponseResult(true, version,  "操作成功", null);//成功
 
     public static ResponseResult ERROR=new ResponseResult(false, version, "操作失败", null);//失败
 

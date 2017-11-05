@@ -55,27 +55,13 @@
 			</div>
 			<div class="cl pd-5 bg-1 bk-gray mt-20">
 				<span class="l"> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','/static/view/jsp/admin-add.jsp','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a> </span>
-				<span class="r">共有数据：<strong>54</strong> 条</span>
 			</div>
             <div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
-				<thead>
-					<tr>
-						<th scope="col" colspan="8">员工列表</th>
-					</tr>
-					<tr class="text-c">
-						<th><input type="checkbox" name="" value=""></th>
-						<th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
+				<%--<thead>--%>
+				<%--</thead>--%>
+				<%--<tbody>--%>
+				<%--</tbody>--%>
 			</table>
             </div>
 		</article>
@@ -93,6 +79,7 @@
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="/static/js/config.js"></script>
 <script type="text/javascript">
 /*
 	参数解释：
@@ -107,12 +94,20 @@ function admin_add(title,url,w,h){
 	layer_show(title,url,w,h);
 }
 /*管理员-删除*/
-function admin_del(obj,id){
+    function admin_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
 		//此处请求后台程序，下方是成功后的前台处理……
-		
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
+        $.ajax({
+            url:'/sysUser/delete',
+            data:{
+                "idList":id
+            },
+            success:function(result){
+                console.info(result);
+//                $(obj).parents("tr").remove();
+//                layer.msg('已删除!',{icon:1,time:1000});
+            }
+        });
 	});
 }
 /*管理员-编辑*/
@@ -145,16 +140,20 @@ function admin_start(obj,id){
 </script> 
 <!--/请在上方写此页面业务相关的脚本-->
 <script>
-    $('.table-sort').dataTable({
+    $('.table-sort').DataTable({
         "aaSorting": [[ 3, "asc" ]],//默认第几个排序
         "bStateSave": true,//状态保存
         "serverSide": true,//打开后台分页
         "bPaginate" : true, //是否显示（应用）分页器
+        "bLengthChange":true, //改变每页显示数据数量
+        "bSort": true, //排序功能
         "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
         "bFilter" : true, //是否启动过滤、搜索功能
+        "bAutoWidth": true,//自动宽度
         "ajax":"/sysUser/page",
         "columns":[
             {
+                "title":'<input type="checkbox" name="" value="">',
                 "sClass": "text-c",
                 "render": function (data, type, full, meta) {
                     return '<input type="checkbox"  class="checkchild"  value="' + data + '" />';
@@ -167,8 +166,20 @@ function admin_start(obj,id){
             { "title":"用户名","data": "userName","defaultContent":'',"width":"15%","className": "text-c" },
             { "title":"手机","data": "userMobile","defaultContent":'',"width":"15%","className": "text-c" },
             { "title":"邮箱","data": "email","defaultContent":'',"width":"15%","className": "text-c" },
-            { "title":"状态","data": "userStatus","defaultContent":'',"orderable": false,"width":"10%","className": "text-c" },
-            { "title":"操作","data": "sex","defaultContent":'',"orderable": false,"className": "text-c" }
+            { "title":"状态","data": "userStatus","defaultContent":'',"orderable": false,"width":"10%","className": "text-c",
+                "render": function (data, type, full, meta) {
+                    return sysConfig.enum.sysUser.userStatus(data);
+                }
+            },
+            { "title":"操作","data": "id","defaultContent":'',"orderable": false,"className": "text-c",
+                "render":function(data, type, full, meta){
+                    var html=[];
+                    html.push('<a style="text-decoration:none" onClick="article_shenhe(this,\''+data+'\')" href="javascript:;" title="审核">审核</a>');
+                    html.push('<a style="text-decoration:none" class="ml-5" onClick="article_edit(\'资讯编辑\',\'article-add.html\',\''+data+'\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>');
+                    html.push('<a style="text-decoration:none" class="ml-5" onClick="admin_del(this,\''+data+'\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>');
+                    return html.join('');
+                }
+            }
         ]
     });
 

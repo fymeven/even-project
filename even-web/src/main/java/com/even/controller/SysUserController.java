@@ -69,10 +69,9 @@ public class SysUserController {
 
     @ResponseBody
     @RequestMapping("/page")
-    public DataTablePage page(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
-                              @RequestParam(value = "pageSize",required = false,defaultValue = "3") Integer pageSize){
+    public DataTablePage page(DataTablePage dataTablePage){
         try {
-            Page<SysUserResponse> page = PageHelper.startPage(pageNum, pageSize);
+            Page<SysUserResponse> page = PageHelper.startPage(dataTablePage.getStart(), dataTablePage.getLength());
             sysUserService.selectAllUser();
             return new DataTablePage(page);
         }catch (Exception ex){

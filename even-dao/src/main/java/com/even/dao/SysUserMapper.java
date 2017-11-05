@@ -36,5 +36,5 @@ public interface SysUserMapper {
      * @param delStatus
      * @return
      */
-    int updateDelForeach(@Param("idArray") String[] idArray,@Param("delStatus") int delStatus);
+    int updateDelForeach(@Param("idArray") String[] idArray,@Param("delStatus") byte delStatus);
 }

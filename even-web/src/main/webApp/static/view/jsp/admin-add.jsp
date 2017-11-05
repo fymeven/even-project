@@ -32,40 +32,34 @@
 <article class="cl pd-20">
 	<form action="" method="post" class="form form-horizontal" id="form-admin-add">
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="adminName" name="adminName">
+				<input type="text" class="input-text" value="" placeholder="" id="userName" name="userName">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
+				<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="userPwd" name="userPwd">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="password2" name="password2">
+				<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="pwdValidate" name="pwdValidate">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input name="sex" type="radio" id="sex-1" checked>
+					<input type="radio" id="sex-1" name="sex" value="1" checked>
 					<label for="sex-1">男</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="sex-2" name="sex">
+					<input type="radio" id="sex-2" name="sex" value="2">
 					<label for="sex-2">女</label>
 				</div>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="phone" name="phone">
 			</div>
 		</div>
 		<div class="row cl">
@@ -77,20 +71,12 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3">角色：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-				<select class="select" name="adminRole" size="1">
-					<option value="0">超级管理员</option>
-					<option value="1">总编</option>
+				<select class="select" name="roleList" size="1">
+					<option value="1">管理员</option>
 					<option value="2">栏目主辑</option>
 					<option value="3">栏目编辑</option>
 				</select>
 				</span> </div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3">备注：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)"></textarea>
-				<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
-			</div>
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
@@ -122,30 +108,26 @@ $(function(){
 	
 	$("#form-admin-add").validate({
 		rules:{
-			adminName:{
+			userName:{
 				required:true,
 				minlength:4,
 				maxlength:16
 			},
-			password:{
+			userPwd:{
 				required:true
 			},
-			password2:{
+            pwdValidate:{
 				required:true,
-				equalTo: "#password"
+				equalTo: "#userPwd"
 			},
 			sex:{
 				required:true
-			},
-			phone:{
-				required:true,
-				isPhone:true
 			},
 			email:{
 				required:true,
 				email:true
 			},
-			adminRole:{
+            roleList:{
 				required:true
 			}
 		},
@@ -153,7 +135,14 @@ $(function(){
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-			$(form).ajaxSubmit();
+			$(form).ajaxSubmit({
+                url:"/sysUser/add",
+                type:"post",
+                dataType:"json",
+                success:function(result){
+                    console.info(result)
+                }
+            });
 			var index = parent.layer.getFrameIndex(window.name);
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);

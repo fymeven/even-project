@@ -46,6 +46,8 @@ public class SysUserServiceImpl implements ISysUserService {
     public ResponseResult save(SysUserRequest sysUserRequest) throws Exception {
         SysUser sysUser=new SysUser();
         BeanCopyUtil.copyProperties(sysUser,sysUserRequest);
+        sysUser.setUserStatus(SysUserEnum.userStatus.NOMAL.getIntValue());
+        sysUser.setIsDel(SysUserEnum.isDel.NOMAL.getByteValue());
         int result = sysUserMapper.insert(sysUser);
         if (result>0){
             return ResponseResult.SUCCESS;
@@ -71,7 +73,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public ResponseResult delete(String idList) {
         String[] idArray = idList.split(",");
-        int result=sysUserMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getIntValue());
+        int result=sysUserMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getByteValue());
         if (result>0){
             return ResponseResult.SUCCESS;
         }else {

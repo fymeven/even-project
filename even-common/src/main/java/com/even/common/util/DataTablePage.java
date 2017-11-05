@@ -65,6 +65,10 @@ public class DataTablePage<T> {
         this.length = length;
     }
 
+    public DataTablePage(){
+        super();
+    }
+
     public DataTablePage(Page<T> page) {
         //使用PageInfo封装
         PageInfo<T> pageInfo = new PageInfo(page);

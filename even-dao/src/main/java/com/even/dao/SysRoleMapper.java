@@ -44,6 +44,6 @@ public interface SysRoleMapper {
      * @param delStatus
      * @return
      */
-    int updateDelForeach(String[] idArray, int delStatus);
+    int updateDelForeach(String[] idArray, byte delStatus);
 
 }
