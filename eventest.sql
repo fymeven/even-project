@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-11-02 22:37:33
+Date: 2017-11-07 23:12:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,22 +23,22 @@ CREATE TABLE `sys_auth` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '权限编号',
   `auth_name` varchar(200) DEFAULT NULL COMMENT '权限名称',
   `auth_desc` varchar(500) DEFAULT NULL COMMENT '权限描述',
-  `auth_url` varchar(500) DEFAULT NULL COMMENT '权限路径',
   `auth_icon` varchar(200) DEFAULT NULL COMMENT '图标',
   `auth_status` int(10) DEFAULT NULL COMMENT '状态',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父级权限',
   `is_del` tinyint(2) DEFAULT NULL COMMENT '删除标识',
-  `auth_permission` varchar(200) DEFAULT NULL COMMENT '权限代码',
   `sort_id` int(10) DEFAULT NULL COMMENT '排序',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_auth
 -- ----------------------------
-INSERT INTO `sys_auth` VALUES ('1', 'auth1', 'isAuth1', '111', null, null, null, null, null, null);
-INSERT INTO `sys_auth` VALUES ('2', 'auth2', 'isAuth2', '222', null, null, null, null, null, null);
-INSERT INTO `sys_auth` VALUES ('3', 'auth3', 'isAuth3', '333', null, null, null, null, null, null);
+INSERT INTO `sys_auth` VALUES ('1', 'auth1', 'isAuth1', null, null, null, null, null, null, null);
+INSERT INTO `sys_auth` VALUES ('2', 'auth2', 'isAuth2', null, null, null, null, null, null, null);
+INSERT INTO `sys_auth` VALUES ('3', 'auth3', 'isAuth3', null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -51,14 +51,16 @@ CREATE TABLE `sys_role` (
   `role_status` int(10) DEFAULT NULL COMMENT '状态',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父级角色',
   `is_del` tinyint(2) DEFAULT NULL COMMENT '删除标识',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', 'admin', 'isAdmin', null, null, null);
-INSERT INTO `sys_role` VALUES ('2', 'nomal', 'isNomal', null, null, null);
+INSERT INTO `sys_role` VALUES ('1', 'admin', 'isAdmin', null, null, null, null, null);
+INSERT INTO `sys_role` VALUES ('2', 'nomal', 'isNomal', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role_auth
@@ -94,14 +96,29 @@ CREATE TABLE `sys_user` (
   `user_mobile` varchar(20) DEFAULT NULL COMMENT '用户电话',
   `user_status` int(10) DEFAULT NULL COMMENT '状态',
   `is_del` tinyint(2) DEFAULT NULL COMMENT '删除标识',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '123', null, 'ADMIN', null, null, '1', '15112341234', null, null);
-INSERT INTO `sys_user` VALUES ('2', 'even', '123', null, 'EVEN', null, null, '1', '15212345678', null, null);
+INSERT INTO `sys_user` VALUES ('1', 'admin', '123', null, 'ADMIN', 'admin@qq.com', null, '1', '15112341234', '1', null, null, null);
+INSERT INTO `sys_user` VALUES ('2', 'even', '123', null, 'EVEN', 'even@qq.com', null, '2', '15212345678', '2', '2', null, null);
+INSERT INTO `sys_user` VALUES ('3', 'user1', '123', null, null, 'user1@qq.com', null, '2', null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('4', 'user2', '123', null, null, 'user2@qq.com', null, '1', null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('5', 'user3', '123', '', '', 'user3@qq.com', '', '1', '', null, null, null, null);
+INSERT INTO `sys_user` VALUES ('6', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
+INSERT INTO `sys_user` VALUES ('7', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
+INSERT INTO `sys_user` VALUES ('8', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
+INSERT INTO `sys_user` VALUES ('9', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
+INSERT INTO `sys_user` VALUES ('10', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
+INSERT INTO `sys_user` VALUES ('11', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
+INSERT INTO `sys_user` VALUES ('12', 'user3', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
+INSERT INTO `sys_user` VALUES ('13', 'user3', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
+INSERT INTO `sys_user` VALUES ('14', '1111111111111', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
+INSERT INTO `sys_user` VALUES ('15', '222221', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for sys_user_role

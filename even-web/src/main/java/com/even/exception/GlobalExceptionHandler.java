@@ -1,5 +1,6 @@
 package com.even.exception;
 
+import com.even.common.util.ResponseResult;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -17,10 +18,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UnauthorizedException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ModelAndView processUnauthenticatedException(NativeWebRequest request, UnauthorizedException e) {
-        logger.info("没有权限访问:"+e);
+        logger.error("没有权限访问:" + e);
         ModelAndView mv = new ModelAndView();
         mv.addObject("exception", e);
         mv.setViewName("unauthorized");
         return mv;
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseResult SystemException(Exception e){
+        logger.error("系统错误:" + e);
+        return ResponseResult.setResult(false,"系统错误:"+e);
     }
 }

@@ -21,7 +21,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
         Set<SysAuth> authSet= sysAuthMapper.selectAuthsByUserName(userName);
         Set<String> permissionSet=new LinkedHashSet<>();
         for (SysAuth auth : authSet) {
-            permissionSet.add(auth.getAuthPermission());
+            permissionSet.add(auth.getAuthName());
         }
         return permissionSet;
     }
