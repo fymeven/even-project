@@ -106,8 +106,7 @@ public class SysUserController {
     @RequestMapping("/delete")
     public ResponseResult delete(@RequestParam(value = "idList",required = true) String idList){
         try {
-            ResponseResult delete = sysUserService.delete(idList);
-            return delete;
+            return sysUserService.delete(idList);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
             return ResponseResult.ERROR;

@@ -5,48 +5,63 @@ package com.even.common.util;
  */
 public class ResponseResult {
 
-    private static boolean status = true; //返回状态
+    private boolean status = true; //返回状态
 
-	private static String version = "1.0.0";    //版本
-	
-	private static String msg;  // 描述
+	private  String version = "1.0.0";    //版本
 
-	private Object data;//返回数据
+	private  String msg="";  // 提示
 
-    public static ResponseResult SUCCESS=new ResponseResult(true, version,  "操作成功", null);//成功
+	private Object data;    //返回数据
 
-    public static ResponseResult ERROR=new ResponseResult(false, version, "操作失败", null);//失败
+    public static ResponseResult SUCCESS=new ResponseResult(true, "操作成功");//成功
 
-	public ResponseResult(Object data) {
-		this.data = data;
-	}
+    public static ResponseResult ERROR=new ResponseResult(false,  "操作失败");//失败
 
-	public Object getData() {
-		return data;
-	}
+    public boolean isStatus() {
+        return status;
+    }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-	public boolean isStatus() {
-		return status;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
+    public String getMsg() {
+        return msg;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 
     public ResponseResult() {
         super();
+    }
+
+    public ResponseResult(boolean status, String msg) {
+        this.status = status;
+        this.msg = msg;
+    }
+
+    public ResponseResult(boolean status, String msg, Object data) {
+        this.status = status;
+        this.msg = msg;
+        this.data = data;
     }
 
     public ResponseResult(boolean status, String version, String msg, Object data) {
@@ -56,28 +71,27 @@ public class ResponseResult {
         this.data = data;
     }
 
-    public static ResponseResult setResult(boolean status,String msg){
-        return new ResponseResult(status, version, msg, null);
-    }
-
-    public static ResponseResult setResult(boolean status,String msg,Object data){
-        return new ResponseResult(status, version, msg, data);
+    public static ResponseResult SUCCESS(String msg){
+        return new ResponseResult(true, msg,null);
     }
 
     public static ResponseResult SUCCESS(Object data){
-        return new ResponseResult(status, version, msg, data);
+        return new ResponseResult(true, "操作成功",data);
     }
 
-    public static ResponseResult SUCCESS(Object data,String msg){
-        return new ResponseResult(status, version, msg, data);
+    public static ResponseResult SUCCESS(String msg,Object data){
+        return new ResponseResult(true, msg,data);
     }
 
     public static ResponseResult ERROR(String msg){
-        return new ResponseResult(false, version, msg, null);
+        return new ResponseResult(false, msg,null);
     }
 
-    public static ResponseResult ERROR(Object data,String msg){
-        return new ResponseResult(false, version, msg, null);
+    public static ResponseResult ERROR(Object data){
+        return new ResponseResult(false, "操作失败",data);
     }
 
+    public static ResponseResult ERROR(String msg,Object data){
+        return new ResponseResult(false, msg,data);
+    }
 }

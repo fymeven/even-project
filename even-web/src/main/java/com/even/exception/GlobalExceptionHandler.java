@@ -28,6 +28,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseResult SystemException(Exception e){
         logger.error("系统错误:" + e);
-        return ResponseResult.setResult(false,"系统错误:"+e);
+        return ResponseResult.ERROR("系统错误:"+e);
     }
 }
