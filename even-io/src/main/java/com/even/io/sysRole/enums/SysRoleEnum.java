@@ -6,20 +6,20 @@ package com.even.io.sysRole.enums;
 public class SysRoleEnum {
 
     public enum isDel{
-        NOMAL(1,"正常"),
-        DELED(2,"已删除");
+        NOMAL((byte)1,"正常"),
+        DELED((byte)2,"已删除");
 
-        private final int intValue;
+        private final byte byteValue;
         private final String desc;
 
 
-        isDel(int intValue, String desc) {
-            this.intValue = intValue;
+        isDel(byte byteValue, String desc) {
+            this.byteValue = byteValue;
             this.desc = desc;
         }
 
-        public int getIntValue() {
-            return intValue;
+        public byte getByteValue() {
+            return byteValue;
         }
 
         public String getDesc() {

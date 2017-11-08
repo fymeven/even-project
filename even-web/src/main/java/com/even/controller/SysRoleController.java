@@ -1,12 +1,11 @@
 package com.even.controller;
 
-import com.even.bean.SysRole;
+import com.even.common.util.DataTablePage;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysRole.request.SysRoleRequest;
 import com.even.service.ISysRoleService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -29,21 +27,14 @@ public class SysRoleController {
 
     @ResponseBody
     @RequestMapping("/page")
-    public ResponseResult page(@RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
-                              @RequestParam(value = "pageSize",required = false,defaultValue = "3") Integer pageSize){
+    public DataTablePage page(DataTablePage dataTablePage){
         try {
-            Page<SysRoleRequest> page = PageHelper.startPage(pageNum, pageSize);
-            //selectAll查询出的List即为上面定义的page
-            List<SysRole> list= sysRoleService.selectAllRole();
-            //注意：
-            //使用PageHelper.startPage只是针对接下来的一条查询语句，
-            //如果又查询了一次数据，则还需要使用一次PageHelper.startPage
-            //使用PageInfo封装
-            PageInfo<SysRoleRequest> info = new PageInfo(page);
-            return ResponseResult.SUCCESS(info);
+            Page<SysRoleRequest> page = PageHelper.startPage(dataTablePage.getStart(), dataTablePage.getLength());
+            sysRoleService.selectAllRole();
+            return new DataTablePage(page);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR("系统繁忙!列表查询失败");
+            return null;
         }
     }
 

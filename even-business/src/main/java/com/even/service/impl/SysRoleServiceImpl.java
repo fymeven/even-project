@@ -5,6 +5,7 @@ import com.even.bean.SysRoleExample;
 import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysRoleMapper;
+import com.even.io.sysRole.enums.SysRoleEnum;
 import com.even.io.sysRole.request.SysRoleRequest;
 import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.service.ISysRoleService;
@@ -35,6 +36,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public List<SysRole> selectAllRole() {
         SysRoleExample example=new SysRoleExample();
+        example.createCriteria().andIsDelEqualTo(SysRoleEnum.isDel.NOMAL.getByteValue());
         List<SysRole> list = sysRoleMapper.selectByExample(example);
         return list;
     }

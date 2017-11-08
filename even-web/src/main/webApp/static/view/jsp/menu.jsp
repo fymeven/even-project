@@ -68,9 +68,9 @@
             <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a href="/static/plugin/H-uiAdmin/admin-role.html" title="角色管理">角色管理</a></li>
+                    <li><a href="/static/view/jsp/sysRole-page.jsp" title="角色管理">角色管理</a></li>
                     <li><a href="/static/plugin/H-uiAdmin/admin-permission.html" title="权限管理">权限管理</a></li>
-                    <li><a href="/static/view/jsp/admin-list.jsp" title="管理员列表">管理员列表</a></li>
+                    <li><a href="/static/view/jsp/sysUser-page.jsp" title="管理员列表">管理员列表</a></li>
                 </ul>
             </dd>
         </dl>

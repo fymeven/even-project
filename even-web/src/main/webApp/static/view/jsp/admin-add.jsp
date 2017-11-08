@@ -135,17 +135,20 @@ $(function(){
 		focusCleanup:true,
 		success:"valid",
 		submitHandler:function(form){
-			$(form).ajaxSubmit({
-                url:"/sysUser/add",
-                type:"post",
-                dataType:"json",
+            $(form).ajaxSubmit({
+                url:'/sysUser/add',
                 success:function(result){
-                    console.info(result)
+                    if(result.status){
+                        layer.msg(result.msg,{icon:1,time:1000});
+                        parent.dataTable.ajax.reload();
+                    }else{
+                        layer.msg(result.msg,{icon:2,time:1000});
+                    }
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
                 }
             });
-			var index = parent.layer.getFrameIndex(window.name);
-			parent.$('.btn-refresh').click();
-			parent.layer.close(index);
 		}
 	});
 });

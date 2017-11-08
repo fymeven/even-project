@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-11-07 23:12:27
+Date: 2017-11-08 22:57:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,8 +59,8 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', 'admin', 'isAdmin', null, null, null, null, null);
-INSERT INTO `sys_role` VALUES ('2', 'nomal', 'isNomal', null, null, null, null, null);
+INSERT INTO `sys_role` VALUES ('1', 'admin', 'isAdmin', '1', null, '1', null, null);
+INSERT INTO `sys_role` VALUES ('2', 'nomal', 'isNomal', '2', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for sys_role_auth
@@ -99,14 +99,14 @@ CREATE TABLE `sys_user` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', 'admin', '123', null, 'ADMIN', 'admin@qq.com', null, '1', '15112341234', '1', null, null, null);
 INSERT INTO `sys_user` VALUES ('2', 'even', '123', null, 'EVEN', 'even@qq.com', null, '2', '15212345678', '2', '2', null, null);
-INSERT INTO `sys_user` VALUES ('3', 'user1', '123', null, null, 'user1@qq.com', null, '2', null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('3', 'user1', '123', null, null, 'user1@qq.com', null, '2', null, null, '2', null, null);
 INSERT INTO `sys_user` VALUES ('4', 'user2', '123', null, null, 'user2@qq.com', null, '1', null, null, null, null, null);
 INSERT INTO `sys_user` VALUES ('5', 'user3', '123', '', '', 'user3@qq.com', '', '1', '', null, null, null, null);
 INSERT INTO `sys_user` VALUES ('6', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
@@ -115,10 +115,31 @@ INSERT INTO `sys_user` VALUES ('8', 'even', '123', '', 'EVEN', 'even@qq.com', ''
 INSERT INTO `sys_user` VALUES ('9', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
 INSERT INTO `sys_user` VALUES ('10', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
 INSERT INTO `sys_user` VALUES ('11', 'even', '123', '', 'EVEN', 'even@qq.com', '', '2', '15212345678', '2', null, null, null);
-INSERT INTO `sys_user` VALUES ('12', 'user3', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
-INSERT INTO `sys_user` VALUES ('13', 'user3', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
-INSERT INTO `sys_user` VALUES ('14', '1111111111111', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
-INSERT INTO `sys_user` VALUES ('15', '222221', '123', null, null, '123@qq.com', null, '1', null, '1', '1', null, null);
+INSERT INTO `sys_user` VALUES ('12', 'user3', '123', null, null, '123@qq.com', null, '1', null, '1', '2', null, null);
+INSERT INTO `sys_user` VALUES ('13', 'user3', '123', null, null, '123@qq.com', null, '1', null, '1', '2', null, null);
+INSERT INTO `sys_user` VALUES ('14', '1111111111111', '123', null, null, '123@qq.com', null, '1', null, '1', '2', null, null);
+INSERT INTO `sys_user` VALUES ('15', '222221', '123', null, null, '123@qq.com', null, '1', null, '1', '2', null, null);
+INSERT INTO `sys_user` VALUES ('16', 'aaaa', '123', null, null, 'aaaa@qq.com', null, '2', null, '1', '2', null, null);
+INSERT INTO `sys_user` VALUES ('17', null, null, null, null, null, null, null, null, '1', '2', '2017-11-08 21:17:26', '2017-11-08 21:17:26');
+INSERT INTO `sys_user` VALUES ('18', null, null, null, null, null, null, null, null, '1', '2', '2017-11-08 21:21:08', '2017-11-08 21:21:08');
+INSERT INTO `sys_user` VALUES ('19', 'xxyy', '123', null, null, 'xxyy@qq.com', null, '2', null, '1', '2', '2017-11-08 21:22:47', '2017-11-08 21:22:47');
+INSERT INTO `sys_user` VALUES ('20', 'tttt', '123', null, null, 'tttt@qq.com', null, '2', null, '1', '2', '2017-11-08 21:27:45', '2017-11-08 21:27:45');
+INSERT INTO `sys_user` VALUES ('21', '1111111111111', '123', null, null, '123@qq.com', null, '1', null, '1', '2', '2017-11-08 21:34:30', '2017-11-08 21:34:30');
+INSERT INTO `sys_user` VALUES ('22', '3333', '123', null, null, '123@qq.com', null, '2', null, '1', '2', '2017-11-08 21:39:19', '2017-11-08 21:39:19');
+INSERT INTO `sys_user` VALUES ('23', '2333', '123', null, null, '123@qq.com', null, '1', null, '1', '2', '2017-11-08 21:43:08', '2017-11-08 21:43:08');
+INSERT INTO `sys_user` VALUES ('24', '32323331', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 21:43:43', '2017-11-08 21:43:43');
+INSERT INTO `sys_user` VALUES ('25', '2222111', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 21:44:23', '2017-11-08 21:44:23');
+INSERT INTO `sys_user` VALUES ('26', 'jobs', '123', null, null, 'jobs@qq.com', null, '2', null, '1', '2', '2017-11-08 21:45:17', '2017-11-08 21:45:17');
+INSERT INTO `sys_user` VALUES ('27', 'aaaa', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 22:51:47', '2017-11-08 22:51:47');
+INSERT INTO `sys_user` VALUES ('28', 'bbbb', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 22:52:04', '2017-11-08 22:52:04');
+INSERT INTO `sys_user` VALUES ('29', 'cccc', '123', null, null, '123@qq.com', null, '2', null, '1', '1', '2017-11-08 22:52:19', '2017-11-08 22:52:19');
+INSERT INTO `sys_user` VALUES ('30', 'dddd', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 22:52:32', '2017-11-08 22:52:32');
+INSERT INTO `sys_user` VALUES ('31', '1111', '123', null, null, '123Q@qq.com', null, '1', null, '1', '1', '2017-11-08 22:52:52', '2017-11-08 22:52:52');
+INSERT INTO `sys_user` VALUES ('32', '2233', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 22:53:12', '2017-11-08 22:53:12');
+INSERT INTO `sys_user` VALUES ('33', '4444', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 22:53:24', '2017-11-08 22:53:24');
+INSERT INTO `sys_user` VALUES ('34', '5555', '123', null, null, '123@qq.com', null, '1', null, '1', '1', '2017-11-08 22:53:38', '2017-11-08 22:53:38');
+INSERT INTO `sys_user` VALUES ('35', '6666', '123', null, null, '123@qq.com', null, '2', null, '1', '1', '2017-11-08 22:53:58', '2017-11-08 22:53:58');
+INSERT INTO `sys_user` VALUES ('36', '8888', '123', null, null, '123@qq.com', null, '1', null, '1', '2', '2017-11-08 22:54:19', '2017-11-08 22:54:19');
 
 -- ----------------------------
 -- Table structure for sys_user_role

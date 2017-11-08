@@ -13,6 +13,7 @@ import com.even.service.ISysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +39,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public List<SysUser> selectAllUser() {
         SysUserExample example=new SysUserExample();
+        example.createCriteria().andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
         List<SysUser> list = sysUserMapper.selectByExample(example);
         return list;
     }
@@ -48,6 +50,8 @@ public class SysUserServiceImpl implements ISysUserService {
         BeanCopyUtil.copyProperties(sysUser,sysUserRequest);
         sysUser.setUserStatus(SysUserEnum.userStatus.NOMAL.getIntValue());
         sysUser.setIsDel(SysUserEnum.isDel.NOMAL.getByteValue());
+        sysUser.setCreateTime(new Date());
+        sysUser.setUpdateTime(new Date());
         int result = sysUserMapper.insert(sysUser);
         if (result>0){
             return ResponseResult.SUCCESS;
