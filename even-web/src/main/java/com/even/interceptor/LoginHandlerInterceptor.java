@@ -2,6 +2,9 @@ package com.even.interceptor;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,31 +17,22 @@ import java.util.Enumeration;
 * 类描述： 登录过滤，权限验证
 * @author even
  */
-public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
+public class    LoginHandlerInterceptor extends HandlerInterceptorAdapter{
     private static final Logger logger = LogManager.getLogger(LoginHandlerInterceptor.class.getName());
+    @Value("${loginUrl}")
+    private String loginUrl;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// TODO Auto-generated method stub
         printRequestInfo(request);
-//		String path = request.getServletPath();
-//		if(path.matches(Const.NO_INTERCEPTOR_PATH)){
-//			return true;
-//		}else{
-//			User user = (User)Jurisdiction.getSession().getAttribute(Const.SESSION_USER);
-//			if(user!=null){
-//				path = path.substring(1, path.length());
-//				boolean b = Jurisdiction.hasJurisdiction(path); //访问权限校验
-//				if(!b){
-//					response.sendRedirect(request.getContextPath() + Const.LOGIN);
-//				}
-//				return b;
-//			}else{
-//				//登陆过滤
-//				response.sendRedirect(request.getContextPath() + Const.LOGIN);
-//				return false;
-//			}
-//		}
-        return true;
+
+        Subject subject = SecurityUtils.getSubject();
+        if(subject.isAuthenticated() || subject.isRemembered()){
+			return true;
+		}else{
+				response.sendRedirect(loginUrl);
+				return false;
+		}
 	}
 
     private void printRequestInfo(HttpServletRequest request) {

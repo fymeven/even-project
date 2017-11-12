@@ -28,11 +28,11 @@
 		<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 			<property name="securityManager" ref="securityManager" />
 			
-			<property name="loginUrl" value="/user/userLoginPage" />
+			<!--<property name="loginUrl" value="/user/userLoginPage" />-->
+			<!---->
+			<!--<property name="successUrl" value="/success.jsp" />-->
 			
-			<property name="successUrl" value="/success.jsp" />
-			
-			<property name="unauthorizedUrl" value="/noAuth" />
+			<!--<property name="unauthorizedUrl" value="/noAuth" />-->
 			
 			<!--<property name="filterChainDefinitions">-->
 				<!--<value>-->

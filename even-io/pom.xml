@@ -11,5 +11,11 @@
 
     <artifactId>even-io</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.even</groupId>
+            <artifactId>even-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

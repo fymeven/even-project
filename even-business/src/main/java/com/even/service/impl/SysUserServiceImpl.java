@@ -10,6 +10,7 @@ import com.even.dao.SysUserRoleMapper;
 import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.io.sysUser.request.SysUserRequest;
 import com.even.service.ISysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,9 +38,13 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public List<SysUser> selectAllUser() {
+    public List<SysUser> selectPageList(SysUserRequest userRequest) {
         SysUserExample example=new SysUserExample();
-        example.createCriteria().andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
+        SysUserExample.Criteria criteria = example.createCriteria();
+        criteria.andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
+        if (StringUtils.isNotBlank(userRequest.getRealName())) {
+           criteria.andRealNameEqualTo(userRequest.getRealName());
+        }
         List<SysUser> list = sysUserMapper.selectByExample(example);
         return list;
     }

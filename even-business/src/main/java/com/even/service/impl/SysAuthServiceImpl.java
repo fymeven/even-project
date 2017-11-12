@@ -19,10 +19,10 @@ public class SysAuthServiceImpl implements ISysAuthService {
     @Override
     public Set<String> selectAuthsByUserName(String userName) {
         Set<SysAuth> authSet= sysAuthMapper.selectAuthsByUserName(userName);
-        Set<String> permissionSet=new LinkedHashSet<>();
+        Set<String> authNameSet=new LinkedHashSet<>();
         for (SysAuth auth : authSet) {
-            permissionSet.add(auth.getAuthName());
+            authNameSet.add(auth.getAuthName());
         }
-        return permissionSet;
+        return authNameSet;
     }
 }

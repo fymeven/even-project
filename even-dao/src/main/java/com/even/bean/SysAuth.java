@@ -7,17 +7,13 @@ public class SysAuth {
 
     private String authName;
 
-    private String authDesc;
-
-    private String authIcon;
-
     private Integer authStatus;
 
     private Long parentId;
 
-    private Byte isDel;
+    private Long menuId;
 
-    private Integer sortId;
+    private Byte isDel;
 
     private Date createTime;
 
@@ -39,22 +35,6 @@ public class SysAuth {
         this.authName = authName == null ? null : authName.trim();
     }
 
-    public String getAuthDesc() {
-        return authDesc;
-    }
-
-    public void setAuthDesc(String authDesc) {
-        this.authDesc = authDesc == null ? null : authDesc.trim();
-    }
-
-    public String getAuthIcon() {
-        return authIcon;
-    }
-
-    public void setAuthIcon(String authIcon) {
-        this.authIcon = authIcon == null ? null : authIcon.trim();
-    }
-
     public Integer getAuthStatus() {
         return authStatus;
     }
@@ -71,20 +51,20 @@ public class SysAuth {
         this.parentId = parentId;
     }
 
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
+
     public Byte getIsDel() {
         return isDel;
     }
 
     public void setIsDel(Byte isDel) {
         this.isDel = isDel;
-    }
-
-    public Integer getSortId() {
-        return sortId;
-    }
-
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
     }
 
     public Date getCreateTime() {

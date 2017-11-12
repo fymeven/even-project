@@ -24,8 +24,6 @@
 <![endif]-->
 
 <title>管理员列表</title>
-<meta name="keywords" content="H-ui.admin v3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-<meta name="description" content="H-ui.admin v3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
 </head>
 <body>
 <!--top header-->
@@ -37,15 +35,12 @@
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页<span class="c-gray en">&gt;</span>管理员管理<span class="c-gray en">&gt;</span>管理员列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
-			<div class="text-c"> 日期范围：
-				<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
-				-
-				<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
-				<input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" id="" name="">
-				<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+			<div class="text-c">
+				<input type="text" class="input-text" style="width:250px" placeholder="真实姓名" id="search_realName">
+                <button type="submit" class="btn btn-success" onclick="dataTable.ajax.reload();"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 			</div>
 			<div class="cl pd-5 bg-1 bk-gray mt-20">
-				<span class="l"> <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="_add('添加管理员','/static/view/jsp/admin-add.jsp','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a> </span>
+				<span class="l"> <a href="javascript:;" onclick="_del()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="_add('添加管理员','/static/view/jsp/admin-add.jsp','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a> </span>
 			</div>
             <div class="mt-20">
 			    <table class="table table-border table-bordered table-bg table-hover table-sort"></table>
@@ -54,7 +49,6 @@
 	</div>
 </section>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/lib/layer/2.4/layer.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/static/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/static/plugin/H-uiAdmin/static/h-ui.admin/js/H-ui.admin.page.js"></script>
@@ -71,13 +65,24 @@
 	w		弹出层宽度（缺省调默认值）
 	h		弹出层高度（缺省调默认值）
 */
-/*管理员-增加*/
+/*添加*/
 function _add(title,url,w,h){
 	layer_show(title,url,w,h);
 }
-/*管理员-删除*/
-    function _del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
+/*删除*/
+function _del(id){
+    if(!id){
+        var ids=[];
+        $('input[name=checkbox]:checked').each(function(i,o){
+            ids.push($(o).val());
+        });
+        id=ids.join();
+        if(!id){
+            layer.msg('请选择要删除的数据!',{icon: 2,time:1000});
+            return false;
+        }
+    }
+    layer.confirm('确认要删除吗？',function(index){
         $.ajax({
             url:'/sysUser/delete',
             data:{
@@ -92,7 +97,7 @@ function _add(title,url,w,h){
                 }
             }
         });
-	});
+    });
 }
 /*管理员-编辑*/
 function _edit(title,url,id,w,h){
@@ -114,7 +119,7 @@ function _stop(obj,id){
 function _start(obj,id){
 	layer.confirm('确认要启用吗？',function(index){
 		//此处请求后台程序，下方是成功后的前台处理……
-		
+
 		$(obj).parents("tr").find(".td-manage").prepend('<a onClick="_stop(this,id)" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
 		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
 		$(obj).remove();
@@ -130,15 +135,23 @@ function _start(obj,id){
         "bLengthChange":true, //改变每页显示数据数量
         "bSort": true, //排序功能
         "bInfo" : true, //是否显示页脚信息，DataTables插件左下角显示记录数
-        "bFilter" : true, //是否启动过滤、搜索功能
+        "bFilter" : false, //是否启动过滤、搜索功能
         "bAutoWidth": true,//自动宽度
-        "ajax":"/sysUser/page",
+        "ajax":{
+            url:"/sysUser/page",
+            data:function(d){
+                d.realName=$('#search_realName').val(),
+                d.userName=$('#search_userName').val()
+            }
+
+        },
         "columns":[
             {
-                "title":'<input type="checkbox" name="" value="">',
+                "title":'<input type="checkbox" name="checkbox" />',
+                "data": "id",
                 "sClass": "text-c",
                 "render": function (data, type, full, meta) {
-                    return '<input type="checkbox"  class="checkchild"  value="' + data + '" />';
+                    return '<input type="checkbox" name="checkbox" class="checkchild"  value="' + data + '" />';
                 },
                 "width":"5%",
                 "orderable": false
@@ -156,9 +169,8 @@ function _start(obj,id){
             { "title":"操作","data": "id","defaultContent":'',"orderable": false,"className": "text-c",
                 "render":function(data, type, full, meta){
                     var html=[];
-                    html.push('<a style="text-decoration:none" onClick="article_shenhe(this,\''+data+'\')" href="javascript:;" title="审核">审核</a>');
-                    html.push('<a style="text-decoration:none" class="ml-5" onClick="article_edit(\'资讯编辑\',\'article-add.html\',\''+data+'\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>');
-                    html.push('<a style="text-decoration:none" class="ml-5" onClick="_del(this,\''+data+'\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>');
+                    html.push('<a style="text-decoration:none" class="ml-5" onClick="_edit(\'资讯编辑\',\'article-add.html\',\''+data+'\')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>');
+                    html.push('<a style="text-decoration:none" class="ml-5" onClick="_del(\''+data+'\')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>');
                     return html.join('');
                 }
             }

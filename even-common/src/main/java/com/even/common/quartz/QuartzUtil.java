@@ -1,4 +1,4 @@
-package com.qccr.gotone.common.util;
+package com.even.common.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -14,6 +14,8 @@ public class QuartzUtil {
     private static String DEFAULT_GROUP_NAME = "DEFAULT_GROUP_NAME"; //触发器组
 
 
+
+
     public static void addJob(String jobName,String jobGroup,Date startTime,Class<? extends Job> jobClass,int interval,int repeatCount) throws Exception {
         try {
             Scheduler scheduler = schedulerFactory.getScheduler();
@@ -22,16 +24,13 @@ public class QuartzUtil {
                     .build();
 
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup)
-//                        .startNow()//一旦加入scheduler，立即生效
                     .startAt(startTime)
                     .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(interval).withRepeatCount(repeatCount))
                     .build();
 
-            //加入这个调度
             scheduler.scheduleJob(job, trigger);
-
             if (!scheduler.isShutdown()) {
-                scheduler.start();        // 启动
+                scheduler.start();
             }
         }catch (Exception ex){
             throw  new Exception("创建任务失败");

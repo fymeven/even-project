@@ -12,7 +12,7 @@ import java.util.List;
 public interface ISysUserService {
     SysUser selectUserByName(String userName);
 
-    List<SysUser> selectAllUser();
+    List<SysUser> selectPageList(SysUserRequest userRequest);
 
     ResponseResult save(SysUserRequest sysUserRequest) throws Exception;
 

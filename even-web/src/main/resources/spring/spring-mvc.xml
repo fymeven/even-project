@@ -21,6 +21,8 @@
   	<!--<mvc:interceptors>-->
 		<!--<mvc:interceptor>-->
 			<!--<mvc:mapping path="/"/>-->
+            <!--<mvc:exclude-mapping path="/system/loginPage"/>-->
+            <!--<mvc:exclude-mapping path="/system/userLogin"/>-->
 			<!--<bean class="com.even.interceptor.LoginHandlerInterceptor"/>-->
 		<!--</mvc:interceptor>-->
 	<!--</mvc:interceptors>-->
@@ -46,7 +48,7 @@
 
 	<!-- 配置SpringMVC的视图解析器 -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/static/view/jsp/"/>
+		<property name="prefix" value="/static/view/admin/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
 
@@ -115,11 +117,11 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager" />
 
-        <property name="loginUrl" value="/user/userLoginPage" />
+        <!--<property name="loginUrl" value="/user/userLoginPage" />-->
 
-        <property name="successUrl" value="/success.jsp" />
+        <!--<property name="successUrl" value="/success.jsp" />-->
 
-        <property name="unauthorizedUrl" value="/noAuth" />
+        <!--<property name="unauthorizedUrl" value="/noAuth" />-->
 
         <!--<property name="filterChainDefinitions">-->
         <!--<value>-->
@@ -131,4 +133,5 @@
         <!--</value>-->
         <!--</property>-->
     </bean>
+    <context:property-placeholder location="classpath:system.properties"/>
 </beans>

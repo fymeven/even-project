@@ -1,8 +1,10 @@
 package com.even.io.sysUser.request;
 
+import com.even.common.util.DataTablePage;
+
 import java.io.Serializable;
 
-public class SysUserRequest implements Serializable {
+public class SysUserRequest extends DataTablePage implements Serializable {
     private Long id;
 
     private String userName;

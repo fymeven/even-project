@@ -235,146 +235,6 @@ public class SysAuthExample {
             return (Criteria) this;
         }
 
-        public Criteria andAuthDescIsNull() {
-            addCriterion("auth_desc is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescIsNotNull() {
-            addCriterion("auth_desc is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescEqualTo(String value) {
-            addCriterion("auth_desc =", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescNotEqualTo(String value) {
-            addCriterion("auth_desc <>", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescGreaterThan(String value) {
-            addCriterion("auth_desc >", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescGreaterThanOrEqualTo(String value) {
-            addCriterion("auth_desc >=", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescLessThan(String value) {
-            addCriterion("auth_desc <", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescLessThanOrEqualTo(String value) {
-            addCriterion("auth_desc <=", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescLike(String value) {
-            addCriterion("auth_desc like", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescNotLike(String value) {
-            addCriterion("auth_desc not like", value, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescIn(List<String> values) {
-            addCriterion("auth_desc in", values, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescNotIn(List<String> values) {
-            addCriterion("auth_desc not in", values, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescBetween(String value1, String value2) {
-            addCriterion("auth_desc between", value1, value2, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthDescNotBetween(String value1, String value2) {
-            addCriterion("auth_desc not between", value1, value2, "authDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconIsNull() {
-            addCriterion("auth_icon is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconIsNotNull() {
-            addCriterion("auth_icon is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconEqualTo(String value) {
-            addCriterion("auth_icon =", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconNotEqualTo(String value) {
-            addCriterion("auth_icon <>", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconGreaterThan(String value) {
-            addCriterion("auth_icon >", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconGreaterThanOrEqualTo(String value) {
-            addCriterion("auth_icon >=", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconLessThan(String value) {
-            addCriterion("auth_icon <", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconLessThanOrEqualTo(String value) {
-            addCriterion("auth_icon <=", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconLike(String value) {
-            addCriterion("auth_icon like", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconNotLike(String value) {
-            addCriterion("auth_icon not like", value, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconIn(List<String> values) {
-            addCriterion("auth_icon in", values, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconNotIn(List<String> values) {
-            addCriterion("auth_icon not in", values, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconBetween(String value1, String value2) {
-            addCriterion("auth_icon between", value1, value2, "authIcon");
-            return (Criteria) this;
-        }
-
-        public Criteria andAuthIconNotBetween(String value1, String value2) {
-            addCriterion("auth_icon not between", value1, value2, "authIcon");
-            return (Criteria) this;
-        }
-
         public Criteria andAuthStatusIsNull() {
             addCriterion("auth_status is null");
             return (Criteria) this;
@@ -495,6 +355,66 @@ public class SysAuthExample {
             return (Criteria) this;
         }
 
+        public Criteria andMenuIdIsNull() {
+            addCriterion("menu_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdIsNotNull() {
+            addCriterion("menu_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdEqualTo(Long value) {
+            addCriterion("menu_id =", value, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdNotEqualTo(Long value) {
+            addCriterion("menu_id <>", value, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdGreaterThan(Long value) {
+            addCriterion("menu_id >", value, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("menu_id >=", value, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdLessThan(Long value) {
+            addCriterion("menu_id <", value, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdLessThanOrEqualTo(Long value) {
+            addCriterion("menu_id <=", value, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdIn(List<Long> values) {
+            addCriterion("menu_id in", values, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdNotIn(List<Long> values) {
+            addCriterion("menu_id not in", values, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdBetween(Long value1, Long value2) {
+            addCriterion("menu_id between", value1, value2, "menuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuIdNotBetween(Long value1, Long value2) {
+            addCriterion("menu_id not between", value1, value2, "menuId");
+            return (Criteria) this;
+        }
+
         public Criteria andIsDelIsNull() {
             addCriterion("is_del is null");
             return (Criteria) this;
@@ -552,66 +472,6 @@ public class SysAuthExample {
 
         public Criteria andIsDelNotBetween(Byte value1, Byte value2) {
             addCriterion("is_del not between", value1, value2, "isDel");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdIsNull() {
-            addCriterion("sort_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdIsNotNull() {
-            addCriterion("sort_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdEqualTo(Integer value) {
-            addCriterion("sort_id =", value, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdNotEqualTo(Integer value) {
-            addCriterion("sort_id <>", value, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdGreaterThan(Integer value) {
-            addCriterion("sort_id >", value, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("sort_id >=", value, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdLessThan(Integer value) {
-            addCriterion("sort_id <", value, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdLessThanOrEqualTo(Integer value) {
-            addCriterion("sort_id <=", value, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdIn(List<Integer> values) {
-            addCriterion("sort_id in", values, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdNotIn(List<Integer> values) {
-            addCriterion("sort_id not in", values, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdBetween(Integer value1, Integer value2) {
-            addCriterion("sort_id between", value1, value2, "sortId");
-            return (Criteria) this;
-        }
-
-        public Criteria andSortIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("sort_id not between", value1, value2, "sortId");
             return (Criteria) this;
         }
 

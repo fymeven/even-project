@@ -29,6 +29,10 @@ public class SysUser {
 
     private Date updateTime;
 
+    private Date lastLoginTime;
+
+    private String lastLoginIp;
+
     public Long getId() {
         return id;
     }
@@ -131,5 +135,21 @@ public class SysUser {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
     }
 }

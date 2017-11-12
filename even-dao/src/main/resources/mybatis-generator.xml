@@ -46,11 +46,13 @@
 
 
 		 <!--table指定每个表的生成策略-->
-        <table tableName="SYS_USER" domainObjectName="SysUser" />
-		<table tableName="SYS_ROLE" domainObjectName="SysRole" />
-        <table tableName="SYS_AUTH" domainObjectName="SysAuth" />
-        <table tableName="SYS_USER_ROLE" domainObjectName="SysUserRole" />
-        <table tableName="SYS_ROLE_AUTH" domainObjectName="SysRoleAuth" />
-
+        <table tableName="sys_user" domainObjectName="SysUser" />
+		<table tableName="sys_role" domainObjectName="SysRole" />
+        <table tableName="sys_auth" domainObjectName="SysAuth" />
+        <table tableName="sys_user_role" domainObjectName="SysUserRole" />
+        <table tableName="sys_role_auth" domainObjectName="SysRoleAuth" />
+        <table tableName="sys_menu" domainObjectName="SysMenu" />
+        <table tableName="sys_dept" domainObjectName="SysDept" />
+        <table tableName="sys_log" domainObjectName="SysLog" />
 	</context>
 </generatorConfiguration>
