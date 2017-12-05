@@ -44,13 +44,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if (!sysUser.getUserPwd().equals(password)){
             throw new IncorrectCredentialsException("输入密码有误");
         }else{
-            /**
-             *
-             *  利用redis缓存限制登录次数，多次登录失败锁定账号
-             *
-             */
-
-            return new SimpleAuthenticationInfo(username, password, getName());
+            return new SimpleAuthenticationInfo(sysUser, password, getName());
         }
 	}
 	

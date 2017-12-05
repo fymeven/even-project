@@ -40,11 +40,6 @@
         <setting name="logImpl" value="LOG4J"/>
     </settings>
 
-	<typeAliases>
-		<!--<typeAlias type="com.fh.entity.system.User" alias="User"/>-->
-
-	</typeAliases>
-	
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageHelper">
             <!--指明数据库 4.0.0以后不需要设置此属性-->

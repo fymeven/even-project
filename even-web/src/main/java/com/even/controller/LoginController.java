@@ -1,6 +1,7 @@
 package com.even.controller;
 
 import com.even.common.util.ResponseResult;
+import com.even.io.sysMenu.response.SysMenuResponse;
 import com.even.service.ISysAuthService;
 import com.even.service.ISysMenuService;
 import com.even.service.ISysUserService;
@@ -18,14 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fymeven on 2017/11/11.
  */
 @Controller
-@RequestMapping("/system")
+@RequestMapping("/login")
 public class LoginController {
     private static final Logger logger= LogManager.getLogger(SysUserController.class.getName());
     @Resource
@@ -35,13 +35,13 @@ public class LoginController {
     @Resource
     private ISysMenuService sysMenuService;
 
-    @RequestMapping(value = "/loginPage",method = RequestMethod.GET)
-    public String redirectLoginPage(){
+    @RequestMapping(value = "/userLogin",method = RequestMethod.GET)
+    public String userLogin(){
         return "login";
     }
 
     @ResponseBody
-    @RequestMapping("/userLogin")
+    @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ResponseResult userLogin(@RequestParam(value = "userName") String userName,@RequestParam(value = "userPwd") String userPwd,
                                     @RequestParam(value ="remeberMe",defaultValue = "false",required = false) Boolean remeberMe){
         /**
@@ -77,14 +77,11 @@ public class LoginController {
     }
 
     @ResponseBody
-    @RequestMapping("/initSysMenu")
+    @RequestMapping(value = "/initSysMenu",method = RequestMethod.GET)
     public ResponseResult initSysMenu(){
         Subject subject=SecurityUtils.getSubject();
-        if (subject.isRemembered() || subject.isAuthenticated()){
-            List<Map<String, Object>> menuSet =sysMenuService.selectSystemMenu((String)subject.getPrincipal());
-            return ResponseResult.SUCCESS(menuSet);
-        }else {
-            return ResponseResult.ERROR("尚未登录");
-        }
+        Set<SysMenuResponse> menuSet =sysMenuService.selectSystemMenu((String)subject.getPrincipal());
+        return ResponseResult.SUCCESS(menuSet);
     }
+
 }

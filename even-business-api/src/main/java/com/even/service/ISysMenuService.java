@@ -3,9 +3,10 @@ package com.even.service;
 import com.even.bean.SysMenu;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysMenu.request.SysMenuRequest;
+import com.even.io.sysMenu.response.SysMenuResponse;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -20,5 +21,5 @@ public interface ISysMenuService {
 
     ResponseResult delete(String id);
 
-    List<Map<String, Object>> selectSystemMenu(String userName);
+    Set<SysMenuResponse> selectSystemMenu(String userName);
 }

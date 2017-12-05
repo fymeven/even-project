@@ -39,4 +39,8 @@ public class MsgController {
         return ResponseResult.SUCCESS("消息发送成功");
     }
 
+    @RequestMapping("websocket")
+    public String websocket(){
+        return "websocket";
+    }
 }

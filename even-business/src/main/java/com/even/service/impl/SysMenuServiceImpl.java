@@ -26,60 +26,37 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Resource
     private SysAuthMapper sysAuthMapper;
 
-    private static String targetTypeDefault = "iframe-tab";// 默认页面打开方式 (ajax,iframe-tab,blank)
-
     @Override
-    public List<Map<String, Object>> selectSystemMenu(String userName) {
+    public Set<SysMenuResponse> selectSystemMenu(String userName) {
         Set<SysAuth> authSet = sysAuthMapper.selectAuthsByUserName(userName);
         List<Long> menuIdList=new ArrayList<>();
         for (SysAuth sysAuth : authSet) {
             menuIdList.add(sysAuth.getMenuId());
         }
         Set<SysMenuResponse> systemMenuSet=sysMenuMapper.selectSystemMenuByAuth(authSet, SysMenuEnum.parentId.PARENT.getLongValue());
-        List<Map<String, Object>> listMap = new ArrayList();
         for (SysMenuResponse parentMenu : systemMenuSet) {
-            Map<String, Object> map = new LinkedHashMap();
-            map.put("id", parentMenu.getId().toString());
-            map.put("text", parentMenu.getMenuName());
-            map.put("icon", parentMenu.getMenuIcon());
-            map.put("targetType", targetTypeDefault);
             SysMenuExample example=new SysMenuExample();
             example.createCriteria().andParentIdEqualTo(parentMenu.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
             long childMenuCount = sysMenuMapper.countByExample(example);
             if (childMenuCount>0){
-                map.put("isOpen",true);
-                getChildMenu(authSet, parentMenu.getId(),menuIdList,map);
-            }else {
-                map.put("url",parentMenu.getMenuUrl());
+                getChildMenu(authSet, parentMenu.getId(),menuIdList,parentMenu);
             }
-            listMap.add(map);
         }
-        return listMap;
+        return systemMenuSet;
     }
 
     //递归查询所有子菜单，本系统只有两级菜单
-    public Map<String,Object> getChildMenu(Set<SysAuth> authSet,Long parentId,List<Long> menuIdList,Map<String, Object> map){
+    public void getChildMenu(Set<SysAuth> authSet,Long parentId,List<Long> menuIdList,SysMenuResponse systemMenu){
         Set<SysMenuResponse> parentMenuSet=sysMenuMapper.selectSystemMenuByAuth(authSet,parentId);
-        List<Map<String, Object>> listMap = new ArrayList();
         for (SysMenuResponse parentMenu : parentMenuSet) {
-            Map<String, Object> childMap = new LinkedHashMap();
-            childMap.put("id", parentMenu.getId().toString());
-            childMap.put("text", parentMenu.getMenuName());
-            childMap.put("icon", parentMenu.getMenuIcon());
-            childMap.put("targetType", targetTypeDefault);
             SysMenuExample example=new SysMenuExample();
             example.createCriteria().andParentIdEqualTo(parentMenu.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
             long childMenuCount = sysMenuMapper.countByExample(example);
             if(childMenuCount>0){
-                childMap.put("isOpen",true);
-                getChildMenu(authSet,parentMenu.getId(),menuIdList,childMap);
-            }else {
-                childMap.put("url",parentMenu.getMenuUrl());
+                getChildMenu(authSet,parentMenu.getId(),menuIdList,parentMenu);
             }
-            listMap.add(childMap);
-            map.put("children",listMap);
         }
-        return map;
+        systemMenu.setChildMenuSet(parentMenuSet);
     }
 
     @Override
