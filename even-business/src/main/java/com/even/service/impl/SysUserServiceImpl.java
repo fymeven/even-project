@@ -9,6 +9,7 @@ import com.even.dao.SysUserMapper;
 import com.even.dao.SysUserRoleMapper;
 import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.io.sysUser.request.SysUserRequest;
+import com.even.io.sysUser.response.SysUserResponse;
 import com.even.service.ISysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,16 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
-    public SysUser selectUserByName(String userName) {
+    public SysUserResponse selectByUserName(String userName) throws Exception {
+        SysUserResponse sysUserResponse=new SysUserResponse();
         SysUserExample example=new SysUserExample();
         example.createCriteria().andUserNameEqualTo(userName);
         List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
-        if (sysUserList!=null && !sysUserList.isEmpty())
-            return sysUserList.get(0);
-        return null;
+        if (sysUserList!=null && !sysUserList.isEmpty()) {
+            SysUser sysUser = sysUserList.get(0);
+            BeanCopyUtil.copyProperties(sysUserResponse,sysUser);
+        }
+            return sysUserResponse;
     }
 
     @Override

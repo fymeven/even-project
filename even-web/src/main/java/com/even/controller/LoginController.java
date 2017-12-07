@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 /**
@@ -43,7 +44,7 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ResponseResult userLogin(@RequestParam(value = "userName") String userName,@RequestParam(value = "userPwd") String userPwd,
-                                    @RequestParam(value ="remeberMe",defaultValue = "false",required = false) Boolean remeberMe){
+                                    @RequestParam(value ="remeberMe",defaultValue = "false",required = false) Boolean remeberMe, HttpServletRequest request){
         /**
          *  进行shiro token认证
          * */
@@ -53,6 +54,9 @@ public class LoginController {
         try {
             currentUser.login(token);
             currentUser.getSession().setAttribute("currentUser", currentUser);
+            //获取系统菜单
+            Set<SysMenuResponse> menuSet =sysMenuService.selectSystemMenu(userName);
+            request.getSession().setAttribute("menuSet", menuSet);
             return ResponseResult.SUCCESS;
         }catch (UnknownAccountException ex){
             logger.error(ex.getMessage());
@@ -76,12 +80,13 @@ public class LoginController {
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/initSysMenu",method = RequestMethod.GET)
-    public ResponseResult initSysMenu(){
-        Subject subject=SecurityUtils.getSubject();
-        Set<SysMenuResponse> menuSet =sysMenuService.selectSystemMenu((String)subject.getPrincipal());
-        return ResponseResult.SUCCESS(menuSet);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/initSysMenu",method = RequestMethod.GET)
+//    public ResponseResult initSysMenu(){
+//        Subject subject=SecurityUtils.getSubject();
+//        SysUserResponse principal = (SysUserResponse) subject.getPrincipal();
+//        Set<SysMenuResponse> menuSet =sysMenuService.selectSystemMenu(principal.getUserName());
+//        return ResponseResult.SUCCESS(menuSet);
+//    }
 
 }

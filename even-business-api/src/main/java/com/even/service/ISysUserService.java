@@ -3,6 +3,7 @@ package com.even.service;
 import com.even.bean.SysUser;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
+import com.even.io.sysUser.response.SysUserResponse;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by fymeven on 2017/10/24.
  */
 public interface ISysUserService {
-    SysUser selectUserByName(String userName);
+    SysUserResponse selectByUserName(String userName) throws Exception;
 
     List<SysUser> selectPageList(SysUserRequest userRequest);
 
