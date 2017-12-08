@@ -5,13 +5,12 @@ import com.even.common.util.ResponseResult;
 import com.even.io.sysRole.request.SysRoleRequest;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by fymeven on 2017/10/28.
  */
 public interface ISysRoleService {
-    Set<String> selectRolesByUserName(String userName);
+    List<String> selectRolesByUserName(String userName);
 
     List<SysRole> selectAllRole();
 

@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by fymeven on 2017/11/11.
@@ -44,7 +43,7 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     public ResponseResult userLogin(@RequestParam(value = "userName") String userName,@RequestParam(value = "userPwd") String userPwd,
-                                    @RequestParam(value ="remeberMe",defaultValue = "false",required = false) Boolean remeberMe, HttpServletRequest request){
+                                    @RequestParam(value ="remeberMe",defaultValue = "false",required = false) Boolean remeberMe){
         /**
          *  进行shiro token认证
          * */
@@ -54,9 +53,9 @@ public class LoginController {
         try {
             currentUser.login(token);
             currentUser.getSession().setAttribute("currentUser", currentUser);
-            //获取系统菜单
-            Set<SysMenuResponse> menuSet =sysMenuService.selectSystemMenu(userName);
-            request.getSession().setAttribute("menuSet", menuSet);
+            //加载系统菜单
+            List<SysMenuResponse> menuList =sysMenuService.selectSystemMenu(userName);
+            currentUser.getSession().setAttribute("menuList", menuList);
             return ResponseResult.SUCCESS;
         }catch (UnknownAccountException ex){
             logger.error(ex.getMessage());

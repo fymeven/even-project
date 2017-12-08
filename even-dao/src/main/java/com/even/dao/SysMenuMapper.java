@@ -7,7 +7,6 @@ import com.even.io.sysMenu.response.SysMenuResponse;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SysMenuMapper {
     long countByExample(SysMenuExample example);
@@ -32,5 +31,5 @@ public interface SysMenuMapper {
 
     int updateByPrimaryKey(SysMenu record);
 
-    Set<SysMenuResponse> selectSystemMenuByAuth(@Param("authSet")Set<SysAuth> authSet,@Param("parentId") Long parentId);
+    List<SysMenuResponse> selectSystemMenuByAuth(@Param("authList")List<SysAuth> authList,@Param("parentId") Long parentId);
 }

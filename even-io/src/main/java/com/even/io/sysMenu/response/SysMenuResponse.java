@@ -2,8 +2,7 @@ package com.even.io.sysMenu.response;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 public class SysMenuResponse implements Serializable {
     private Long id;
@@ -28,7 +27,7 @@ public class SysMenuResponse implements Serializable {
 
     private Date updateTime;
 
-    private Set<SysMenuResponse> childMenuSet=new LinkedHashSet<>();
+    private List<SysMenuResponse> childMenuList;
 
     public Long getId() {
         return id;
@@ -118,11 +117,11 @@ public class SysMenuResponse implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Set<SysMenuResponse> getChildMenuSet() {
-        return childMenuSet;
+    public List<SysMenuResponse> getChildMenuList() {
+        return childMenuList;
     }
 
-    public void setChildMenuSet(Set<SysMenuResponse> childMenuSet) {
-        this.childMenuSet = childMenuSet;
+    public void setChildMenuList(List<SysMenuResponse> childMenuList) {
+        this.childMenuList = childMenuList;
     }
 }

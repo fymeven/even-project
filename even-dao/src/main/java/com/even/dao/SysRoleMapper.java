@@ -5,7 +5,6 @@ import com.even.bean.SysRoleExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SysRoleMapper {
     long countByExample(SysRoleExample example);
@@ -36,7 +35,7 @@ public interface SysRoleMapper {
      * @param userName
      * @return
      */
-    Set<SysRole> selectRolesByUserName(String userName);
+    List<SysRole> selectRolesByUserName(String userName);
 
     /**
      * TODO

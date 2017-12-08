@@ -5,7 +5,6 @@ import com.even.bean.SysAuthExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SysAuthMapper {
     long countByExample(SysAuthExample example);
@@ -35,5 +34,5 @@ public interface SysAuthMapper {
      * @param userName
      * @return
      */
-    Set<SysAuth> selectAuthsByUserName(String userName);
+    List<SysAuth> selectAuthsByUserName(String userName);
 }

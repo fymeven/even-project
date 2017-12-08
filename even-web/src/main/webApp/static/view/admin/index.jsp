@@ -33,11 +33,11 @@
                 <ul class="nav" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span>
+                            <span><img alt="image" class="img-circle" src="" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold"><shiro:principal property="userName"/></strong></span>
-                                <span class="text-muted text-xs block"><shiro:principal property="roleSet"/><b class="caret"></b></span>
+                                <span class="text-muted text-xs block"><shiro:principal property="roleList"/><b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -57,9 +57,9 @@
                         <div class="logo-element">H+
                         </div>
                     </li>
-                    <c:forEach items="${menuSet}" var="menu">
+                    <c:forEach items="${menuList}" var="menu">
                         <c:choose>
-                            <c:when test="${!empty menu.childMenuSet}">
+                            <c:when test="${!empty menu.childMenuList}">
                                 <li>
                                     <a href="#">
                                         <i class="${menu.menuIcon}"></i>
@@ -67,9 +67,9 @@
                                         <span class="fa arrow"></span>
                                     </a>
                                     <ul class="nav nav-second-level">
-                                        <c:forEach items="${menu.childMenuSet}" var="second">
+                                        <c:forEach items="${menu.childMenuList}" var="second">
                                             <c:choose>
-                                                <c:when test="${!empty second.childMenuSet}">
+                                                <c:when test="${!empty second.childMenuList}">
                                                     <li>
                                                         <a href="#">
                                                             <i class="${second.menuIcon}"></i>
@@ -77,7 +77,7 @@
                                                             <span class="fa arrow"></span>
                                                         </a>
                                                         <ul class="nav nav-third-level">
-                                                            <c:forEach items="${second.childMenuSet}" var="third">
+                                                            <c:forEach items="${second.childMenuList}" var="third">
                                                                 <li><a class="J_menuItem" href="${third.menuUrl}"><i class="${third.menuIcon}"></i><span class="nav-label">${third.menuName}</span></a></li>
                                                             </c:forEach>
                                                         </ul>
@@ -187,9 +187,6 @@
                                     </div>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="hidden-xs">
-                            <a href="index_v1.html" class="J_menuItem" data-index="0"><i class="fa fa-cart-arrow-down"></i> 购买</a>
                         </li>
                         <li class="dropdown hidden-xs">
                             <a class="right-sidebar-toggle" aria-expanded="false">

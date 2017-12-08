@@ -27,36 +27,36 @@ public class SysMenuServiceImpl implements ISysMenuService {
     private SysAuthMapper sysAuthMapper;
 
     @Override
-    public Set<SysMenuResponse> selectSystemMenu(String userName) {
-        Set<SysAuth> authSet = sysAuthMapper.selectAuthsByUserName(userName);
+    public List<SysMenuResponse> selectSystemMenu(String userName) {
+        List<SysAuth> authList = sysAuthMapper.selectAuthsByUserName(userName);
         List<Long> menuIdList=new ArrayList<>();
-        for (SysAuth sysAuth : authSet) {
+        for (SysAuth sysAuth : authList) {
             menuIdList.add(sysAuth.getMenuId());
         }
-        Set<SysMenuResponse> systemMenuSet=sysMenuMapper.selectSystemMenuByAuth(authSet, SysMenuEnum.parentId.PARENT.getLongValue());
-        for (SysMenuResponse parentMenu : systemMenuSet) {
+        List<SysMenuResponse> systemMenuList=sysMenuMapper.selectSystemMenuByAuth(authList, SysMenuEnum.parentId.PARENT.getLongValue());
+        for (SysMenuResponse parentMenu : systemMenuList) {
             SysMenuExample example=new SysMenuExample();
             example.createCriteria().andParentIdEqualTo(parentMenu.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
             long childMenuCount = sysMenuMapper.countByExample(example);
             if (childMenuCount>0){
-                getChildMenu(authSet, parentMenu.getId(),menuIdList,parentMenu);
+                getChildMenu(authList, parentMenu.getId(),menuIdList,parentMenu);
             }
         }
-        return systemMenuSet;
+        return systemMenuList;
     }
 
     //递归查询所有子菜单，本系统只有两级菜单
-    public void getChildMenu(Set<SysAuth> authSet,Long parentId,List<Long> menuIdList,SysMenuResponse systemMenu){
-        Set<SysMenuResponse> parentMenuSet=sysMenuMapper.selectSystemMenuByAuth(authSet,parentId);
-        for (SysMenuResponse parentMenu : parentMenuSet) {
+    public void getChildMenu(List<SysAuth> authList,Long parentId,List<Long> menuIdList,SysMenuResponse systemMenu){
+        List<SysMenuResponse> parentMenuList=sysMenuMapper.selectSystemMenuByAuth(authList,parentId);
+        for (SysMenuResponse parentMenu : parentMenuList) {
             SysMenuExample example=new SysMenuExample();
             example.createCriteria().andParentIdEqualTo(parentMenu.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
             long childMenuCount = sysMenuMapper.countByExample(example);
             if(childMenuCount>0){
-                getChildMenu(authSet,parentMenu.getId(),menuIdList,parentMenu);
+                getChildMenu(authList,parentMenu.getId(),menuIdList,parentMenu);
             }
         }
-        systemMenu.setChildMenuSet(parentMenuSet);
+        systemMenu.setChildMenuList(parentMenuList);
     }
 
     @Override

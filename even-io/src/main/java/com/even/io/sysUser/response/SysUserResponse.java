@@ -1,8 +1,7 @@
 package com.even.io.sysUser.response;
 
 import java.io.Serializable;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 public class SysUserResponse implements Serializable {
     private Long id;
@@ -25,14 +24,14 @@ public class SysUserResponse implements Serializable {
 
     private Integer userStatus;
 
-    private Set roleSet=new LinkedHashSet<>();
+    private List roleList;
 
-    public Set getRoleSet() {
-        return roleSet;
+    public List getRoleList() {
+        return roleList;
     }
 
-    public void setRoleSet(Set roleSet) {
-        this.roleSet = roleSet;
+    public void setRoleList(List roleList) {
+        this.roleList = roleList;
     }
 
     public Long getId() {

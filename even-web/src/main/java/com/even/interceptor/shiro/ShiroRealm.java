@@ -16,7 +16,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -45,8 +45,8 @@ public class ShiroRealm extends AuthorizingRealm {
         } catch (Exception e) {
             logger.error("未获取到用户信息",e);
         }
-        Set<String> roleSet=sysRoleService.selectRolesByUserName(userName);
-        sysUserResponse.setRoleSet(roleSet);
+        List<String> roleList=sysRoleService.selectRolesByUserName(userName);
+        sysUserResponse.setRoleList(roleList);
         if (sysUserResponse==null){
             throw new UnknownAccountException("该用户尚未注册");
         }
@@ -67,10 +67,10 @@ public class ShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
         String userName = (String) pc.fromRealm(getName()).iterator().next();
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        Set<String> roleSet=sysRoleService.selectRolesByUserName(userName);
-        info.addRoles(roleSet);
-        Set<String> permisssionSet=sysAuthService.selectAuthsByUserName(userName);
-        info.addStringPermissions(permisssionSet);
+        List<String> roleList=sysRoleService.selectRolesByUserName(userName);
+        info.addRoles(roleList);
+        List<String> permisssionList=sysAuthService.selectAuthsByUserName(userName);
+        info.addStringPermissions(permisssionList);
         return info;
 	}
 

@@ -1,12 +1,8 @@
 package com.even.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -26,13 +22,8 @@ public class PageController {
         return "welcome";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/test",method = RequestMethod.GET)
-    public void test(){
-        Subject subject= SecurityUtils.getSubject();
-        PrincipalCollection principals = subject.getPrincipals();
-        for (Object principal : principals) {
-            System.out.println("obj:==="+principal);
-        }
+    @RequestMapping(value = "/sysMenu",method = RequestMethod.GET)
+    public String sysMenu(){
+        return "sysMenu";
     }
 }

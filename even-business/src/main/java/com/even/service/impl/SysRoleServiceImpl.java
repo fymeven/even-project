@@ -12,9 +12,8 @@ import com.even.service.ISysRoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by fymeven on 2017/10/28.
@@ -24,10 +23,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Resource
     private SysRoleMapper sysRoleMapper;
     @Override
-    public Set<String> selectRolesByUserName(String userName) {
-        Set<SysRole> roleSet=sysRoleMapper.selectRolesByUserName(userName);
-        Set<String> roleNameS=new LinkedHashSet<>();
-        for (SysRole sysRole : roleSet) {
+    public List<String> selectRolesByUserName(String userName) {
+        List<SysRole> roleList=sysRoleMapper.selectRolesByUserName(userName);
+        List<String> roleNameS=new ArrayList<>();
+        for (SysRole sysRole : roleList) {
             roleNameS.add(sysRole.getRoleName());
         }
         return roleNameS;

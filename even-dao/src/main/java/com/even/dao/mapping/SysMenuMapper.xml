@@ -308,7 +308,7 @@
     select * from sys_menu sm
     <where>
         sm.id in
-        <foreach collection="authSet" open="(" separator="," close=")" item="item">
+        <foreach collection="authList" open="(" separator="," close=")" item="item">
             #{item.menuId}
         </foreach>
             and sm.parent_id=#{parentId}

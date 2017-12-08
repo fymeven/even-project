@@ -6,8 +6,8 @@ import com.even.service.ISysAuthService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fymeven on 2017/10/28.
@@ -17,12 +17,12 @@ public class SysAuthServiceImpl implements ISysAuthService {
     @Resource
     private SysAuthMapper sysAuthMapper;
     @Override
-    public Set<String> selectAuthsByUserName(String userName) {
-        Set<SysAuth> authSet= sysAuthMapper.selectAuthsByUserName(userName);
-        Set<String> authNameSet=new LinkedHashSet<>();
-        for (SysAuth auth : authSet) {
-            authNameSet.add(auth.getAuthName());
+    public List<String> selectAuthsByUserName(String userName) {
+        List<SysAuth> authList= sysAuthMapper.selectAuthsByUserName(userName);
+        List<String> authNameList=new ArrayList<>();
+        for (SysAuth auth : authList) {
+            authNameList.add(auth.getAuthName());
         }
-        return authNameSet;
+        return authNameList;
     }
 }
