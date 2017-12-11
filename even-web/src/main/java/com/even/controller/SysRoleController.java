@@ -28,14 +28,9 @@ public class SysRoleController {
     @ResponseBody
     @RequestMapping("/page")
     public DataTablePage page(DataTablePage dataTablePage){
-        try {
-            Page<SysRoleRequest> page = PageHelper.startPage(dataTablePage.getStart(), dataTablePage.getLength());
-            sysRoleService.selectAllRole();
-            return new DataTablePage(page);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return null;
-        }
+        Page<SysRoleRequest> page = PageHelper.startPage(dataTablePage.getStart(), dataTablePage.getLength());
+        sysRoleService.selectAllRole();
+        return new DataTablePage(page);
     }
 
     @ResponseBody

@@ -21,6 +21,9 @@
         <property name="testOnBorrow" value="${redis.testOnBorrow}" />
     </bean>
 
+    <bean id="redisUtil" class="com.even.common.redis.RedisUtil">
+        <property name="redisTemplate" ref="redisTemplate"></property>
+    </bean>
 
     <!--rocketMq配置-->
     <bean id="rocketMqProducer" class="com.even.common.rocketmq.SmsRocketMQProducer" init-method="init" destroy-method="destory">

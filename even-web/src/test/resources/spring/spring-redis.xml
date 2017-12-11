@@ -16,5 +16,8 @@
         <property name="maxIdle" value="${redis.maxIdle}" />  
         <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
     </bean>  
-     
+
+    <bean id="redisUtil" class="com.even.common.redis.RedisUtil">
+        <property name="redisTemplate" ref="redisTemplate"></property>
+    </bean>
 </beans>

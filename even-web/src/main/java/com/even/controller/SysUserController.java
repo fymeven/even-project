@@ -29,14 +29,9 @@ public class SysUserController {
     @ResponseBody
     @RequestMapping("/page")
     public DataTablePage page(SysUserRequest userRequest){
-        try {
-            Page<SysUserResponse> page = PageHelper.startPage(userRequest.getStart(), userRequest.getLength());
-            sysUserService.selectPageList(userRequest);
-            return new DataTablePage(page);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return null;
-        }
+        Page<SysUserResponse> page = PageHelper.startPage(userRequest.getStart(), userRequest.getLength());
+        sysUserService.selectPageList(userRequest);
+        return new DataTablePage(page);
     }
 
     @ResponseBody

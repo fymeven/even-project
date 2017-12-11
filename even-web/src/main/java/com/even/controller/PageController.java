@@ -22,8 +22,4 @@ public class PageController {
         return "welcome";
     }
 
-    @RequestMapping(value = "/sysMenu",method = RequestMethod.GET)
-    public String sysMenu(){
-        return "sysMenu";
-    }
 }

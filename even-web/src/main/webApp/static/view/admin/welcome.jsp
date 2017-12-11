@@ -126,7 +126,7 @@
 
                                 <div class="feed-element">
                                     <a href="profile.html" class="pull-left">
-                                        <img alt="image" class="img-circle" src="img/profile.jpg">
+                                        <img alt="image" class="img-circle" src="/static/plugin/hplus/img/profile.jpg">
                                     </a>
                                     <div class="media-body ">
                                         <small class="pull-right">5分钟前</small>
@@ -139,7 +139,7 @@
 
                                 <div class="feed-element">
                                     <a href="profile.html" class="pull-left">
-                                        <img alt="image" class="img-circle" src="img/a2.jpg">
+                                        <img alt="image" class="img-circle" src="/static/plugin/hplus/img/a2.jpg">
                                     </a>
                                     <div class="media-body ">
                                         <small class="pull-right">2个月前</small>
@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="feed-element">
                                     <a href="profile.html" class="pull-left">
-                                        <img alt="image" class="img-circle" src="img/a3.jpg">
+                                        <img alt="image" class="img-circle" src="/static/plugin/hplus/img/a3.jpg">
                                     </a>
                                     <div class="media-body ">
                                         <small class="pull-right">2小时前</small>
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="feed-element">
                                     <a href="profile.html" class="pull-left">
-                                        <img alt="image" class="img-circle" src="img/a5.jpg">
+                                        <img alt="image" class="img-circle" src="/static/plugin/hplus/img/a5.jpg">
                                     </a>
                                     <div class="media-body ">
                                         <small class="pull-right">32分钟前</small>

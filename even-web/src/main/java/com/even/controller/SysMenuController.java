@@ -26,17 +26,17 @@ public class SysMenuController {
     @Resource
     private ISysMenuService sysMenuService;
 
+    @RequestMapping(value = "/page")
+    public String page(){
+        return "menu-manage";
+    }
+
     @ResponseBody
-    @RequestMapping("/page")
-    public DataTablePage page(SysMenuRequest sysMenuRequest){
-        try {
-            Page<SysUserResponse> page = PageHelper.startPage(sysMenuRequest.getStart(), sysMenuRequest.getLength());
-            sysMenuService.selectPageList(sysMenuRequest);
-            return new DataTablePage(page);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return null;
-        }
+    @RequestMapping("/list")
+    public DataTablePage list(SysMenuRequest sysMenuRequest){
+        Page<SysUserResponse> page = PageHelper.startPage(sysMenuRequest.getStart(), sysMenuRequest.getLength());
+        sysMenuService.selectPageList(sysMenuRequest);
+        return new DataTablePage(page);
     }
 
     @ResponseBody
