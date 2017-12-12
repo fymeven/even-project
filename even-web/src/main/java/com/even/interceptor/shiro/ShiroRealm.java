@@ -65,11 +65,10 @@ public class ShiroRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection pc) {
-        String userName = (String) pc.fromRealm(getName()).iterator().next();
+        SysUserResponse sysUserResponse = (SysUserResponse) pc.fromRealm(getName()).iterator().next();
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        List<String> roleList=sysRoleService.selectRolesByUserName(userName);
-        info.addRoles(roleList);
-        List<String> permisssionList=sysAuthService.selectAuthsByUserName(userName);
+        info.addRoles(sysUserResponse.getRoleList());
+        List<String> permisssionList=sysAuthService.selectAuthsByUserName(sysUserResponse.getUserName());
         info.addStringPermissions(permisssionList);
         return info;
 	}

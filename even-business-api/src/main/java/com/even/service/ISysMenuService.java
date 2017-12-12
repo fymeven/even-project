@@ -6,6 +6,7 @@ import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -21,4 +22,6 @@ public interface ISysMenuService {
     ResponseResult delete(String id);
 
     List<SysMenuResponse> selectSystemMenu(String userName);
+
+    List<Map<String,Object>> loadSysMenuTree();
 }

@@ -14,7 +14,10 @@ import com.even.service.ISysMenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -26,6 +29,11 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Resource
     private SysAuthMapper sysAuthMapper;
 
+    /**
+     * 加载主页系统菜单
+     * @param userName
+     * @return
+     */
     @Override
     public List<SysMenuResponse> selectSystemMenu(String userName) {
         List<SysAuth> authList = sysAuthMapper.selectAuthsByUserName(userName);
@@ -45,7 +53,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         return systemMenuList;
     }
 
-    //递归查询所有子菜单，本系统只有两级菜单
+    //递归查询主页所有子菜单
     public void getChildMenu(List<SysAuth> authList,Long parentId,List<Long> menuIdList,SysMenuResponse systemMenu){
         List<SysMenuResponse> parentMenuList=sysMenuMapper.selectSystemMenuByAuth(authList,parentId);
         for (SysMenuResponse parentMenu : parentMenuList) {
@@ -57,6 +65,55 @@ public class SysMenuServiceImpl implements ISysMenuService {
             }
         }
         systemMenu.setChildMenuList(parentMenuList);
+    }
+
+    /**
+     * 加载菜单模块菜单树列表
+     * @return
+     */
+    @Override
+    public List<Map<String,Object>> loadSysMenuTree() {
+        List<Map<String,Object>> jsonArray=new ArrayList<>();
+        SysMenuExample sysMenuExample=new SysMenuExample();
+        sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(SysMenuEnum.parentId.PARENT.getLongValue());
+        List<SysMenu> systemMenuList = sysMenuMapper.selectByExample(sysMenuExample);
+        for (SysMenu parentMenu : systemMenuList) {
+            Map<String,Object> parentJSObject=new LinkedHashMap<>();
+            parentJSObject.put("id",parentMenu.getId());
+            parentJSObject.put("text",parentMenu.getMenuName());
+            parentJSObject.put("icon",parentMenu.getMenuIcon());
+            sysMenuExample.clear();
+            sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentMenu.getId());
+            long childMenuCount = sysMenuMapper.countByExample(sysMenuExample);
+            if (childMenuCount>0){
+                loadChildrenTree(parentJSObject);
+            }
+            jsonArray.add(parentJSObject);
+        }
+        return jsonArray;
+    }
+
+    //递归查询主页所有子菜单
+    public void loadChildrenTree(Map<String,Object> jsonObject){
+        List<Map<String,Object>> jsonArray=new ArrayList<>();
+        SysMenuExample sysMenuExample=new SysMenuExample();
+        Long parentId = (Long)jsonObject.get("id");
+        sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentId);
+        List<SysMenu> parentMenuList = sysMenuMapper.selectByExample(sysMenuExample);
+        for (SysMenu parentMenu : parentMenuList) {
+            Map<String,Object> parentJSObject=new LinkedHashMap<>();
+            parentJSObject.put("id",parentMenu.getId());
+            parentJSObject.put("text",parentMenu.getMenuName());
+            parentJSObject.put("icon",parentMenu.getMenuIcon());
+            sysMenuExample.clear();
+            sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentMenu.getId());
+            long childMenuCount = sysMenuMapper.countByExample(sysMenuExample);
+            if(childMenuCount>0){
+                loadChildrenTree(parentJSObject);
+            }
+            jsonArray.add(parentJSObject);
+        }
+        jsonObject.put("children",jsonArray);
     }
 
     @Override

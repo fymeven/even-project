@@ -56,7 +56,7 @@
 <script type="text/javascript" src="/static/plugin/hplus/js/plugins/validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
 <script>
-    $(function(){
+
     var login={
         init:function(){
             var e = "<i class='fa fa-times-circle'></i> ";
@@ -104,7 +104,9 @@
             })
         }
     }
-    login.init();
+
+    $(function(){
+        login.init();
     });
 </script>
 </body>

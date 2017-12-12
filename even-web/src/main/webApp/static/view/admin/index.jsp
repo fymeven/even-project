@@ -54,7 +54,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="logo-element">H+
+                        <div class="logo-element">even<shiro:hasAnyRoles name="admin">isADMIN</shiro:hasAnyRoles>
                         </div>
                     </li>
                     <c:forEach items="${menuList}" var="menu">

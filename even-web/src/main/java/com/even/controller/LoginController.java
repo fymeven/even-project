@@ -49,18 +49,18 @@ public class LoginController {
         Subject currentUser = SecurityUtils.getSubject();
         try {
             currentUser.login(token);
-            currentUser.getSession().setAttribute("currentUser", currentUser);
-            //加载系统菜单
-            List<SysMenuResponse> menuList =sysMenuService.selectSystemMenu(userName);
-            currentUser.getSession().setAttribute("menuList", menuList);
-            return ResponseResult.SUCCESS;
         }catch (UnknownAccountException ex){
-            logger.error(ex.getMessage());
+            logger.error("登录异常===>",ex);
             return ResponseResult.ERROR(ex.getMessage());
         }catch (IncorrectCredentialsException ex){
-            logger.error("异常信息:"+ex.getMessage());
+            logger.error("登录异常===>",ex);
             return ResponseResult.ERROR(ex.getMessage());
         }
+        currentUser.getSession().setAttribute("currentUser", currentUser);
+        //加载系统菜单
+        List<SysMenuResponse> menuList =sysMenuService.selectSystemMenu(userName);
+        currentUser.getSession().setAttribute("menuList", menuList);
+        return ResponseResult.SUCCESS;
     }
 
     @RequestMapping("/loginOut")
