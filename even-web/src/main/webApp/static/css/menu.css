@@ -1,0 +1,23 @@
+.layout{
+    height: 93%;position: relative;overflow: hidden;
+}
+.layout-left{
+    border:1px #a9a9a9 solid;height: 100%;
+}
+.layout-right{
+    border:1px #a9a9a9 solid;height: 100%;
+}
+.layout_title{
+    border-bottom:1px #a9a9a9 solid;
+    height: 32px;
+    line-height: 32px;
+    color: #666;
+    font-weight: bold;
+    padding-left: 9px;
+}
+.table_operate{
+    line-height: 70px;
+    height: 70px;
+    border-bottom:1px #a9a9a9 solid;
+}
+.table_operate .btn-group{top: 25%;padding-left:13px;}

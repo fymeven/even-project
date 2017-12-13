@@ -49,16 +49,22 @@ public class LoginController {
         Subject currentUser = SecurityUtils.getSubject();
         try {
             currentUser.login(token);
-        }catch (UnknownAccountException ex){
-            logger.error("登录异常===>",ex);
-            return ResponseResult.ERROR(ex.getMessage());
-        }catch (IncorrectCredentialsException ex){
-            logger.error("登录异常===>",ex);
-            return ResponseResult.ERROR(ex.getMessage());
+        }catch (UnknownAccountException e){
+            logger.error("登录异常===>",e);
+            return ResponseResult.ERROR(e.getMessage());
+        }catch (IncorrectCredentialsException e){
+            logger.error("登录异常===>",e);
+            return ResponseResult.ERROR(e.getMessage());
         }
         currentUser.getSession().setAttribute("currentUser", currentUser);
         //加载系统菜单
-        List<SysMenuResponse> menuList =sysMenuService.selectSystemMenu(userName);
+        List<SysMenuResponse> menuList = null;
+        try {
+            menuList = sysMenuService.initSysMenu(userName);
+        } catch (Exception e) {
+            logger.error("加载系统菜单异常===>",e);
+            return ResponseResult.ERROR("系统错误");
+        }
         currentUser.getSession().setAttribute("menuList", menuList);
         return ResponseResult.SUCCESS;
     }

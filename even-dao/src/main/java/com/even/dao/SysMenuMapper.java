@@ -1,9 +1,7 @@
 package com.even.dao;
 
-import com.even.bean.SysAuth;
 import com.even.bean.SysMenu;
 import com.even.bean.SysMenuExample;
-import com.even.io.sysMenu.response.SysMenuResponse;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -31,5 +29,5 @@ public interface SysMenuMapper {
 
     int updateByPrimaryKey(SysMenu record);
 
-    List<SysMenuResponse> selectSystemMenuByAuth(@Param("authList")List<SysAuth> authList,@Param("parentId") Long parentId);
+//    List<SysMenuResponse> selectSystemMenuByAuth(@Param("authList")List<SysAuth> authList,@Param("parentId") Long parentId);
 }

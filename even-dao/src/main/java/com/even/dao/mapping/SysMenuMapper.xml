@@ -304,15 +304,15 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectSystemMenuByAuth" resultType="com.even.io.sysMenu.response.SysMenuResponse">
-    select * from sys_menu sm
-    <where>
-        sm.id in
-        <foreach collection="authList" open="(" separator="," close=")" item="item">
-            #{item.menuId}
-        </foreach>
-            and sm.parent_id=#{parentId}
-    </where>
-    order by sm.id
-  </select>
+  <!--<select id="selectSystemMenuByAuth" resultType="com.even.io.sysMenu.response.SysMenuResponse">-->
+    <!--select * from sys_menu sm-->
+    <!--<where>-->
+        <!--sm.id in-->
+        <!--<foreach collection="authList" open="(" separator="," close=")" item="item">-->
+            <!--#{item.menuId}-->
+        <!--</foreach>-->
+            <!--and sm.parent_id=#{parentId}-->
+    <!--</where>-->
+    <!--order by sm.id-->
+  <!--</select>-->
 </mapper>

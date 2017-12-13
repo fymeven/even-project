@@ -19,6 +19,8 @@ public class SysMenuResponse implements Serializable {
 
     private Long parentId;
 
+    private String parentMenuName;
+
     private Byte isDel;
 
     private Integer sortId;
@@ -123,5 +125,13 @@ public class SysMenuResponse implements Serializable {
 
     public void setChildMenuList(List<SysMenuResponse> childMenuList) {
         this.childMenuList = childMenuList;
+    }
+
+    public String getParentMenuName() {
+        return parentMenuName;
+    }
+
+    public void setParentMenuName(String parentMenuName) {
+        this.parentMenuName = parentMenuName;
     }
 }

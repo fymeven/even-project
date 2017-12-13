@@ -3,21 +3,18 @@ package com.even.service.impl;
 import com.even.bean.SysAuth;
 import com.even.bean.SysMenu;
 import com.even.bean.SysMenuExample;
+import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysAuthMapper;
 import com.even.dao.SysMenuMapper;
 import com.even.io.sysMenu.enums.SysMenuEnum;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
-import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.service.ISysMenuService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -35,36 +32,34 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return
      */
     @Override
-    public List<SysMenuResponse> selectSystemMenu(String userName) {
+    public List<SysMenuResponse> initSysMenu(String userName) throws Exception {
         List<SysAuth> authList = sysAuthMapper.selectAuthsByUserName(userName);
         List<Long> menuIdList=new ArrayList<>();
         for (SysAuth sysAuth : authList) {
             menuIdList.add(sysAuth.getMenuId());
         }
-        List<SysMenuResponse> systemMenuList=sysMenuMapper.selectSystemMenuByAuth(authList, SysMenuEnum.parentId.PARENT.getLongValue());
-        for (SysMenuResponse parentMenu : systemMenuList) {
-            SysMenuExample example=new SysMenuExample();
-            example.createCriteria().andParentIdEqualTo(parentMenu.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
-            long childMenuCount = sysMenuMapper.countByExample(example);
-            if (childMenuCount>0){
-                getChildMenu(authList, parentMenu.getId(),menuIdList,parentMenu);
-            }
-        }
-        return systemMenuList;
+        return selectChildrenSysMenu(SysMenuEnum.parentId.PARENT.getLongValue(),menuIdList);
     }
 
     //递归查询主页所有子菜单
-    public void getChildMenu(List<SysAuth> authList,Long parentId,List<Long> menuIdList,SysMenuResponse systemMenu){
-        List<SysMenuResponse> parentMenuList=sysMenuMapper.selectSystemMenuByAuth(authList,parentId);
-        for (SysMenuResponse parentMenu : parentMenuList) {
-            SysMenuExample example=new SysMenuExample();
-            example.createCriteria().andParentIdEqualTo(parentMenu.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
-            long childMenuCount = sysMenuMapper.countByExample(example);
+    public List<SysMenuResponse> selectChildrenSysMenu(Long parentId,List<Long> menuIdList) throws Exception {
+        List<SysMenuResponse> currentMenuList=new ArrayList<>();
+        SysMenuExample sysMenuExample=new SysMenuExample();
+        sysMenuExample.createCriteria().andParentIdEqualTo(parentId).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
+        List<SysMenu> sysMenuList = sysMenuMapper.selectByExample(sysMenuExample);
+        for (SysMenu sysMenu : sysMenuList) {
+            SysMenuResponse sysMenuResponse=new SysMenuResponse();
+            BeanCopyUtil.copyProperties(sysMenuResponse,sysMenu);
+            currentMenuList.add(sysMenuResponse);
+            sysMenuExample.clear();
+            sysMenuExample.createCriteria().andParentIdEqualTo(sysMenuResponse.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
+            long childMenuCount = sysMenuMapper.countByExample(sysMenuExample);
             if(childMenuCount>0){
-                getChildMenu(authList,parentMenu.getId(),menuIdList,parentMenu);
+                List<SysMenuResponse> childrenMenuList = selectChildrenSysMenu(sysMenuResponse.getId(), menuIdList);
+                sysMenuResponse.setChildMenuList(childrenMenuList);
             }
         }
-        systemMenu.setChildMenuList(parentMenuList);
+        return currentMenuList;
     }
 
     /**
@@ -73,59 +68,45 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public List<Map<String,Object>> loadSysMenuTree() {
-        List<Map<String,Object>> jsonArray=new ArrayList<>();
-        SysMenuExample sysMenuExample=new SysMenuExample();
-        sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(SysMenuEnum.parentId.PARENT.getLongValue());
-        List<SysMenu> systemMenuList = sysMenuMapper.selectByExample(sysMenuExample);
-        for (SysMenu parentMenu : systemMenuList) {
-            Map<String,Object> parentJSObject=new LinkedHashMap<>();
-            parentJSObject.put("id",parentMenu.getId());
-            parentJSObject.put("text",parentMenu.getMenuName());
-            parentJSObject.put("icon",parentMenu.getMenuIcon());
-            sysMenuExample.clear();
-            sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentMenu.getId());
-            long childMenuCount = sysMenuMapper.countByExample(sysMenuExample);
-            if (childMenuCount>0){
-                loadChildrenTree(parentJSObject);
-            }
-            jsonArray.add(parentJSObject);
-        }
-        return jsonArray;
+        return loadChildrenTree(SysMenuEnum.parentId.PARENT.getLongValue());
     }
 
     //递归查询主页所有子菜单
-    public void loadChildrenTree(Map<String,Object> jsonObject){
-        List<Map<String,Object>> jsonArray=new ArrayList<>();
+    public List<Map<String,Object>> loadChildrenTree(Long parentId){
+        List<Map<String,Object>> currentList=new ArrayList<>();
+        Map<String,Object> stateMap=new HashMap<>();
+        stateMap.put("opened",true);
         SysMenuExample sysMenuExample=new SysMenuExample();
-        Long parentId = (Long)jsonObject.get("id");
         sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentId);
-        List<SysMenu> parentMenuList = sysMenuMapper.selectByExample(sysMenuExample);
-        for (SysMenu parentMenu : parentMenuList) {
-            Map<String,Object> parentJSObject=new LinkedHashMap<>();
-            parentJSObject.put("id",parentMenu.getId());
-            parentJSObject.put("text",parentMenu.getMenuName());
-            parentJSObject.put("icon",parentMenu.getMenuIcon());
+        List<SysMenu> currentMenuList = sysMenuMapper.selectByExample(sysMenuExample);
+        for (SysMenu currentMenu : currentMenuList) {
+            Map<String,Object> currentMenuMap=new LinkedHashMap<>();
+            currentMenuMap.put("id",currentMenu.getId());
+            currentMenuMap.put("text",currentMenu.getMenuName());
+            currentMenuMap.put("icon",currentMenu.getMenuIcon());
+            currentMenuMap.put("state",stateMap);
             sysMenuExample.clear();
-            sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentMenu.getId());
-            long childMenuCount = sysMenuMapper.countByExample(sysMenuExample);
-            if(childMenuCount>0){
-                loadChildrenTree(parentJSObject);
+            sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(currentMenu.getId());
+            long childrenCount = sysMenuMapper.countByExample(sysMenuExample);
+            if(childrenCount>0){
+                List<Map<String, Object>> childrenList = loadChildrenTree(currentMenu.getId());
+                currentMenuMap.put("children",childrenList);
             }
-            jsonArray.add(parentJSObject);
+            currentList.add(currentMenuMap);
         }
-        jsonObject.put("children",jsonArray);
+        return currentList;
     }
 
     @Override
-    public List<SysMenu> selectPageList(SysMenuRequest sysMenuRequest) {
-        SysMenuExample example=new SysMenuExample();
-        SysMenuExample.Criteria criteria = example.createCriteria();
-        criteria.andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
-//        if (StringUtils.isNotBlank(sysMenuRequest.getRealName())) {
-//           criteria.andRealNameEqualTo(sysMenuRequest.getRealName());
-//        }
-        List<SysMenu> list = sysMenuMapper.selectByExample(example);
-        return list;
+    public ResponseResult detail(Long id) throws Exception {
+        SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(id);
+        SysMenuResponse sysMenuResponse=new SysMenuResponse();
+        BeanCopyUtil.copyProperties(sysMenuResponse,sysMenu);
+        if (sysMenuResponse.getParentId()!=SysMenuEnum.parentId.PARENT.getLongValue()){
+            SysMenu parentMenu = sysMenuMapper.selectByPrimaryKey(sysMenuResponse.getParentId());
+            sysMenuResponse.setParentMenuName(parentMenu.getMenuName());
+        }
+        return ResponseResult.SUCCESS(sysMenuResponse);
     }
 
     @Override

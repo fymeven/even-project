@@ -1,12 +1,8 @@
 package com.even.controller;
 
-import com.even.common.util.DataTablePage;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysMenu.request.SysMenuRequest;
-import com.even.io.sysUser.response.SysUserResponse;
 import com.even.service.ISysMenuService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -42,14 +38,6 @@ public class SysMenuController {
     }
 
     @ResponseBody
-    @RequestMapping("/list")
-    public DataTablePage list(SysMenuRequest sysMenuRequest){
-        Page<SysUserResponse> page = PageHelper.startPage(sysMenuRequest.getStart(), sysMenuRequest.getLength());
-        sysMenuService.selectPageList(sysMenuRequest);
-        return new DataTablePage(page);
-    }
-
-    @ResponseBody
     @RequestMapping("/add")
     public ResponseResult add(SysMenuRequest sysMenuRequest){
         try {
@@ -67,6 +55,17 @@ public class SysMenuController {
             return sysMenuService.update(sysMenuRequest);
         }catch (Exception ex){
             logger.error("异常信息:"+ex.getMessage());
+            return ResponseResult.ERROR;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/detail")
+    public ResponseResult detail(@RequestParam(value = "id",required = true)Long id){
+        try {
+            return sysMenuService.detail(id);
+        }catch (Exception ex){
+            logger.error("获取菜单详情异常===>:"+ex);
             return ResponseResult.ERROR;
         }
     }
