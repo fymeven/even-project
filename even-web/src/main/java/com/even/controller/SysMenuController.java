@@ -1,8 +1,11 @@
 package com.even.controller;
 
+import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysMenu.request.SysMenuRequest;
+import com.even.io.sysMenu.response.SysMenuResponse;
 import com.even.service.ISysMenuService;
+import com.github.pagehelper.PageInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -35,6 +38,12 @@ public class SysMenuController {
     public ResponseResult loadSysMenuTree(){
         List<Map<String,Object>> jsonArray=sysMenuService.loadSysMenuTree();
         return ResponseResult.SUCCESS(jsonArray);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/selectChildrenMenus",method = RequestMethod.GET)
+    public PageInfo<SysMenuResponse> selectChildrenMenus(PageModel pageModel,@RequestParam(value = "id",required = true)Long id) throws Exception {
+        return sysMenuService.selectChildrenMenus(id, pageModel);
     }
 
     @ResponseBody

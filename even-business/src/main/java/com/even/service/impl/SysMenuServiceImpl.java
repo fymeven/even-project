@@ -4,6 +4,8 @@ import com.even.bean.SysAuth;
 import com.even.bean.SysMenu;
 import com.even.bean.SysMenuExample;
 import com.even.common.util.BeanCopyUtil;
+import com.even.common.util.MyPageInfo;
+import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysAuthMapper;
 import com.even.dao.SysMenuMapper;
@@ -11,6 +13,8 @@ import com.even.io.sysMenu.enums.SysMenuEnum;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
 import com.even.service.ISysMenuService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -95,6 +99,27 @@ public class SysMenuServiceImpl implements ISysMenuService {
             currentList.add(currentMenuMap);
         }
         return currentList;
+    }
+
+    @Override
+    public PageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception {
+        List<SysMenuResponse> sysMenuResponseList=new ArrayList<>();
+        PageHelper.startPage(pageModel.getPage(), pageModel.getRows(), pageModel.getOrderBy());
+        SysMenuExample sysMenuExample=new SysMenuExample();
+        sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(id);
+        List<SysMenu> sysMenus = sysMenuMapper.selectByExample(sysMenuExample);
+        for (SysMenu sysMenu : sysMenus) {
+            SysMenuResponse sysMenuResponse=new SysMenuResponse();
+            BeanCopyUtil.copyProperties(sysMenuResponse,sysMenu);
+            if (sysMenuResponse.getParentId()!=SysMenuEnum.parentId.PARENT.getLongValue()){
+                SysMenu parentMenu = sysMenuMapper.selectByPrimaryKey(sysMenuResponse.getParentId());
+                sysMenuResponse.setParentMenuName(parentMenu.getMenuName());
+            }
+            sysMenuResponseList.add(sysMenuResponse);
+        }
+        MyPageInfo pageInfo=new MyPageInfo(sysMenus);
+        System.out.println("pageInfo:"+pageInfo);
+        return new PageInfo<SysMenuResponse>(sysMenuResponseList);
     }
 
     @Override

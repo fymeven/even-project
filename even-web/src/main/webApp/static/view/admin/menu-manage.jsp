@@ -23,7 +23,9 @@
     <link href="/static/plugin/hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/plugin/hplus/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" >
     <link href="/static/plugin/hplus/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/static/plugin/hplus/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
     <link href="/static/css/menu.css" rel="stylesheet">
+
 </head>
 <body class="gray-bg"><div class="wrapper wrapper-content  animated fadeInRight">
 <div class="row layout">
@@ -38,60 +40,52 @@
     <div class="layout_title">功能信息</div>
     <div class="table_operate">
         <div class="btn-group">
-            <a class="btn btn-white active" id="btn-view"><i class="fa fa-eye"></i>&nbsp;查看</a>
+            <%--<a class="btn btn-white active" id="btn-view"><i class="fa fa-eye"></i>&nbsp;查看</a>--%>
             <a class="btn btn-white" id="btn-add"><i class="fa fa-plus"></i>&nbsp;新增</a>
             <a class="btn btn-white" id="btn-edit"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
             <a class="btn btn-white" id="btn-delete"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
         </div>
     </div>
     <div>
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <form class="form-horizontal m-t" id="signupForm" novalidate="novalidate">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">菜单名称：</label>
-                        <div class="col-sm-8">
-                            <input id="menuName" name="menuName" class="form-control" type="text" disabled>
-                            <%--<span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里写点提示的内容</span>--%>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">图标：</label>
-                        <div class="col-sm-8">
-                            <div id="menuIcon"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">菜单地址：</label>
-                        <div class="col-sm-8">
-                            <input id="menuUrl" name="menuUrl" class="form-control" type="text" disabled>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">父级菜单：</label>
-                        <div class="col-sm-8">
-                            <input id="parentMenuName" class="form-control" type="text" disabled>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">菜单描述：</label>
-                        <div class="col-sm-8">
-                            <textarea id="menuDesc" name="menuDesc" class="form-control" disabled></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <table id="jqGrid"></table>
+        <div id="pager"></div>
+    <%--<div class="ibox float-e-margins">--%>
+            <%--<div class="ibox-title"></div>--%>
+            <%--<div class="ibox-content">--%>
+                <%--<form class="form-horizontal m-t" id="signupForm" novalidate="novalidate">--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-3 control-label">菜单名称：</label>--%>
+                        <%--<div class="col-sm-8">--%>
+                            <%--<input id="menuName" name="menuName" class="form-control" type="text" disabled>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-3 control-label">图标：</label>--%>
+                        <%--<div class="col-sm-8">--%>
+                            <%--<div id="menuIcon"></div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-3 control-label">菜单地址：</label>--%>
+                        <%--<div class="col-sm-8">--%>
+                            <%--<input id="menuUrl" name="menuUrl" class="form-control" type="text" disabled>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-3 control-label">父级菜单：</label>--%>
+                        <%--<div class="col-sm-8">--%>
+                            <%--<input id="parentMenuName" class="form-control" type="text" disabled>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="col-sm-3 control-label">菜单描述：</label>--%>
+                        <%--<div class="col-sm-8">--%>
+                            <%--<textarea id="menuDesc" name="menuDesc" class="form-control" disabled></textarea>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</form>--%>
+            <%--</div>--%>
+        <%--</div>--%>
     </div>
 </div>
 </div>
@@ -105,13 +99,16 @@
 <script src="/static/plugin/hplus/js/content.min.js?v=1.0.0"></script>
 <script src="/static/plugin/hplus/plugins/jstree/dist/jstree.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
-<script src="/static/plugin/hplus/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="/static/plugin/hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+<script src="/static/plugin/hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
 <script>
     var menu={
         jstree:{},//jstree对象
+        jqGrid:{},
         btn:$('.btn'),
         init:function(){
             this.loadJstree();
+            this.loadJqGrid(-1," a");
             this.operate();
         },
         loadJstree:function(){
@@ -126,11 +123,56 @@
                                 data : result.data
                             }
                         });
+                        $menu.jstree.on('changed.jstree', function(e, data) {
+                            $menu.jqGrid.jqGrid('setGridParam', {
+                                url: "/sysMenu/selectChildrenMenus",
+                                postData: {
+                                    id: data.node.id
+                                }
+                            }).trigger('reloadGrid');
+                        });
                     }else{
                         toastr.warning(result.msg);
                     }
                 }
             });
+        },
+        loadJqGrid:function(id){
+            $.jgrid.defaults.styleUI = "Bootstrap";
+            this.jqGrid=$("#jqGrid").jqGrid({
+                url: '/sysMenu/selectChildrenMenus',
+                postData:{
+                    id:id
+                },
+                datatype: "json",
+                mtype: 'GET',
+                autowidth:true,
+                height: 'auto',
+                rowNum: 3,
+                rowList: [3,10, 20, 30],
+                pager: $('#pager'),
+                viewrecords: true,
+                sortname: 'update_time',
+                sortorder: "desc",
+                colModel: [
+                    { name: 'id', hidden:true},
+                    { name: 'menuName', index: 'menu_name',label:'菜单名称', width: 100, align: "center" },
+                    { name: 'menuIcon', sortable :false,label:'图标', width: 100, align: "center",
+                        formatter: function (value, grid, rows, state){
+                            return '<i class="'+value+'"></i>';
+                        }
+                    },
+                    { name: 'parentMenuName',sortable :false ,label:'父级菜单', width: 100, align: "center" },
+                    { name: 'menuDesc', sortable :false,label:'菜单描述', width: 150, align: "center" }
+                ],
+                jsonReader: {
+                    root: "list",
+                    total: "pages",
+                    page: "pageNum",
+                    records: "total",
+                    repeatitems: false
+                }
+            }).navGrid('#pager', { add: false, edit: false, del: false,search:false,refresh:false });
         },
         operate:function(){
             var $menu=this;

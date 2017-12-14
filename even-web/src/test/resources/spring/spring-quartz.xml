@@ -29,7 +29,7 @@
     </bean>
     <!-- 2.定义触发器的trigger，一个触发器只能和一个任务进行绑定 -->
     <!--<bean name="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">&lt;!&ndash;SimpleTrigger&ndash;&gt;-->
-    <bean name="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"><!--SimpleTrigger-->
+    <bean name="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean"><!--SimpleTrigger-->
 
         <!--指定Tirgger绑定的Job-->
         <property name="jobDetail" ref="quartzJob"/>

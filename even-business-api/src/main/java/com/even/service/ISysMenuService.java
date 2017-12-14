@@ -1,8 +1,10 @@
 package com.even.service;
 
+import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +35,12 @@ public interface ISysMenuService {
     List<Map<String,Object>> loadSysMenuTree();
 
     ResponseResult detail(Long id) throws Exception;
+
+    /**
+     * 获取子菜单
+     * @param id
+     * @param pageModel
+     * @return
+     */
+    PageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception;
 }

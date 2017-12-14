@@ -1,4 +1,7 @@
-import com.even.service.ISysUserService;
+import com.even.common.util.PageModel;
+import com.even.io.sysMenu.response.SysMenuResponse;
+import com.even.service.ISysMenuService;
+import com.github.pagehelper.PageInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -23,20 +26,30 @@ public class PageHelperTest {
     private static final Logger logger= LogManager.getLogger(PageHelperTest.class.getName());
 
     @Resource
-    private ISysUserService sysUserService;
+    private ISysMenuService sysMenuService;
 
     @Test
     public void testSelectAll() {
-//        Page<SysUserResponse> page = PageHelper.startPage(1, 3);
-        //selectAll查询出的List即为上面定义的page
-//        List<SysUser> list= sysUserService.selectAllUser();
-        //注意：
-        //使用PageHelper.startPage只是针对接下来的一条查询语句，
-        //如果又查询了一次数据，则还需要使用一次PageHelper.startPage
-        //使用PageInfo封装
-//        PageInfo<SysUserResponse> info = new PageInfo(page);
-//        for (SysUser sysUser : list) {
-//            logger.info("sysUser" + sysUser.getUserName());
-//        }
+        PageModel pageModel=new PageModel();
+        pageModel.setPage(1);
+        pageModel.setRows(3);
+        pageModel.setSidx("update_time");
+        pageModel.setSord("DESC");
+        try {
+            PageInfo<SysMenuResponse> pageInfo = sysMenuService.selectChildrenMenus(1L, pageModel);
+            System.err.println("err");
+            System.out.println(pageInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testSelectAllRoles() {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

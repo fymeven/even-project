@@ -178,7 +178,8 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
-            <version>4.0.1</version>
+            <!--<version>4.0.1</version>-->
+            <version>4.2.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
         <dependency>
