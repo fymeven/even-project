@@ -13,8 +13,8 @@ import com.even.io.sysMenu.enums.SysMenuEnum;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
 import com.even.service.ISysMenuService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -72,6 +72,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public List<Map<String,Object>> loadSysMenuTree() {
+        Map<String,Object> system=new HashMap<>();
+        system.put("id","-1");
+        system.put("text","本系统");
+        system.put("icon","");
         return loadChildrenTree(SysMenuEnum.parentId.PARENT.getLongValue());
     }
 
@@ -88,7 +92,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
             currentMenuMap.put("id",currentMenu.getId());
             currentMenuMap.put("text",currentMenu.getMenuName());
             currentMenuMap.put("icon",currentMenu.getMenuIcon());
-            currentMenuMap.put("state",stateMap);
+//            currentMenuMap.put("state",stateMap);
             sysMenuExample.clear();
             sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(currentMenu.getId());
             long childrenCount = sysMenuMapper.countByExample(sysMenuExample);
@@ -102,9 +106,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
     }
 
     @Override
-    public PageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception {
+    public MyPageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception {
         List<SysMenuResponse> sysMenuResponseList=new ArrayList<>();
-        PageHelper.startPage(pageModel.getPage(), pageModel.getRows(), pageModel.getOrderBy());
+        Page page = PageHelper.startPage(pageModel.getPage(), pageModel.getRows(), pageModel.getOrderBy());
         SysMenuExample sysMenuExample=new SysMenuExample();
         sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(id);
         List<SysMenu> sysMenus = sysMenuMapper.selectByExample(sysMenuExample);
@@ -117,9 +121,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
             }
             sysMenuResponseList.add(sysMenuResponse);
         }
-        MyPageInfo pageInfo=new MyPageInfo(sysMenus);
-        System.out.println("pageInfo:"+pageInfo);
-        return new PageInfo<SysMenuResponse>(sysMenuResponseList);
+        return new MyPageInfo(sysMenuResponseList,page);
     }
 
     @Override
@@ -136,46 +138,44 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     @Override
     public ResponseResult save(SysMenuRequest sysMenuRequest) throws Exception {
-//        SysMenu sysMenu=new SysMenu();
-//        BeanCopyUtil.copyProperties(sysMenu,sysMenuRequest);
-//        sysUser.setUserStatus(SysUserEnum.userStatus.NOMAL.getIntValue());
-//        sysUser.setIsDel(SysUserEnum.isDel.NOMAL.getByteValue());
-//        sysUser.setCreateTime(new Date());
-//        sysUser.setUpdateTime(new Date());
-//        int result = sysUserMapper.insert(sysUser);
-//        if (result>0){
-//            return ResponseResult.SUCCESS;
-//        }else {
-//            return ResponseResult.ERROR;
-//        }
-        return null;
+        SysMenu sysMenu=new SysMenu();
+        BeanCopyUtil.copyProperties(sysMenu,sysMenuRequest);
+        sysMenu.setMenuStatus(SysMenuEnum.menuStatus.SHOW.getIntValue());
+        sysMenu.setIsDel(SysMenuEnum.isDel.NOMAL.getByteValue());
+        sysMenu.setCreateTime(new Date());
+        sysMenu.setUpdateTime(new Date());
+        int result = sysMenuMapper.insert(sysMenu);
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
+        }
     }
 
     @Override
     public ResponseResult update(SysMenuRequest sysMenuRequest) throws Exception {
-//        SysUser sysUser=new SysUser();
-//        BeanCopyUtil.copyProperties(sysUser, sysUserRequest);
-//        if (sysUser.getId()==null)
-//            return ResponseResult.ERROR;
-//        int result = sysUserMapper.updateByPrimaryKey(sysUser);
-//        if (result>0){
-//            return ResponseResult.SUCCESS;
-//        }else {
-//            return ResponseResult.ERROR;
-//        }
-        return null;
+        SysMenu sysMenu=sysMenuMapper.selectByPrimaryKey(sysMenuRequest.getId());
+        BeanCopyUtil.copyProperties(sysMenu,sysMenuRequest);
+        sysMenu.setUpdateTime(new Date());
+        int result = sysMenuMapper.updateByPrimaryKey(sysMenu);
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
+        }
     }
 
     @Override
-    public ResponseResult delete(String idList) {
-//        String[] idArray = idList.split(",");
-//        int result=sysMenuMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getByteValue());
-//        if (result>0){
-//            return ResponseResult.SUCCESS;
-//        }else {
-//            return ResponseResult.ERROR;
-//        }
-        return null;
+    public ResponseResult delete(Long id) {
+        SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(id);
+        sysMenu.setUpdateTime(new Date());
+        sysMenu.setIsDel(SysMenuEnum.isDel.DELED.getByteValue());
+        int result = sysMenuMapper.updateByPrimaryKey(sysMenu);
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
+        }
     }
 
 

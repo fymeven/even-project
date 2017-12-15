@@ -21,3 +21,14 @@
     border-bottom:1px #a9a9a9 solid;
 }
 .table_operate .btn-group{top: 25%;padding-left:13px;}
+textarea.form-control{resize: none;}
+.form-horizontal .input-button {
+    border: none;
+    right: 35px;
+    top: 50%;
+    margin-top: -12px;
+    cursor: pointer;
+    overflow: hidden;
+    position: absolute;
+    z-index: 100;
+}

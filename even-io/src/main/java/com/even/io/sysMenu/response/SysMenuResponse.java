@@ -1,12 +1,11 @@
 package com.even.io.sysMenu.response;
 
-import com.even.bean.SysMenu;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class SysMenuResponse extends SysMenu implements Serializable {
+public class SysMenuResponse implements Serializable {
     private Long id;
 
     private String menuName;

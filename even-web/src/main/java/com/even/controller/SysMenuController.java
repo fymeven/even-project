@@ -1,13 +1,11 @@
 package com.even.controller;
 
+import com.even.common.util.MyPageInfo;
 import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
 import com.even.service.ISysMenuService;
-import com.github.pagehelper.PageInfo;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,70 +22,58 @@ import java.util.Map;
 @Controller
 @RequestMapping("/sysMenu")
 public class SysMenuController {
-    private static final Logger logger= LogManager.getLogger(SysMenuController.class.getName());
     @Resource
     private ISysMenuService sysMenuService;
 
-    @RequestMapping(value = "/page")
+    @RequestMapping(value = "/page/menu_manage",method = RequestMethod.GET)
     public String page(){
-        return "menu-manage";
+        return "menu_manage";
+    }
+
+    @RequestMapping(value = "/page/add",method = RequestMethod.GET)
+    public String add(){
+        return "menu_add";
+    }
+
+    @RequestMapping(value = "/page/update",method = RequestMethod.GET)
+    public String update(){
+        return "menu_edit";
     }
 
     @ResponseBody
     @RequestMapping(value = "/loadSysMenuTree",method = RequestMethod.GET)
-    public ResponseResult loadSysMenuTree(){
-        List<Map<String,Object>> jsonArray=sysMenuService.loadSysMenuTree();
-        return ResponseResult.SUCCESS(jsonArray);
+    public List<Map<String,Object>> loadSysMenuTree(){
+        return sysMenuService.loadSysMenuTree();
     }
 
     @ResponseBody
     @RequestMapping(value = "/selectChildrenMenus",method = RequestMethod.GET)
-    public PageInfo<SysMenuResponse> selectChildrenMenus(PageModel pageModel,@RequestParam(value = "id",required = true)Long id) throws Exception {
+    public MyPageInfo<SysMenuResponse> selectChildrenMenus(PageModel pageModel,@RequestParam(value = "id",required = true)Long id) throws Exception {
         return sysMenuService.selectChildrenMenus(id, pageModel);
     }
 
     @ResponseBody
-    @RequestMapping("/add")
-    public ResponseResult add(SysMenuRequest sysMenuRequest){
-        try {
-            return sysMenuService.save(sysMenuRequest);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public ResponseResult save(SysMenuRequest sysMenuRequest) throws Exception {
+        return sysMenuService.save(sysMenuRequest);
     }
 
     @ResponseBody
-    @RequestMapping("/update")
-    public ResponseResult update(SysMenuRequest sysMenuRequest){
-        try {
-            return sysMenuService.update(sysMenuRequest);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ResponseResult update(SysMenuRequest sysMenuRequest) throws Exception {
+        return sysMenuService.update(sysMenuRequest);
     }
 
     @ResponseBody
-    @RequestMapping("/detail")
-    public ResponseResult detail(@RequestParam(value = "id",required = true)Long id){
-        try {
-            return sysMenuService.detail(id);
-        }catch (Exception ex){
-            logger.error("获取菜单详情异常===>:"+ex);
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping(value = "/detail",method = RequestMethod.GET)
+    public ResponseResult detail(@RequestParam(value = "id",required = true)Long id) throws Exception {
+        return sysMenuService.detail(id);
     }
 
     @ResponseBody
-    @RequestMapping("/delete")
-    public ResponseResult delete(@RequestParam(value = "idList",required = true) String idList){
-        try {
-            return sysMenuService.delete(idList);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public ResponseResult delete(Long id){
+        return sysMenuService.delete(id);
     }
 
 }

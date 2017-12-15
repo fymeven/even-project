@@ -99,6 +99,40 @@ import java.util.List;
         }
 
         /**
+         * 添加新的构造方法返回额外对象
+         * @author @even
+         * @param list 数据
+         * @param page page对象
+         */
+        public MyPageInfo(List<T> list, Page page) {
+            if (list instanceof Collection) {
+                this.pageNum = page.getPageNum();
+                this.pageSize = page.getPageSize();
+
+                this.pages = page.getPages();
+                this.list = list;
+                this.size = page.size();
+                this.total = page.getTotal();
+                //由于结果是>startRow的，所以实际的需要+1
+                if (this.size == 0) {
+                    this.startRow = 0;
+                    this.endRow = 0;
+                } else {
+                    this.startRow = page.getStartRow() + 1;
+                    //计算实际的endRow（最后一页的时候特殊）
+                    this.endRow = this.startRow - 1 + this.size;
+                }
+                this.navigatePages = navigatePages;
+                //计算导航页
+                calcNavigatepageNums();
+                //计算前后页，第一页，最后一页
+                calcPage();
+                //判断页面边界
+                judgePageBoudary();
+            }
+        }
+
+        /**
          * 包装Page对象
          *
          * @param list          page结果

@@ -26,6 +26,29 @@ public class SysMenuEnum {
         }
     }
 
+    public enum menuStatus{
+        SHOW(1,"显示"),
+        HIDDEN(2,"隐藏");
+
+
+        private final int intValue;
+        private final String desc;
+
+
+        menuStatus(int intValue, String desc) {
+            this.intValue = intValue;
+            this.desc = desc;
+        }
+
+        public int getIntValue() {
+            return intValue;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
+
     public enum parentId{
 
         PARENT(0L,"一级菜单");// 一级菜单为 0

@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>H+ 后台主题UI框架 - 主页</title>
-
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <title>hieven后台管理</title>
 
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
@@ -50,11 +47,11 @@
                                 <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="login.html">安全退出</a>
+                                <li><a href="/login/loginOut">安全退出</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="logo-element">even<shiro:hasAnyRoles name="admin">isADMIN</shiro:hasAnyRoles>
+                        <div class="logo-element">even
                         </div>
                     </li>
                     <c:forEach items="${menuList}" var="menu">

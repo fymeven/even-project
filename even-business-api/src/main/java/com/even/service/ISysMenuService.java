@@ -1,10 +1,10 @@
 package com.even.service;
 
+import com.even.common.util.MyPageInfo;
 import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ public interface ISysMenuService {
 
     ResponseResult update(SysMenuRequest sysMenuRequest) throws Exception;
 
-    ResponseResult delete(String id);
+    ResponseResult delete(Long id);
 
     /**
      * 加载主页系统菜单
@@ -42,5 +42,5 @@ public interface ISysMenuService {
      * @param pageModel
      * @return
      */
-    PageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception;
+    MyPageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception;
 }

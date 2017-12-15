@@ -1,7 +1,7 @@
+import com.even.common.util.MyPageInfo;
 import com.even.common.util.PageModel;
 import com.even.io.sysMenu.response.SysMenuResponse;
 import com.even.service.ISysMenuService;
-import com.github.pagehelper.PageInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class PageHelperTest {
         pageModel.setSidx("update_time");
         pageModel.setSord("DESC");
         try {
-            PageInfo<SysMenuResponse> pageInfo = sysMenuService.selectChildrenMenus(1L, pageModel);
+            MyPageInfo<SysMenuResponse> pageInfo = sysMenuService.selectChildrenMenus(1L, pageModel);
             System.err.println("err");
             System.out.println(pageInfo);
         } catch (Exception e) {
