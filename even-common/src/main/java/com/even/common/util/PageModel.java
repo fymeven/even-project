@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Created by even on 2017/12/14.
  */
 public class PageModel implements Serializable{
-    private int rows;//请求行数
-    private int page;//请求页码
+    private Integer rows;//请求行数
+    private Integer page;//请求页码
     private String sidx;//排序参数
     private String sord;//排序方式（ASC,DESC）
     private String search;//搜素参数
@@ -24,19 +24,19 @@ public class PageModel implements Serializable{
         this.orderBy = orderBy;
     }
 
-    public int getRows() {
+    public Integer getRows() {
         return rows;
     }
 
-    public void setRows(int rows) {
+    public void setRows(Integer rows) {
         this.rows = rows;
     }
 
-    public int getPage() {
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
 

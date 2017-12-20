@@ -51,7 +51,7 @@ public class SysMenuEnum {
 
     public enum parentId{
 
-        PARENT(0L,"一级菜单");// 一级菜单为 0
+        NO_PARENT(0L,"本系统");// 最高级菜单 0
         private final long longValue;
         private final String desc;
 

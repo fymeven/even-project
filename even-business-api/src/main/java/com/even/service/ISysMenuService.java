@@ -32,15 +32,22 @@ public interface ISysMenuService {
      * 加载菜单模块菜单树列表
      * @return
      */
-    List<Map<String,Object>> loadSysMenuTree();
+    Map<String,Object> loadSysMenuTree();
 
     ResponseResult detail(Long id) throws Exception;
 
     /**
      * 获取子菜单
-     * @param id
+     * @param parentId
      * @param pageModel
      * @return
      */
-    MyPageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception;
+    MyPageInfo<SysMenuResponse> selectChildrenMenus(Long parentId,PageModel pageModel) throws Exception;
+
+    /**
+     * 更改菜单状态
+     * @param sysMenuRequest
+     * @return
+     */
+    ResponseResult updateMenuStatus(SysMenuRequest sysMenuRequest);
 }

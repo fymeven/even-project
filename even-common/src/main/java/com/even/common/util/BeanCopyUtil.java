@@ -1,14 +1,14 @@
 package com.even.common.util;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.Vector;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
 public class BeanCopyUtil{
 
@@ -46,19 +46,7 @@ public class BeanCopyUtil{
      * @throws Exception ex
      */
     public static void copyProperties(Object destination, Object source) throws Exception {
-        copyProperties(destination, source, false);
-    }
-
-    public static void copyProperty(Object dest, Object src) {
-        copyProperty(dest, src, false);
-    }
-
-    public static void copyProperty(Object dest, Object src, boolean keepOnNull) {
-        try {
-            copyProperties(dest, src, keepOnNull);
-        } catch (Exception e) {
-            logger.error("属性复制Exception" + src + "=====================>>" + dest, e);
-        }
+        copyProperties(destination, source, true);
     }
 
     /**

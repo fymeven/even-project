@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>hieven后台管理</title>
+    <title>控制台</title>
 
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/static/plugin/hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">

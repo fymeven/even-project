@@ -1,5 +1,5 @@
 var menu={
-    currentNode:{},//当前节点对象
+    currentNode:{},//当前树节点对象
     jstree:{},//jstree对象
     jqGrid:{},//jqGrid对象
     init:function(){
@@ -8,29 +8,29 @@ var menu={
         this.event();
     },
     loadJstree:function(){
-            menu.jstree=$('#jstree').jstree({
-                core : {
-                    data : {
-                        url:'/sysMenu/loadSysMenuTree',
-                        dataType : "json"
-                    }
+        menu.jstree=$('#jstree').jstree({
+            core : {
+                data : {
+                    url:'/sysMenu/loadSysMenuTree',
+                    dataType : "json"
                 }
-            });
-            menu.jstree.on('activate_node.jstree', function(e, data) {
-                menu.jqGrid.jqGrid('setGridParam', {
-                    url: "/sysMenu/selectChildrenMenus",
-                    postData: {
-                        id: data.node.id
-                    }
-                }).trigger('reloadGrid');
-            });
+            }
+        });
+        menu.jstree.on('activate_node.jstree', function(e, data) {
+            menu.jqGrid.jqGrid('setGridParam', {
+                url: "/sysMenu/selectChildrenMenus",
+                postData: {
+                    parentId: data.node.id
+                }
+            }).trigger('reloadGrid');
+        });
     },
-    loadJqGrid:function(id){
+    loadJqGrid:function(parentId){
         $.jgrid.defaults.styleUI = "Bootstrap";
         this.jqGrid=$("#jqGrid").jqGrid({
             url: '/sysMenu/selectChildrenMenus',
             postData:{
-                id:id
+                parentId:parentId
             },
             datatype: "json",
             mtype: 'GET',
@@ -43,15 +43,29 @@ var menu={
             sortname: 'update_time',
             sortorder: "desc",
             colModel: [
-                { name: 'id', hidden:true},
+                { name: 'id', hidden:true ,key:true },
                 { name: 'menuName', index: 'menu_name',label:'菜单名称', width: 100, align: "center" },
                 { name: 'menuIcon', sortable :false,label:'图标', width: 100, align: "center",
                     formatter: function (value, grid, rows, state){
                         return '<i class="'+value+'"></i>';
                     }
                 },
-                { name: 'parentMenuName',sortable :false ,label:'父级菜单', width: 100, align: "center" },
-                { name: 'menuDesc', sortable :false,label:'菜单描述', width: 150, align: "center" }
+                { name: 'parentMenuName',sortable :false ,label:'上级菜单', width: 100, align: "center" },
+                { name: 'menuDesc', sortable :false,label:'菜单描述', width: 150, align: "center" },
+                { name: 'menuStatus', sortable :false,label:'菜单状态', width: 80, align: "center",
+                    formatter: function (value, grid, rows, state){
+                        var html=[];
+                        switch (value){
+                            case 1:
+                                html.push('<input type="checkbox" name="menuStatus" data-rowId='+rows.id+' checked autocomplete="off" />');
+                                break;
+                            case 2:
+                                html.push('<input type="checkbox" name="menuStatus" data-rowId='+rows.id+' autocomplete="off" />');
+                                break;
+                        }
+                        return html.join('');
+                    }
+                }
             ],
             jsonReader: {
                 root: "list",
@@ -59,38 +73,52 @@ var menu={
                 page: "pageNum",
                 records: "total",
                 repeatitems: false
+            },
+            loadComplete: function(){
+                $('input[name=menuStatus]').lc_switch();
+                $('body').delegate('input[name=menuStatus]', 'lcs-statuschange', function() {
+                    var status = $(this).is(':checked') ? 1 : 2;
+                    $.ajax({
+                        url:'/sysMenu/updateMenuStatus',
+                        type:'POST',
+                        data:{
+                            id:$(this).attr('data-rowId'),
+                            menuStatus:status
+                        },
+                        success:function(result){
+                            if(!result.status){
+                                toastr.warning(result.msg);
+                            }
+                        }
+                    });
+                });
             }
         });
     },
     event:function(){
         $('.btn').click(function(){
             menu.currentNode=menu.jstree.jstree(true).get_selected(true)[0];
-            if(menu.currentNode){
-                var btn_id = $(this).attr("id");
-                switch (btn_id){
-                    case "btn_flush":
-                        menu.jstree.jstree(true).refresh();
-                        menu.jqGrid.trigger('reloadGrid');
-                        break;
-                    case "btn_add":
-                        menu.method.btnAdd();
-                        break;
-                    case "btn_edit":
-                        menu.method.btnEdit();
-                        break;
-                    case "btn_delete":
-                        menu.method.btnDelete();
-                        break;
-                }
-            }else{
-                layer.msg("请在左侧选择操作菜单");
-                return false;
+            var btn_id = $(this).attr("id");
+            switch (btn_id){
+                case "btn_flush":
+                    menu.jstree.jstree(true).refresh();
+                    menu.jqGrid.trigger('reloadGrid');
+                    break;
+                case "btn_add":
+                    menu.method.btnAdd();
+                    break;
+                case "btn_edit":
+                    menu.method.btnEdit();
+                    break;
+                case "btn_delete":
+                    menu.method.btnDelete();
+                    break;
             }
         });
     },
     method:{
         btnAdd:function(){
-            if(menu.currentNode.parents.length==3){
+            if(menu.currentNode.parents.length>3){
                 toastr.warning("最多添加三级菜单");
                 return false;
             }
@@ -118,6 +146,10 @@ var menu={
             });
         },
         btnEdit:function(){
+            if(menu.currentNode.id==0){
+                toastr.warning("此菜单不允许修改");
+                return false;
+            }
             layer.open({
                 type: 2 //Page层类型
                 ,area: ['800px', '500px']

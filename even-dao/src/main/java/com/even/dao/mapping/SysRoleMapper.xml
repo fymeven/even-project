@@ -268,4 +268,12 @@
         order by r.id
     </select>
 
+    <update id="updateDelForeach">
+        update sys_role set is_del=#{delStatus}
+        where id in
+        <foreach collection="idArray" item="item" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>

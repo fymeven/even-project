@@ -42,21 +42,21 @@ public class SysMenuServiceImpl implements ISysMenuService {
         for (SysAuth sysAuth : authList) {
             menuIdList.add(sysAuth.getMenuId());
         }
-        return selectChildrenSysMenu(SysMenuEnum.parentId.PARENT.getLongValue(),menuIdList);
+        return selectChildrenSysMenu(SysMenuEnum.parentId.NO_PARENT.getLongValue(),menuIdList);
     }
 
     //递归查询主页所有子菜单
     public List<SysMenuResponse> selectChildrenSysMenu(Long parentId,List<Long> menuIdList) throws Exception {
         List<SysMenuResponse> currentMenuList=new ArrayList<>();
         SysMenuExample sysMenuExample=new SysMenuExample();
-        sysMenuExample.createCriteria().andParentIdEqualTo(parentId).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
+        sysMenuExample.createCriteria().andParentIdEqualTo(parentId).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andMenuStatusEqualTo(SysMenuEnum.menuStatus.SHOW.getIntValue()).andIdIn(menuIdList);
         List<SysMenu> sysMenuList = sysMenuMapper.selectByExample(sysMenuExample);
         for (SysMenu sysMenu : sysMenuList) {
             SysMenuResponse sysMenuResponse=new SysMenuResponse();
             BeanCopyUtil.copyProperties(sysMenuResponse,sysMenu);
             currentMenuList.add(sysMenuResponse);
             sysMenuExample.clear();
-            sysMenuExample.createCriteria().andParentIdEqualTo(sysMenuResponse.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andIdIn(menuIdList);
+            sysMenuExample.createCriteria().andParentIdEqualTo(sysMenuResponse.getId()).andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andMenuStatusEqualTo(SysMenuEnum.menuStatus.SHOW.getIntValue()).andIdIn(menuIdList);
             long childMenuCount = sysMenuMapper.countByExample(sysMenuExample);
             if(childMenuCount>0){
                 List<SysMenuResponse> childrenMenuList = selectChildrenSysMenu(sysMenuResponse.getId(), menuIdList);
@@ -71,19 +71,22 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return
      */
     @Override
-    public List<Map<String,Object>> loadSysMenuTree() {
+    public Map<String,Object> loadSysMenuTree() {
         Map<String,Object> system=new HashMap<>();
-        system.put("id","-1");
-        system.put("text","本系统");
-        system.put("icon","");
-        return loadChildrenTree(SysMenuEnum.parentId.PARENT.getLongValue());
+        Map<String,Object> stateMap=new HashMap<>();
+        stateMap.put("opened",true);
+        stateMap.put("selected",true);
+        system.put("id", String.valueOf(SysMenuEnum.parentId.NO_PARENT.getLongValue()));
+        system.put("text", SysMenuEnum.parentId.NO_PARENT.getDesc());
+        system.put("icon", "fa fa-television");
+        system.put("state", stateMap);
+        system.put("children", loadChildrenTree(SysMenuEnum.parentId.NO_PARENT.getLongValue()));
+        return system;
     }
 
     //递归查询主页所有子菜单
     public List<Map<String,Object>> loadChildrenTree(Long parentId){
         List<Map<String,Object>> currentList=new ArrayList<>();
-        Map<String,Object> stateMap=new HashMap<>();
-        stateMap.put("opened",true);
         SysMenuExample sysMenuExample=new SysMenuExample();
         sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentId);
         List<SysMenu> currentMenuList = sysMenuMapper.selectByExample(sysMenuExample);
@@ -92,7 +95,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
             currentMenuMap.put("id",currentMenu.getId());
             currentMenuMap.put("text",currentMenu.getMenuName());
             currentMenuMap.put("icon",currentMenu.getMenuIcon());
-//            currentMenuMap.put("state",stateMap);
             sysMenuExample.clear();
             sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(currentMenu.getId());
             long childrenCount = sysMenuMapper.countByExample(sysMenuExample);
@@ -106,16 +108,18 @@ public class SysMenuServiceImpl implements ISysMenuService {
     }
 
     @Override
-    public MyPageInfo<SysMenuResponse> selectChildrenMenus(Long id,PageModel pageModel) throws Exception {
+    public MyPageInfo<SysMenuResponse> selectChildrenMenus(Long parentId,PageModel pageModel) throws Exception {
         List<SysMenuResponse> sysMenuResponseList=new ArrayList<>();
         Page page = PageHelper.startPage(pageModel.getPage(), pageModel.getRows(), pageModel.getOrderBy());
         SysMenuExample sysMenuExample=new SysMenuExample();
-        sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(id);
-        List<SysMenu> sysMenus = sysMenuMapper.selectByExample(sysMenuExample);
-        for (SysMenu sysMenu : sysMenus) {
+        sysMenuExample.createCriteria().andIsDelEqualTo(SysMenuEnum.isDel.NOMAL.getByteValue()).andParentIdEqualTo(parentId);
+        List<SysMenu> sysMenuList = sysMenuMapper.selectByExample(sysMenuExample);
+        for (SysMenu sysMenu : sysMenuList) {
             SysMenuResponse sysMenuResponse=new SysMenuResponse();
             BeanCopyUtil.copyProperties(sysMenuResponse,sysMenu);
-            if (sysMenuResponse.getParentId()!=SysMenuEnum.parentId.PARENT.getLongValue()){
+            if (sysMenuResponse.getParentId()==SysMenuEnum.parentId.NO_PARENT.getLongValue()){
+                sysMenuResponse.setParentMenuName(SysMenuEnum.parentId.NO_PARENT.getDesc());
+            }else {
                 SysMenu parentMenu = sysMenuMapper.selectByPrimaryKey(sysMenuResponse.getParentId());
                 sysMenuResponse.setParentMenuName(parentMenu.getMenuName());
             }
@@ -129,7 +133,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(id);
         SysMenuResponse sysMenuResponse=new SysMenuResponse();
         BeanCopyUtil.copyProperties(sysMenuResponse,sysMenu);
-        if (sysMenuResponse.getParentId()!=SysMenuEnum.parentId.PARENT.getLongValue()){
+        if (sysMenuResponse.getParentId()==SysMenuEnum.parentId.NO_PARENT.getLongValue()){
+            sysMenuResponse.setParentMenuName(SysMenuEnum.parentId.NO_PARENT.getDesc());
+        }else {
             SysMenu parentMenu = sysMenuMapper.selectByPrimaryKey(sysMenuResponse.getParentId());
             sysMenuResponse.setParentMenuName(parentMenu.getMenuName());
         }
@@ -140,10 +146,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public ResponseResult save(SysMenuRequest sysMenuRequest) throws Exception {
         SysMenu sysMenu=new SysMenu();
         BeanCopyUtil.copyProperties(sysMenu,sysMenuRequest);
-        sysMenu.setMenuStatus(SysMenuEnum.menuStatus.SHOW.getIntValue());
-        sysMenu.setIsDel(SysMenuEnum.isDel.NOMAL.getByteValue());
         sysMenu.setCreateTime(new Date());
         sysMenu.setUpdateTime(new Date());
+        sysMenu.setIsDel(SysMenuEnum.isDel.NOMAL.getByteValue());
+        sysMenu.setMenuStatus(SysMenuEnum.menuStatus.SHOW.getIntValue());
         int result = sysMenuMapper.insert(sysMenu);
         if (result>0){
             return ResponseResult.SUCCESS;
@@ -178,6 +184,16 @@ public class SysMenuServiceImpl implements ISysMenuService {
         }
     }
 
-
-
+    @Override
+    public ResponseResult updateMenuStatus(SysMenuRequest sysMenuRequest) {
+        SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(sysMenuRequest.getId());
+        sysMenu.setUpdateTime(new Date());
+        sysMenu.setMenuStatus(sysMenuRequest.getMenuStatus());
+        int result = sysMenuMapper.updateByPrimaryKey(sysMenu);
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
+        }
+    }
 }

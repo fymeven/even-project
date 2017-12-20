@@ -13,6 +13,8 @@ public class SysRoleResponse implements Serializable {
 
     private Long parentId;
 
+    private String parentRoleName;
+
     public Long getId() {
         return id;
     }
@@ -51,5 +53,13 @@ public class SysRoleResponse implements Serializable {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public String getParentRoleName() {
+        return parentRoleName;
+    }
+
+    public void setParentRoleName(String parentRoleName) {
+        this.parentRoleName = parentRoleName;
     }
 }
