@@ -14,7 +14,7 @@
 		</commentGenerator>
 		<!-- 配置数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/eventest" userId="root"
+			connectionURL="jdbc:mysql://47.100.0.82:3306/eventest" userId="root"
 			password="even">
 		</jdbcConnection>
 
@@ -26,7 +26,7 @@
 
 		<!-- 指定javaBean生成的位置 -->
 		<javaModelGenerator targetPackage="com.even.bean"
-			targetProject="E:\Develop\IDEAWorkSpace\even-project\even-dao\src\main\java">
+			targetProject="even-dao\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true" />
             <!-- 从数据库返回的值被清理前后的空格 -->
@@ -34,25 +34,30 @@
 		</javaModelGenerator>
 
 		<!--指定sql映射文件生成的位置 -->
-		<sqlMapGenerator targetPackage="com.even.dao.mapping" targetProject="E:\Develop\IDEAWorkSpace\even-project\even-dao\src\main\java">
+		<sqlMapGenerator targetPackage="com.even.dao.mapping" targetProject="even-dao\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- 指定dao接口生成的位置，mapper接口 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.even.dao" targetProject="E:\Develop\IDEAWorkSpace\even-project\even-dao\src\main\java">
+			targetPackage="com.even.dao" targetProject="even-dao\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 
 		 <!--table指定每个表的生成策略-->
-        <table tableName="sys_user" domainObjectName="SysUser" />
-		<table tableName="sys_role" domainObjectName="SysRole" />
-        <table tableName="sys_auth" domainObjectName="SysAuth" />
-        <table tableName="sys_user_role" domainObjectName="SysUserRole" />
-        <table tableName="sys_role_auth" domainObjectName="SysRoleAuth" />
-        <table tableName="sys_menu" domainObjectName="SysMenu" />
-        <table tableName="sys_dept" domainObjectName="SysDept" />
-        <table tableName="sys_log" domainObjectName="SysLog" />
+
+
+        <!--<table tableName="sys_user" domainObjectName="SysUser" />-->
+		<!--<table tableName="sys_role" domainObjectName="SysRole" />-->
+        <!--<table tableName="sys_auth" domainObjectName="SysAuth" />-->
+        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu" />
+        <!--<table tableName="sys_user_role" domainObjectName="SysUserRole" />-->
+        <!--<table tableName="sys_role_auth" domainObjectName="SysRoleAuth" />-->
+        <!--<table tableName="sys_menu" domainObjectName="SysMenu" />-->
+        <!--<table tableName="sys_dept" domainObjectName="SysDept" />-->
+        <!--<table tableName="sys_log" domainObjectName="SysLog" />-->
+
+
 	</context>
 </generatorConfiguration>

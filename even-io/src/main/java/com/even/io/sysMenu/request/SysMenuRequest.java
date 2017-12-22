@@ -1,11 +1,10 @@
 package com.even.io.sysMenu.request;
 
-import com.even.common.util.DataTablePage;
+import com.even.io.base.request.BaseRequest;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class SysMenuRequest extends DataTablePage implements Serializable {
+public class SysMenuRequest extends BaseRequest {
     private Long id;
 
     private String menuName;

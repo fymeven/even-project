@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -68,7 +69,7 @@ public class ShiroRealm extends AuthorizingRealm {
         SysUserResponse sysUserResponse = (SysUserResponse) pc.fromRealm(getName()).iterator().next();
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addRoles(sysUserResponse.getRoleList());
-        List<String> permisssionList=sysAuthService.selectAuthsByUserName(sysUserResponse.getUserName());
+        Set<String> permisssionList=sysAuthService.selectAuthsByUserName(sysUserResponse.getUserName());
         info.addStringPermissions(permisssionList);
         return info;
 	}

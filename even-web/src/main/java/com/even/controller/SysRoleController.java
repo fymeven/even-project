@@ -108,16 +108,15 @@ public class SysRoleController {
 
     /**
      * 角色授权
-     * @param userId
-     * @param roleList
+     * @param roleId
+     * @param menuList
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/setAuth",method = RequestMethod.POST)
-    public ResponseResult setAuth(@RequestParam(value = "roleId",required = true) String userId,
-                                    @RequestParam(value = "roleList",required = true) String roleList){
-//            return sysRoleService.setAuth(userId,roleList);
-        return null;
+    @RequestMapping(value = "/setMenuPermission",method = RequestMethod.POST)
+    public ResponseResult setMenuList(@RequestParam(value = "roleId",required = true) Long roleId,
+                                    @RequestParam(value = "menuList",required = true) String menuList){
+        return sysRoleService.setMenuPermission(roleId,menuList);
     }
     
 }

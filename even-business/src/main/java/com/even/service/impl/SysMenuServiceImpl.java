@@ -1,14 +1,13 @@
 package com.even.service.impl;
 
-import com.even.bean.SysAuth;
 import com.even.bean.SysMenu;
 import com.even.bean.SysMenuExample;
 import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.MyPageInfo;
 import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
-import com.even.dao.SysAuthMapper;
 import com.even.dao.SysMenuMapper;
+import com.even.dao.SysRoleMenuMapper;
 import com.even.io.sysMenu.enums.SysMenuEnum;
 import com.even.io.sysMenu.request.SysMenuRequest;
 import com.even.io.sysMenu.response.SysMenuResponse;
@@ -28,7 +27,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;
     @Resource
-    private SysAuthMapper sysAuthMapper;
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     /**
      * 加载主页系统菜单
@@ -37,11 +36,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public List<SysMenuResponse> initSysMenu(String userName) throws Exception {
-        List<SysAuth> authList = sysAuthMapper.selectAuthsByUserName(userName);
-        List<Long> menuIdList=new ArrayList<>();
-        for (SysAuth sysAuth : authList) {
-            menuIdList.add(sysAuth.getMenuId());
-        }
+        List<Long> menuIdList = sysRoleMenuMapper.selectMenuIdByUserName(userName);
+        if (menuIdList==null || menuIdList.isEmpty())
+            return null;
         return selectChildrenSysMenu(SysMenuEnum.parentId.NO_PARENT.getLongValue(),menuIdList);
     }
 

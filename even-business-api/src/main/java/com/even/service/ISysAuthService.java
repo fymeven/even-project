@@ -1,11 +1,12 @@
 package com.even.service;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fymeven on 2017/10/28.
  */
 public interface ISysAuthService {
 
-    List<String> selectAuthsByUserName(String userName);
+    Set<String> selectAuthsByUserName(String userName);
+
 }

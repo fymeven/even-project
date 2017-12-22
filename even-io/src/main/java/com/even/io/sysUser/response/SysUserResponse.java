@@ -1,9 +1,11 @@
 package com.even.io.sysUser.response;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class SysUserResponse implements Serializable {
+
     private Long id;
 
     private String userName;
@@ -23,6 +25,16 @@ public class SysUserResponse implements Serializable {
     private String userMobile;
 
     private Integer userStatus;
+
+    private Byte isDel;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Date lastLoginTime;
+
+    private String lastLoginIp;
 
     private List roleList;
 
@@ -112,5 +124,45 @@ public class SysUserResponse implements Serializable {
 
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public Byte getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Byte isDel) {
+        this.isDel = isDel;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
     }
 }

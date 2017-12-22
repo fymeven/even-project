@@ -1,16 +1,14 @@
 package com.even.controller;
 
-import com.even.common.util.DataTablePage;
+import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
-import com.even.io.sysUser.response.SysUserResponse;
 import com.even.service.ISysUserService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,23 +24,40 @@ public class SysUserController {
     @Resource
     private ISysUserService sysUserService;
 
+    //用户管理页面
+    @RequestMapping(value = "/page/user_menage",method = RequestMethod.GET)
+    public String page(){
+        return "user_manage";
+    }
+
+    //添加用户页面
+    @RequestMapping(value = "/page/add",method = RequestMethod.GET)
+    public String add(){
+        return "user_add";
+    }
+
+    //编辑用户页面
+    @RequestMapping(value = "/page/update",method = RequestMethod.GET)
+    public String update(){
+        return "user_edit";
+    }
+
+    /**
+     * 获取所有用户
+     * @param pageModel
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
-    @RequestMapping("/page")
-    public DataTablePage page(SysUserRequest userRequest){
-        Page<SysUserResponse> page = PageHelper.startPage(userRequest.getStart(), userRequest.getLength());
-        sysUserService.selectPageList(userRequest);
-        return new DataTablePage(page);
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public Object list(PageModel pageModel) throws Exception {
+        return sysUserService.list(pageModel);
     }
 
     @ResponseBody
-    @RequestMapping("/add")
-    public ResponseResult add(SysUserRequest sysUserRequest){
-        try {
-            return sysUserService.save(sysUserRequest);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping("/save")
+    public ResponseResult add(SysUserRequest sysUserRequest) throws Exception {
+        return sysUserService.save(sysUserRequest);
     }
 
     @ResponseBody
@@ -69,7 +84,7 @@ public class SysUserController {
 
     @ResponseBody
     @RequestMapping("/setRole")
-    public ResponseResult setRole(@RequestParam(value = "userId",required = true) String userId,
+    public ResponseResult setRole(@RequestParam(value = "userId",required = true) Long userId,
                                     @RequestParam(value = "roleList",required = true) String roleList){
         try {
             return sysUserService.setRole(userId,roleList);

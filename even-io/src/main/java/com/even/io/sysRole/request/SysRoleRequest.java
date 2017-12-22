@@ -1,8 +1,8 @@
 package com.even.io.sysRole.request;
 
-import java.io.Serializable;
+import com.even.io.base.request.BaseRequest;
 
-public class SysRoleRequest implements Serializable {
+public class SysRoleRequest extends BaseRequest {
     private Long id;
 
     private String roleName;

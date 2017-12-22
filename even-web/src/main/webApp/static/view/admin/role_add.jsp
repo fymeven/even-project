@@ -18,7 +18,6 @@
     <link href="/static/plugin/hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/plugin/hplus/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="/static/plugin/hplus/js/plugins/iosSwitch/lc_switch.css" rel="stylesheet">
-    <link href="/static/plugin/hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="/static/css/hieven.css" rel="stylesheet">
 </head>
 <body>
@@ -28,16 +27,6 @@
 <label class="col-sm-3 control-label">角色名称：</label>
 <div class="col-sm-8">
 <input id="roleName" name="roleName" class="form-control" type="text" autocomplete="off">
-</div>
-</div>
-<div class="form-group">
-<label class="col-sm-3 control-label">上级角色：</label>
-<div class="col-sm-8">
-    <div class="input-group">
-        <select id="parentId" name="parentId" style="width:350px;" tabindex="2">
-            <option value="0"><span style="color: #ff0000;">无</span></option>
-        </select>
-    </div>
 </div>
 </div>
 <div class="form-group">
@@ -61,7 +50,6 @@
 <script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/iosSwitch/js/lc_switch.min.js"></script>
-<script src="/static/plugin/hplus/js/plugins/chosen/chosen.jquery.js"></script>
 <script src="/static/js/role.js"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 package com.even.io.sysUser.request;
 
-import com.even.common.util.DataTablePage;
+import com.even.io.base.request.BaseRequest;
 
-import java.io.Serializable;
+import java.util.Date;
 
-public class SysUserRequest extends DataTablePage implements Serializable {
+public class SysUserRequest extends BaseRequest {
     private Long id;
 
     private String userName;
@@ -23,7 +23,19 @@ public class SysUserRequest extends DataTablePage implements Serializable {
 
     private String userMobile;
 
+    private Long deptId;
+
     private Integer userStatus;
+
+    private Byte isDel;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Date lastLoginTime;
+
+    private String lastLoginIp;
 
     public Long getId() {
         return id;
@@ -97,11 +109,59 @@ public class SysUserRequest extends DataTablePage implements Serializable {
         this.userMobile = userMobile == null ? null : userMobile.trim();
     }
 
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
     public Integer getUserStatus() {
         return userStatus;
     }
 
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public Byte getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Byte isDel) {
+        this.isDel = isDel;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
     }
 }

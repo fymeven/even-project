@@ -21,4 +21,6 @@ public interface ISysRoleService {
     Object list(PageModel pageModel) throws Exception;
 
     ResponseResult detail(Long id);
+
+    ResponseResult setMenuPermission(Long roleId, String menuList);
 }

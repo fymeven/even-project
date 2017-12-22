@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>添加角色</title>
+    <title>添加用户</title>
 
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
@@ -22,25 +22,37 @@
 </head>
 <body>
 <div class="wrapper wrapper-content  animated fadeInRight">
-<form class="form-horizontal m-t" id="form_role_update" novalidate="novalidate">
+<form class="form-horizontal m-t" id="form_user_add" novalidate="novalidate">
 <div class="form-group">
-<label class="col-sm-3 control-label">角色名称：</label>
-<div class="col-sm-8">
-<input id="id" type="hidden">
-<input id="roleName" name="roleName" class="form-control" type="text" autocomplete="off">
-</div>
-</div>
-<div class="form-group">
-<label class="col-sm-3 control-label">角色状态：</label>
-<div class="col-sm-8">
-<input id="roleStatus" name="roleStatus" class="form-control" type="checkbox" autocomplete="off">
-</div>
+    <label class="col-sm-3 control-label">姓名：</label>
+    <div class="col-sm-8">
+        <input id="realName" name="realName" class="form-control" type="text" autocomplete="off">
+    </div>
 </div>
 <div class="form-group">
-<label class="col-sm-3 control-label">角色描述：</label>
-<div class="col-sm-8">
-<textarea id="roleDesc" name="roleDesc" class="form-control" autocomplete="off"></textarea>
+    <label class="col-sm-3 control-label">用户账号：</label>
+    <div class="col-sm-8">
+    <input id="userName" name="userName" class="form-control" type="text" autocomplete="off">
 </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">用户密码：</label>
+    <div class="col-sm-8">
+    <input id="userPwd" name="userPwd" class="form-control" type="text" autocomplete="off">
+    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>默认初始密码：hieven</span>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">部门：</label>
+    <div class="col-sm-8">
+        <input id="deptId" name="deptId" class="form-control" type="text" autocomplete="off">
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-3 control-label">邮箱：</label>
+    <div class="col-sm-8">
+        <input id="email" name="email" class="form-control" type="text" autocomplete="off">
+    </div>
 </div>
 </form>
 </div>
@@ -51,6 +63,6 @@
 <script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/iosSwitch/js/lc_switch.min.js"></script>
-<script src="/static/js/role.js"></script>
+<script src="/static/js/user.js"></script>
 </body>
 </html>

@@ -42,6 +42,12 @@ public class SysMenuController {
         return "menu_edit";
     }
 
+    //菜单权限页面
+    @RequestMapping(value = "/page/auth",method = RequestMethod.GET)
+    public String auth(){
+        return "menu_auth";
+    }
+
     /**
      * 获取菜单模块菜单树数据
      * @return

@@ -16,6 +16,8 @@ public class SysMenuResponse implements Serializable {
 
     private String menuUrl;
 
+    private Integer menuType;
+
     private Integer menuStatus;
 
     private Long parentId;
@@ -70,6 +72,14 @@ public class SysMenuResponse implements Serializable {
 
     public void setMenuUrl(String menuUrl) {
         this.menuUrl = menuUrl == null ? null : menuUrl.trim();
+    }
+
+    public Integer getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(Integer menuType) {
+        this.menuType = menuType;
     }
 
     public Integer getMenuStatus() {

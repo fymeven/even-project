@@ -1,11 +1,11 @@
 package com.even.bean;
 
-public class SysRoleAuth {
+public class SysRoleMenu {
     private Long id;
 
     private Long roleId;
 
-    private Long authId;
+    private Long menuId;
 
     public Long getId() {
         return id;
@@ -23,11 +23,11 @@ public class SysRoleAuth {
         this.roleId = roleId;
     }
 
-    public Long getAuthId() {
-        return authId;
+    public Long getMenuId() {
+        return menuId;
     }
 
-    public void setAuthId(Long authId) {
-        this.authId = authId;
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 }

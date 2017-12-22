@@ -1,44 +1,13 @@
-var role={
+var user={
     jqGrid:{},//jqGrid对象
-    jstree:{},//jstree对象
     init:function(){
         this.loadJqGrid();
         this.event();
     },
-    loadJstree:function(){
-        role.jstree=$('#jstree').jstree({
-            core : {
-                data : {
-                    url:'/sysMenu/loadSysMenuTree',
-                    dataType : "json"
-                }
-            },
-            plugins:["checkbox"],
-            checkbox: {
-                "keep_selected_style": false,//是否默认选中
-                "three_state": true,//父子级别级联选择
-                "tie_selection": false,
-                "cascade":"down"
-            }
-        });
-
-        role.jstree.jstree(true).get_all_checked = function(full) {
-            var tmp=new Array;
-            for(var i in this._model.data){
-                if(this.is_undetermined(i)||this.is_checked(i)){
-                    if(i!='#'){tmp.push(full?this._model.data[i]:i);}
-                }
-            }
-            return tmp;
-        };
-//        role.jstree.on('activate_node.jstree', function(e, data) {
-//            console.info(data.node.id)
-//        });
-    },
     loadJqGrid:function(){
         $.jgrid.defaults.styleUI = "Bootstrap";
         this.jqGrid=$("#jqGrid").jqGrid({
-            url: '/sysRole/list',
+            url: '/sysUser/list',
             datatype: "json",
             mtype: 'GET',
             autowidth:true,
@@ -52,9 +21,10 @@ var role={
             sortorder: "desc",
             colModel: [
                 { name: 'id', hidden:true ,key:true},
-                { name: 'roleName', index: 'role_name',label:'角色名称', width: 100, align: "center" },
-                { name: 'roleDesc', sortable :false,label:'角色描述', width: 150, align: "center" },
-                { name: 'roleStatus', sortable :false,label:'角色状态', width: 80, align: "center",
+                { name: 'userName', sortable :false,label:'用户账号', width: 100, align: "center" },
+                { name: 'realName', sortable :false,label:'姓名', width: 100, align: "center" },
+                { name: 'email', sortable :false,label:'邮箱', width: 100, align: "center" },
+                { name: 'userStatus', sortable :false,label:'用户状态', width: 80, align: "center",
                     formatter: function (value, grid, rows, state){
                         var html=[];
                         switch (value){
@@ -62,7 +32,7 @@ var role={
                                 html.push('正常');
                                 break;
                             case 2:
-                                html.push('隐藏');
+                                html.push('已锁定');
                                 break;
                         }
                         return html.join('');
@@ -71,9 +41,9 @@ var role={
                 { name: 'id', sortable :false,label: '操作', width: 60,align: "center",
                     formatter: function (value, grid, rows, state){
                         var html=[];
-                        html.push('<a class="btn" title="授权" alt="授权" onclick="role.method.btnAuth('+value+');"><i class="fa fa-key"></i></a>');
-                        html.push('<a class="btn" title="编辑" alt="编辑" onclick="role.method.btnEdit('+value+');"><i class="fa fa-pencil"></i></a>');
-                        html.push('<a class="btn" title="删除" alt="删除" onclick="role.method.btnDelete('+value+');"><i class="glyphicon glyphicon-trash"></i></a>');
+                        html.push('<a class="btn" title="设置角色" alt="设置角色" onclick="user.method.btnAuth('+value+');"><i class="glyphicon glyphicon-knight"></i></a>');
+                        html.push('<a class="btn" title="编辑" alt="编辑" onclick="user.method.btnEdit('+value+');"><i class="fa fa-pencil"></i></a>');
+                        html.push('<a class="btn" title="删除" alt="删除" onclick="user.method.btnDelete('+value+');"><i class="glyphicon glyphicon-trash"></i></a>');
                         return html.join('');
                     }
                 }
@@ -99,13 +69,13 @@ var role={
 //            role.selectRow = role.jqGrid.jqGrid('getRowData',selectRowId);
             switch (btn_id){
                 case "btn_flush":
-                    role.jqGrid.trigger('reloadGrid');
+                    user.jqGrid.trigger('reloadGrid');
                     break;
                 case "btn_add":
-                    role.method.btnAdd();
+                    user.method.btnAdd();
                     break;
                 case "btn_delete":
-                    role.method.btnDelete();
+                    user.method.btnDelete();
                     break;
             }
         });
@@ -115,21 +85,35 @@ var role={
             layer.open({
                 type: 2 //Page层类型
                 ,area: ['800px', '500px']
-                ,title: '添加角色'
+                ,title: '添加用户'
                 ,shade: 0.6 //遮罩透明度
                 ,anim: 1 //0-6的动画形式，-1不开启
-                ,content: '/sysRole/page/add'
+                ,content: '/sysUser/page/add'
                 ,btn: ['确认', '关闭']
                 ,yes: function(index, layero){
                     var childrenFrame = window[layero.find('iframe')[0]['name']]; //得到子iframe页的窗口对象
-                    childrenFrame.$('#form_role_add').submit();
+                    childrenFrame.$('#form_user_add').submit();
                 },
                 success: function(layero, index){
                     var childrenFrame = window[layero.find('iframe')[0]['name']];
-                    childrenFrame.$('input[name=roleStatus]').lc_switch();
-                    childrenFrame.role.method.initValidate({
-                        form:'form_role_add',
-                        url:'/sysRole/save'
+//                    $.ajax({
+//                        url:'/sysDept/list',
+//                        type:'GET',
+//                        success:function(result){
+//                            console.info(result)
+//                            if(result.status){
+//                                $.each(result.data,function(i,o){
+//                                    childrenFrame.document.getElementById('deptId').options[i+1]=new Option(o.deptName, o.id);
+//                                });
+//                                childrenFrame.$("#parentId").chosen();
+//                            }else{
+//                                toastr.warning(result.msg);
+//                            }
+//                        }
+//                    });
+                    childrenFrame.user.method.initValidate({
+                        form:'form_user_add',
+                        url:'/sysUser/save'
                     });
                 }
             });
@@ -154,11 +138,27 @@ var role={
                 success: function(layero, index){
                     var childrenFrame = window[layero.find('iframe')[0]['name']];
                     childrenFrame.$('input[name=roleStatus]').lc_switch();
-                    role.method.getRoleDetail(roleId,function(result){
-                        childrenFrame.$('#id').val(result.data.id);
-                        childrenFrame.$('#roleName').val(result.data.roleName);
-                        result.data.roleStatus ==1 ? childrenFrame.$('#roleStatus').lcs_on() : childrenFrame.$('#roleStatus').lcs_off();
-                        childrenFrame.$('#roleDesc').val(result.data.roleDesc);
+                    $.ajax({
+                        url:'/sysRole/list',
+                        type:'GET',
+                        success:function(result){
+                            if(result.status){
+                                $.each(result.data,function(i,o){
+                                    childrenFrame.document.getElementById('parentId').options[i+1]=new Option(o.roleName, o.id);
+                                });
+                                childrenFrame.$("#parentId").chosen();
+                                role.method.getRoleDetail(roleId,function(result){
+                                    childrenFrame.$('#id').val(result.data.id);
+                                    childrenFrame.$('#roleName').val(result.data.roleName);
+                                    childrenFrame.$('#parentId').val(result.data.parentId);
+                                    childrenFrame.$('#parentId').trigger("chosen:updated");
+                                    result.data.roleStatus ==1 ? childrenFrame.$('#roleStatus').lcs_on() : childrenFrame.$('#roleStatus').lcs_off();
+                                    childrenFrame.$('#roleDesc').val(result.data.roleDesc);
+                                })
+                            }else{
+                                toastr.warning(result.msg);
+                            }
+                        }
                     });
                     childrenFrame.role.method.initValidate({
                         form:'form_role_update',
@@ -211,27 +211,15 @@ var role={
                 ,btn: ['确认', '关闭']
                 ,yes: function(index, layero){
                     var childrenFrame = window[layero.find('iframe')[0]['name']]; //得到子iframe页的窗口对象
-                    var menuArray = childrenFrame.role.jstree.jstree(true).get_all_checked();
-                    $.ajax({
-                        url:'/sysRole/setMenuPermission',
-                        type:'POST',
-                        data:{
-                            roleId:roleId,
-                            menuList:menuArray.join('')
-                        },
-                        success:function(result){
-                            console.info(result)
-                            if(result.status){
-
-                            }else{
-                                toastr.warning(result.msg);
-                            }
-                        }
-                    });
+                    childrenFrame.$('#form_role_auth').submit();
                 },
                 success: function(layero, index){
                     var childrenFrame = window[layero.find('iframe')[0]['name']];
-                    childrenFrame.role.loadJstree();
+
+                    childrenFrame.role.method.initValidate({
+                        form:'form_role_auth',
+                        url:'/sysRole/setAuth'
+                    });
                 }
             });
         },
@@ -239,23 +227,49 @@ var role={
             var e = "<i class='fa fa-times-circle'></i> ";
             $('#'+options.form).validate({
                 rules: {
-                    roleName:{
+                    realName:{
+                        required: true,
+                        maxlength:20
+                    },
+                    userName:{
                         required: true,
                         minlength:2,
-                        maxlength:10
+                        maxlength:20
                     },
-                    roleDesc:{
-                        maxlength:500
+                    userPwd:{
+                        minlength:6,
+                        maxlength:20
+                    },
+                    deptId:{
+                        required: true
+                    },
+                    email:{
+                        email:true,
+                        required: true,
+                        maxlength:25
                     }
                 },
                 messages: {
-                    roleName: {
-                        required: e + "请输入角色名称",
-                        minlength: e + "角色名称至少2个字符",
-                        maxlength: e + "角色名称最多10个字符"
+                    realName: {
+                        required: e + "请输入姓名",
+                        maxlength: e + "姓名最多20个字符"
                     },
-                    roleDesc: {
-                        maxlength: e + "角色描述最多500个字符"
+                    userName: {
+                        required: e + "请输入用户账号",
+                        minlength: e + "用户账号至少2个字符",
+                        maxlength: e + "用户账号最多20个字符"
+                    },
+                    userPwd: {
+                        minlength: e + "用户密码至少6个字符",
+                        maxlength: e + "用户密码最多20个字符"
+                    },
+                    deptId: {
+                        required: e + "请选择部门"
+                    },
+                    email:{
+                        email:e + "请输入正确的email格式",
+                        required: e + "请输入邮箱地址",
+                        maxlength:e + "邮箱地址最多20个字符"
                     }
                 },
                 submitHandler:function(form){
@@ -264,13 +278,15 @@ var role={
                         type:'POST',
                         data:{
                             id:$('#id').val(),
-                            roleName:$('#roleName').val(),
-                            roleStatus:$('#roleStatus').is(':checked') ? 1 : 2,
-                            roleDesc:$('#roleDesc').val()
+                            realName:$('#realName').val(),
+                            userName:$('#userName').val(),
+                            userPwd:$('#userPwd').val(),
+                            deptId:$('#deptId').val(),
+                            email:$('#email').val()
                         },
                         success:function(result){
                             if(result.status){
-                                parent.role.jqGrid.trigger('reloadGrid');
+                                parent.user.jqGrid.trigger('reloadGrid');
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
                             }else{

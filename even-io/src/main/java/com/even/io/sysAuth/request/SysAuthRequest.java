@@ -1,8 +1,8 @@
 package com.even.io.sysAuth.request;
 
-import java.io.Serializable;
+import com.even.io.base.request.BaseRequest;
 
-public class SysAuthRequest implements Serializable {
+public class SysAuthRequest extends BaseRequest {
     private Long id;
 
     private String authName;

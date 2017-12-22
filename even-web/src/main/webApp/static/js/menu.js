@@ -55,14 +55,14 @@ var menu={
                 { name: 'menuStatus', sortable :false,label:'菜单状态', width: 80, align: "center",
                     formatter: function (value, grid, rows, state){
                         var html=[];
-                        switch (value){
-                            case 1:
-                                html.push('<input type="checkbox" name="menuStatus" data-rowId='+rows.id+' checked autocomplete="off" />');
-                                break;
-                            case 2:
-                                html.push('<input type="checkbox" name="menuStatus" data-rowId='+rows.id+' autocomplete="off" />');
-                                break;
+                        html.push('<input type="checkbox" name="menuStatus" data-rowId='+rows.id+' autocomplete="off" ');
+                        if(value==1){
+                            html.push('checked');
                         }
+                        if(rows.menuType==1){   //系统菜单不允许修改状态
+                            html.push(' disabled');
+                        }
+                        html.push('/>');
                         return html.join('');
                     }
                 }
@@ -262,10 +262,14 @@ var menu={
                         },
                         success:function(result){
                             if(result.status){
-                                parent.menu.jstree.jstree(true).refresh();
-                                parent.menu.jqGrid.trigger('reloadGrid');
-                                var index = parent.layer.getFrameIndex(window.name);
-                                parent.layer.close(index);
+                                if(options.callBack){
+                                    options.callBack(result);
+                                }else{
+                                    parent.menu.jstree.jstree(true).refresh();
+                                    parent.menu.jqGrid.trigger('reloadGrid');
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    parent.layer.close(index);
+                                }
                             }else{
                                 toastr.warning(result.msg);
                             }

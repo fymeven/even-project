@@ -2,11 +2,13 @@ package com.even.service.impl;
 
 import com.even.bean.SysRole;
 import com.even.bean.SysRoleExample;
+import com.even.bean.SysRoleMenuExample;
 import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.MyPageInfo;
 import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysRoleMapper;
+import com.even.dao.SysRoleMenuMapper;
 import com.even.io.sysRole.enums.SysRoleEnum;
 import com.even.io.sysRole.request.SysRoleRequest;
 import com.even.io.sysRole.response.SysRoleResponse;
@@ -28,6 +30,10 @@ import java.util.List;
 public class SysRoleServiceImpl implements ISysRoleService {
     @Resource
     private SysRoleMapper sysRoleMapper;
+    @Resource
+    private SysRoleMenuMapper sysRoleMenuMapper;
+
+
     @Override
     public List<String> selectRolesByUserName(String userName) {
         List<SysRole> roleList=sysRoleMapper.selectRolesByUserName(userName);
@@ -50,12 +56,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
         for (SysRole sysRole : sysRoleList) {
             SysRoleResponse sysRoleResponse=new SysRoleResponse();
             BeanCopyUtil.copyProperties(sysRoleResponse,sysRole);
-            if (sysRoleResponse.getParentId()== SysRoleEnum.parentId.NO_PARENT.getLongValue()){
-               sysRoleResponse.setParentRoleName(SysRoleEnum.parentId.NO_PARENT.getDesc());
-            }else {
-                SysRole parentRole = sysRoleMapper.selectByPrimaryKey(sysRoleResponse.getParentId());
-                sysRoleResponse.setParentRoleName(parentRole.getRoleName());
-            }
             sysRoleResponseList.add(sysRoleResponse);
         }
         if (pageModel.getPage()!=null && pageModel.getRows()!=null){
@@ -82,7 +82,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception {
-        SysRole sysRole=new SysRole();
+        SysRole sysRole=sysRoleMapper.selectByPrimaryKey(sysRoleRequest.getId());
         BeanCopyUtil.copyProperties(sysRole, sysRoleRequest);
         sysRole.setUpdateTime(new Date());
         int result = sysRoleMapper.updateByPrimaryKey(sysRole);
@@ -103,6 +103,20 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public ResponseResult delete(String idList) {
         String[] idArray = idList.split(",");
         int result=sysRoleMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getByteValue());
+        if (result>0){
+            return ResponseResult.SUCCESS;
+        }else {
+            return ResponseResult.ERROR;
+        }
+    }
+
+    @Override
+    public ResponseResult setMenuPermission(Long roleId, String menuList) {
+        SysRoleMenuExample sysRoleMenuExample=new SysRoleMenuExample();
+        sysRoleMenuExample.createCriteria().andRoleIdEqualTo(roleId);
+        sysRoleMenuMapper.deleteByExample(sysRoleMenuExample);
+        String[] menuArray = menuList.split(",");
+        int result=sysRoleMenuMapper.insertForeach(roleId,menuArray);
         if (result>0){
             return ResponseResult.SUCCESS;
         }else {
