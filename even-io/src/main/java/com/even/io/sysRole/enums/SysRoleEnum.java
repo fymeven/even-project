@@ -27,15 +27,15 @@ public class SysRoleEnum {
         }
     }
 
-    public enum roleStatus{
+    public enum status{
         NOMAL(1,"正常"),
-        HIDDEN(2,"隐藏");
+        HIDDEN(2,"不可用");
 
         private final int intValue;
         private final String desc;
 
 
-        roleStatus(int intValue, String desc) {
+        status(int intValue, String desc) {
             this.intValue = intValue;
             this.desc = desc;
         }

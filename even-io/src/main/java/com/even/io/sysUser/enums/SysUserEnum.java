@@ -50,7 +50,7 @@ public class SysUserEnum {
         }
     }
 
-    public enum userStatus{
+    public enum status{
         NOMAL(1,"正常"),
         LOCK(2,"已锁定");
 
@@ -59,7 +59,7 @@ public class SysUserEnum {
         private final String desc;
 
 
-        userStatus(int intValue, String desc) {
+        status(int intValue, String desc) {
             this.intValue = intValue;
             this.desc = desc;
         }

@@ -1,6 +1,6 @@
 package com.even.controller;
 
-import com.even.common.util.PageModel;
+import com.even.model.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
 import com.even.service.ISysUserService;
@@ -25,7 +25,7 @@ public class SysUserController {
     private ISysUserService sysUserService;
 
     //用户管理页面
-    @RequestMapping(value = "/page/user_menage",method = RequestMethod.GET)
+    @RequestMapping(value = "/page",method = RequestMethod.GET)
     public String page(){
         return "user_manage";
     }

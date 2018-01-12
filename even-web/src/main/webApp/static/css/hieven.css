@@ -16,8 +16,8 @@
     padding-left: 9px;
 }
 .btn-group-toolbar{
-    line-height: 70px;
-    height: 70px;
+    line-height: 55px;
+    height: 55px;
     vertical-align: middle;
     border-bottom:1px #a9a9a9 solid;
 }
@@ -43,6 +43,12 @@ textarea.form-control{resize: none;}
     position: absolute;
     z-index: 100;
 }
-table th:not(#jqGrid_cb){
+table th{
     text-align: center;
+}
+.footer {
+    position: relative;
+    margin-top: -150px; /* footer高度的负值 */
+    height: 150px;
+    clear:both;
 }

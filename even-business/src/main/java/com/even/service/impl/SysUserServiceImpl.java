@@ -5,7 +5,7 @@ import com.even.bean.SysUserExample;
 import com.even.bean.SysUserRoleExample;
 import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.MyPageInfo;
-import com.even.common.util.PageModel;
+import com.even.model.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysUserMapper;
 import com.even.dao.SysUserRoleMapper;
@@ -23,8 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by fymeven on 2017/10/24.
- */
+* Created by fymeven on 2017/10/24.
+*/
 @Service("sysUserServiceImpl")
 public class SysUserServiceImpl implements ISysUserService {
     @Resource
@@ -33,16 +33,14 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
-    public SysUserResponse selectByUserName(String userName) throws Exception {
-        SysUserResponse sysUserResponse=new SysUserResponse();
+    public SysUser selectByUserName(String userName) {
         SysUserExample example=new SysUserExample();
-        example.createCriteria().andUserNameEqualTo(userName);
+        example.createCriteria().andUserNameEqualTo(userName).andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
         List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
         if (sysUserList!=null && !sysUserList.isEmpty()) {
-            SysUser sysUser = sysUserList.get(0);
-            BeanCopyUtil.copyProperties(sysUserResponse,sysUser);
+            return sysUserList.get(0);
         }
-            return sysUserResponse;
+        return null;
     }
 
     @Override
@@ -73,7 +71,7 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUser.setCreateTime(new Date());
         sysUser.setUpdateTime(new Date());
         sysUser.setIsDel(SysUserEnum.isDel.NOMAL.getByteValue());
-        sysUser.setUserStatus(SysUserEnum.userStatus.NOMAL.getIntValue());
+        sysUser.setStatus(SysUserEnum.status.NOMAL.getIntValue());
         int result = sysUserMapper.insert(sysUser);
         if (result>0){
             return ResponseResult.SUCCESS;
@@ -113,7 +111,6 @@ public class SysUserServiceImpl implements ISysUserService {
         example.createCriteria().andIdEqualTo(userId);
         sysUserRoleMapper.deleteByExample(example);
         String[] roleArray = roleList.split(",");
-        example.clear();
         int result = sysUserRoleMapper.insertForeach(userId, roleArray);
         if (result>0){
             return ResponseResult.SUCCESS;

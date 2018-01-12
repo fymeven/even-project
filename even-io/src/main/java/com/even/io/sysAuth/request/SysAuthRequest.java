@@ -2,6 +2,8 @@ package com.even.io.sysAuth.request;
 
 import com.even.io.base.request.BaseRequest;
 
+import java.util.Date;
+
 public class SysAuthRequest extends BaseRequest {
     private Long id;
 
@@ -9,11 +11,25 @@ public class SysAuthRequest extends BaseRequest {
 
     private String authDesc;
 
-    private String authUrl;
+    private String perms;
 
-    private Integer authStatus;
+    private String icon;
+
+    private String linkUrl;
+
+    private Integer type;
+
+    private Integer status;
 
     private Long parentId;
+
+    private Byte isDel;
+
+    private Integer sortNo;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     public Long getId() {
         return id;
@@ -39,20 +55,44 @@ public class SysAuthRequest extends BaseRequest {
         this.authDesc = authDesc == null ? null : authDesc.trim();
     }
 
-    public String getAuthUrl() {
-        return authUrl;
+    public String getPerms() {
+        return perms;
     }
 
-    public void setAuthUrl(String authUrl) {
-        this.authUrl = authUrl == null ? null : authUrl.trim();
+    public void setPerms(String perms) {
+        this.perms = perms == null ? null : perms.trim();
     }
 
-    public Integer getAuthStatus() {
-        return authStatus;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setAuthStatus(Integer authStatus) {
-        this.authStatus = authStatus;
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl == null ? null : linkUrl.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Long getParentId() {
@@ -61,5 +101,37 @@ public class SysAuthRequest extends BaseRequest {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Byte getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Byte isDel) {
+        this.isDel = isDel;
+    }
+
+    public Integer getSortNo() {
+        return sortNo;
+    }
+
+    public void setSortNo(Integer sortNo) {
+        this.sortNo = sortNo;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

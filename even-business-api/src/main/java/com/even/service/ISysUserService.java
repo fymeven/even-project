@@ -1,15 +1,15 @@
 package com.even.service;
 
-import com.even.common.util.PageModel;
+import com.even.bean.SysUser;
+import com.even.model.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
-import com.even.io.sysUser.response.SysUserResponse;
 
 /**
- * Created by fymeven on 2017/10/24.
- */
+* Created by fymeven on 2017/10/24.
+*/
 public interface ISysUserService {
-    SysUserResponse selectByUserName(String userName) throws Exception;
+    SysUser selectByUserName(String userName);
 
     ResponseResult save(SysUserRequest sysUserRequest) throws Exception;
 

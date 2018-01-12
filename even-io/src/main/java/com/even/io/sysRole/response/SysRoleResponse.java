@@ -10,7 +10,9 @@ public class SysRoleResponse implements Serializable {
 
     private String roleDesc;
 
-    private Integer roleStatus;
+    private Integer status;
+
+    private Long parentId;
 
     private Byte isDel;
 
@@ -42,12 +44,20 @@ public class SysRoleResponse implements Serializable {
         this.roleDesc = roleDesc == null ? null : roleDesc.trim();
     }
 
-    public Integer getRoleStatus() {
-        return roleStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setRoleStatus(Integer roleStatus) {
-        this.roleStatus = roleStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public Byte getIsDel() {

@@ -1,6 +1,6 @@
 package com.even.io.base.request;
 
-import com.even.common.util.PageModel;
+import com.even.model.PageModel;
 
 import java.io.Serializable;
 

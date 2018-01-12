@@ -34,7 +34,7 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold"><shiro:principal property="userName"/></strong></span>
-                                <span class="text-muted text-xs block"><shiro:principal property="roleList"/><b class="caret"></b></span>
+                                <span class="text-muted text-xs block"><b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -56,32 +56,32 @@
                     </li>
                     <c:forEach items="${menuList}" var="menu">
                         <c:choose>
-                            <c:when test="${!empty menu.childMenuList}">
+                            <c:when test="${!empty menu.children}">
                                 <li>
                                     <a href="#">
-                                        <i class="${menu.menuIcon}"></i>
-                                        <span class="nav-label">${menu.menuName}</span>
+                                        <i class="${menu.icon}"></i>
+                                        <span class="nav-label">${menu.text}</span>
                                         <span class="fa arrow"></span>
                                     </a>
                                     <ul class="nav nav-second-level">
-                                        <c:forEach items="${menu.childMenuList}" var="second">
+                                        <c:forEach items="${menu.children}" var="second">
                                             <c:choose>
-                                                <c:when test="${!empty second.childMenuList}">
+                                                <c:when test="${!empty second.children}">
                                                     <li>
                                                         <a href="#">
-                                                            <i class="${second.menuIcon}"></i>
-                                                            <span class="nav-label">${second.menuName}</span>
+                                                            <i class="${second.icon}"></i>
+                                                            <span class="nav-label">${second.text}</span>
                                                             <span class="fa arrow"></span>
                                                         </a>
                                                         <ul class="nav nav-third-level">
-                                                            <c:forEach items="${second.childMenuList}" var="third">
-                                                                <li><a class="J_menuItem" href="${third.menuUrl}"><i class="${third.menuIcon}"></i><span class="nav-label">${third.menuName}</span></a></li>
+                                                            <c:forEach items="${second.children}" var="third">
+                                                                <li><a class="J_menuItem" href="${third.attr.linkUrl}"><i class="${third.icon}"></i><span class="nav-label">${third.text}</span></a></li>
                                                             </c:forEach>
                                                         </ul>
                                                     </li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <li><a class="J_menuItem" href="${second.menuUrl}"><i class="${second.menuIcon}"></i><span class="nav-label">${second.menuName}</span></a></li>
+                                                    <li><a class="J_menuItem" href="${second.attr.linkUrl}"><i class="${second.icon}"></i><span class="nav-label">${second.text}</span></a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -89,7 +89,7 @@
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li><a class="J_menuItem" href="${menu.menuUrl}"><i class="${menu.menuIcon}"></i><span class="nav-label">${menu.menuName}</span></a></li>
+                                <li><a class="J_menuItem" href="${menu.attr.linkUrl}"><i class="${menu.icon}"></i><span class="nav-label">${menu.text}</span></a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

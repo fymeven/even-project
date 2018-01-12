@@ -1,16 +1,14 @@
 package com.even.controller;
 
-import com.even.common.util.PageModel;
+import com.even.bean.SysRole;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysRole.request.SysRoleRequest;
+import com.even.model.JsTree;
+import com.even.service.ISysAuthService;
 import com.even.service.ISysRoleService;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,44 +18,63 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/sysRole")
 public class SysRoleController {
-    private static final Logger logger= LogManager.getLogger(SysRoleController.class.getName());
     @Resource
     private ISysRoleService sysRoleService;
 
-    //角色管理页面
-    @RequestMapping(value = "/page/role_manage",method = RequestMethod.GET)
+    @Resource
+    private ISysAuthService sysAuthService;
+    /**
+     * 角色管理页面
+     * @return
+     */
+    @RequestMapping(value = "/page",method = RequestMethod.GET)
     public String page(){
-        return "role_manage";
+        return "role/page";
     }
 
     //添加角色页面
-    @RequestMapping(value = "/page/add",method = RequestMethod.GET)
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
     public String add(){
-        return "role_add";
+        return "role/add";
     }
 
     //编辑角色页面
-    @RequestMapping(value = "/page/update",method = RequestMethod.GET)
-    public String update(){
-        return "role_edit";
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String update(@PathVariable Long id,ModelMap modelMap){
+        SysRole detail = sysRoleService.detail(id);
+        modelMap.put("detail",detail);
+        return "role/edit";
     }
 
     //角色授权页面
-    @RequestMapping(value = "/page/auth",method = RequestMethod.GET)
-    public String auth(){
-        return "role_auth";
+    @RequestMapping(value = "/auth/{id}",method = RequestMethod.GET)
+    public String auth(@PathVariable Long id,ModelMap modelMap){
+        modelMap.put("roleId",id);
+        return "role/auth";
+    }
+
+    /**
+     * 获取权限树
+     * @param roleId
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAuthTree/{roleId}",method = RequestMethod.GET)
+    public JsTree getAuthTree(@PathVariable Long roleId) throws Exception {
+        return sysAuthService.selectAuthTreeByRoleId(roleId);
     }
 
     /**
      * 获取所有角色
-     * @param pageModel
+     * @param sysRoleRequest
      * @return
      * @throws Exception
      */
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Object list(PageModel pageModel) throws Exception {
-        return sysRoleService.list(pageModel);
+    public Object list(SysRoleRequest sysRoleRequest) throws Exception {
+        return sysRoleService.list(sysRoleRequest);
     }
 
     /**
@@ -66,9 +83,9 @@ public class SysRoleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ResponseResult add(SysRoleRequest sysRoleRequest) throws Exception {
-        return sysRoleService.save(sysRoleRequest);
+        return sysRoleService.add(sysRoleRequest);
     }
 
     /**
@@ -78,21 +95,9 @@ public class SysRoleController {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception {
-        return sysRoleService.update(sysRoleRequest);
-    }
-
-    /**
-     * 查看角色详情
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    @ResponseBody
-    @RequestMapping(value = "/detail",method = RequestMethod.GET)
-    public ResponseResult detail(@RequestParam(value = "id",required = true)Long id) throws Exception {
-        return sysRoleService.detail(id);
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
+    public ResponseResult edit(SysRoleRequest sysRoleRequest) throws Exception {
+        return sysRoleService.edit(sysRoleRequest);
     }
 
     /**
@@ -113,10 +118,11 @@ public class SysRoleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/setMenuPermission",method = RequestMethod.POST)
+    @RequestMapping(value = "/setAuth",method = RequestMethod.POST)
     public ResponseResult setMenuList(@RequestParam(value = "roleId",required = true) Long roleId,
                                     @RequestParam(value = "menuList",required = true) String menuList){
-        return sysRoleService.setMenuPermission(roleId,menuList);
+//        return sysRoleService.setMenuPermission(roleId,menuList);
+        return null;
     }
     
 }
