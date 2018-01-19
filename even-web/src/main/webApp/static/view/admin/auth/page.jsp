@@ -34,6 +34,13 @@
         <table id="jqTreeGrid" data-mobile-responsive="true"></table>
     </div>
 </div>
+<script src="/static/plugin/hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/plugin/hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/static/plugin/hplus/js/plugins/layer/layer.min.js"></script>
+<script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
+<script src="/static/plugin/hplus/plugins/jqTreeGrid/jquery.treegrid.min.js"></script>
+<script src="/static/plugin/hplus/plugins/jqTreeGrid/jquery.treegrid.extension.js"></script>
+<script src="/static/js/evenPack.js"></script>
 <script>
     //权限管理所有权限
     var perms={
@@ -57,13 +64,6 @@
         perms.auth_delete=true
     </script>
 </shiro:hasPermission>
-<script src="/static/plugin/hplus/js/jquery.min.js?v=2.1.4"></script>
-<script src="/static/plugin/hplus/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="/static/plugin/hplus/js/plugins/layer/layer.min.js"></script>
-<script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
-<script src="/static/plugin/hplus/plugins/jqTreeGrid/jquery.treegrid.min.js"></script>
-<script src="/static/plugin/hplus/plugins/jqTreeGrid/jquery.treegrid.extension.js"></script>
-<script src="/static/js/evenPack.js"></script>
 <script src="/static/js/admin/auth/page.js"></script>
 </body>
 </html>

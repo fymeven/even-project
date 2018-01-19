@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class SysUserResponse implements Serializable {
-
     private Long id;
 
     private String userName;
@@ -24,7 +23,9 @@ public class SysUserResponse implements Serializable {
 
     private String userMobile;
 
-    private Integer userStatus;
+    private Long deptId;
+
+    private Integer status;
 
     private Byte isDel;
 
@@ -35,16 +36,6 @@ public class SysUserResponse implements Serializable {
     private Date lastLoginTime;
 
     private String lastLoginIp;
-
-    private List roleList;
-
-    public List getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List roleList) {
-        this.roleList = roleList;
-    }
 
     public Long getId() {
         return id;
@@ -118,12 +109,20 @@ public class SysUserResponse implements Serializable {
         this.userMobile = userMobile == null ? null : userMobile.trim();
     }
 
-    public Integer getUserStatus() {
-        return userStatus;
+    public Long getDeptId() {
+        return deptId;
     }
 
-    public void setUserStatus(Integer userStatus) {
-        this.userStatus = userStatus;
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Byte getIsDel() {
@@ -163,6 +162,6 @@ public class SysUserResponse implements Serializable {
     }
 
     public void setLastLoginIp(String lastLoginIp) {
-        this.lastLoginIp = lastLoginIp;
+        this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
     }
 }

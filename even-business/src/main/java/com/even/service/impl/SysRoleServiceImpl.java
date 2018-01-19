@@ -1,10 +1,12 @@
 package com.even.service.impl;
 
 import com.even.bean.SysRole;
+import com.even.bean.SysRoleAuthExample;
 import com.even.bean.SysRoleExample;
 import com.even.common.util.BeanCopyUtil;
 import com.even.common.util.MyPageInfo;
 import com.even.common.util.ResponseResult;
+import com.even.dao.SysRoleAuthMapper;
 import com.even.dao.SysRoleMapper;
 import com.even.io.sysRole.enums.SysRoleEnum;
 import com.even.io.sysRole.request.SysRoleRequest;
@@ -27,7 +29,8 @@ import java.util.List;
 public class SysRoleServiceImpl implements ISysRoleService {
     @Resource
     private SysRoleMapper sysRoleMapper;
-
+    @Resource
+    private SysRoleAuthMapper sysRoleAuthMapper;
 
     @Override
     public List<String> selectRolesByUserId(Long userId) {
@@ -72,7 +75,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public ResponseResult edit(SysRoleRequest sysRoleRequest) throws Exception {
+    public ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception {
         SysRole sysRole=sysRoleMapper.selectByPrimaryKey(sysRoleRequest.getId());
         BeanCopyUtil.copyProperties(sysRole, sysRoleRequest);
         sysRole.setUpdateTime(new Date());
@@ -92,17 +95,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return result>0 ? ResponseResult.SUCCESS : ResponseResult.ERROR;
     }
 
-//    @Override
-//    public ResponseResult setMenuPermission(Long roleId, String menuList) {
-//        SysRoleMenuExample sysRoleMenuExample=new SysRoleMenuExample();
-//        sysRoleMenuExample.createCriteria().andRoleIdEqualTo(roleId);
-//        sysRoleMenuMapper.deleteByExample(sysRoleMenuExample);
-//        String[] menuArray = menuList.split(",");
-//        int result=sysRoleMenuMapper.insertForeach(roleId,menuArray);
-//        if (result>0){
-//            return ResponseResult.SUCCESS;
-//        }else {
-//            return ResponseResult.ERROR;
-//        }
-//    }
+    @Override
+    public ResponseResult setAuth(Long roleId, String authList) {
+        SysRoleAuthExample sysRoleAuthExample = new SysRoleAuthExample();
+        sysRoleAuthExample.createCriteria().andRoleIdEqualTo(roleId);
+        sysRoleAuthMapper.deleteByExample(sysRoleAuthExample);
+        String[] authArray = authList.split(",");
+        int result=sysRoleAuthMapper.insertForeach(roleId,authArray);
+        return  result>0 ? ResponseResult.SUCCESS : ResponseResult.ERROR;
+    }
+
 }

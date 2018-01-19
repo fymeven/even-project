@@ -34,11 +34,11 @@ public class SysAuthServiceImpl implements ISysAuthService {
         return perms;
     }
 
-    public List<String> selectPermsByRoleId(Long roleId) {
-        List<String> perms=new ArrayList<>();
+    public List<Long> selectAuthIdByRoleId(Long roleId) {
+        List<Long> perms=new ArrayList<>();
         List<SysAuth> authList = sysAuthMapper.selectAllAuthByRoleId(roleId);
         for (SysAuth sysAuth : authList) {
-            perms.add(sysAuth.getPerms());
+            perms.add(sysAuth.getId());
         }
         return perms;
     }
@@ -69,7 +69,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
     @Override
     public JsTree selectAuthTreeByRoleId(Long roleId) throws Exception {
         List<SysAuth> authList = selectAllAuth();
-        List<String> permsList = selectPermsByRoleId(roleId);
+        List<Long> permsList = selectAuthIdByRoleId(roleId);
         List<JsTree> nodes=new ArrayList<>();
         for (SysAuth sysAuth : authList) {
             JsTree node=new JsTree();
@@ -77,8 +77,10 @@ public class SysAuthServiceImpl implements ISysAuthService {
             node.setText(sysAuth.getAuthName());
             node.setParentId(sysAuth.getParentId().toString());
             node.setIcon(sysAuth.getIcon());
-            if (permsList.contains(sysAuth.getPerms())){
+            if (permsList.contains(sysAuth.getId())){
                 node.getState().put("selected",true);
+            }else {
+                node.getState().put("selected",false);
             }
             nodes.add(node);
         }
@@ -102,7 +104,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
     }
 
     @Override
-    public ResponseResult edit(SysAuthRequest sysAuthRequest) throws Exception {
+    public ResponseResult update(SysAuthRequest sysAuthRequest) throws Exception {
         SysAuth sysAuth=sysAuthMapper.selectByPrimaryKey(sysAuthRequest.getId());
         BeanCopyUtil.copyProperties(sysAuth,sysAuthRequest);
         sysAuth.setUpdateTime(new Date());

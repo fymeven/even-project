@@ -119,7 +119,7 @@ public class SysAuthController {
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ResponseResult edit(SysAuthRequest sysAuthRequest) throws Exception {
-        return sysAuthService.edit(sysAuthRequest);
+        return sysAuthService.update(sysAuthRequest);
     }
 
     /**

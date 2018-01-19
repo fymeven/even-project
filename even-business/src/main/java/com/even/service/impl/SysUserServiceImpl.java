@@ -65,7 +65,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public ResponseResult save(SysUserRequest sysUserRequest) throws Exception {
+    public ResponseResult add(SysUserRequest sysUserRequest) throws Exception {
         SysUser sysUser=new SysUser();
         BeanCopyUtil.copyProperties(sysUser,sysUserRequest);
         sysUser.setCreateTime(new Date());
@@ -73,36 +73,28 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUser.setIsDel(SysUserEnum.isDel.NOMAL.getByteValue());
         sysUser.setStatus(SysUserEnum.status.NOMAL.getIntValue());
         int result = sysUserMapper.insert(sysUser);
-        if (result>0){
-            return ResponseResult.SUCCESS;
-        }else {
-            return ResponseResult.ERROR;
-        }
+        return result>0 ? ResponseResult.SUCCESS : ResponseResult.ERROR;
+    }
+
+    @Override
+    public SysUser detail(Long id) {
+        return sysUserMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public ResponseResult update(SysUserRequest sysUserRequest) throws Exception {
         SysUser sysUser=sysUserMapper.selectByPrimaryKey(sysUserRequest.getId());
         BeanCopyUtil.copyProperties(sysUser, sysUserRequest);
-        if (sysUser.getId()==null)
-            return ResponseResult.ERROR;
+        sysUser.setUpdateTime(new Date());
         int result = sysUserMapper.updateByPrimaryKey(sysUser);
-        if (result>0){
-            return ResponseResult.SUCCESS;
-        }else {
-            return ResponseResult.ERROR;
-        }
+        return result>0 ? ResponseResult.SUCCESS : ResponseResult.ERROR;
     }
 
     @Override
     public ResponseResult delete(String idList) {
         String[] idArray = idList.split(",");
         int result=sysUserMapper.updateDelForeach(idArray, SysUserEnum.isDel.DELED.getByteValue());
-        if (result>0){
-            return ResponseResult.SUCCESS;
-        }else {
-            return ResponseResult.ERROR;
-        }
+        return result>0 ? ResponseResult.SUCCESS : ResponseResult.ERROR;
     }
 
     @Override
@@ -112,10 +104,6 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserRoleMapper.deleteByExample(example);
         String[] roleArray = roleList.split(",");
         int result = sysUserRoleMapper.insertForeach(userId, roleArray);
-        if (result>0){
-            return ResponseResult.SUCCESS;
-        }else {
-            return ResponseResult.ERROR;
-        }
+        return result>0 ? ResponseResult.SUCCESS : ResponseResult.ERROR;
     }
 }

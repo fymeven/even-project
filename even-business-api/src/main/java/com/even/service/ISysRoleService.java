@@ -14,7 +14,7 @@ public interface ISysRoleService {
 
     ResponseResult add(SysRoleRequest sysRoleRequest) throws Exception;
 
-    ResponseResult edit(SysRoleRequest sysRoleRequest) throws Exception;
+    ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception;
 
     ResponseResult delete(String id);
 
@@ -22,5 +22,6 @@ public interface ISysRoleService {
 
     SysRole detail(Long id);
 
-//    ResponseResult setMenuPermission(Long roleId, String menuList);
+    ResponseResult setAuth(Long roleId, String authList);
+
 }

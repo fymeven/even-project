@@ -33,6 +33,7 @@
 <script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/validate/jquery.validate.min.js"></script>
 <script src="/static/plugin/hplus/plugins/jstree/dist/jstree.min.js"></script>
+<script src="/static/js/evenPack.js"></script>
 <script>
     var roleId='${roleId}';
 </script>

@@ -20,11 +20,11 @@ public interface ISysAuthService {
     List<String> selectPermsByUserId(Long userId);
 
     /**
-     * 根据角色id查询所有权限标识
+     * 查询角色的所有权限id
      * @param roleId
      * @return
      */
-    List<String> selectPermsByRoleId(Long roleId);
+    List<Long> selectAuthIdByRoleId(Long roleId);
 
     /**
      * 加载主页系统菜单
@@ -59,7 +59,7 @@ public interface ISysAuthService {
      * @param sysAuthRequest
      * @return
      */
-    ResponseResult edit(SysAuthRequest sysAuthRequest) throws Exception;
+    ResponseResult update(SysAuthRequest sysAuthRequest) throws Exception;
 
     /**
      * 删除权限

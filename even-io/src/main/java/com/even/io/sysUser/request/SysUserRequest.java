@@ -25,7 +25,7 @@ public class SysUserRequest extends BaseRequest {
 
     private Long deptId;
 
-    private Integer userStatus;
+    private Integer status;
 
     private Byte isDel;
 
@@ -117,12 +117,12 @@ public class SysUserRequest extends BaseRequest {
         this.deptId = deptId;
     }
 
-    public Integer getUserStatus() {
-        return userStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUserStatus(Integer userStatus) {
-        this.userStatus = userStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Byte getIsDel() {
@@ -163,5 +163,4 @@ public class SysUserRequest extends BaseRequest {
 
     public void setLastLoginIp(String lastLoginIp) {
         this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
-    }
-}
+    }}

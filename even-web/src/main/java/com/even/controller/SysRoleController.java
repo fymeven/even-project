@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -40,7 +41,7 @@ public class SysRoleController {
 
     //编辑角色页面
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
-    public String update(@PathVariable Long id,ModelMap modelMap){
+    public String edit(@PathVariable Long id,ModelMap modelMap){
         SysRole detail = sysRoleService.detail(id);
         modelMap.put("detail",detail);
         return "role/edit";
@@ -97,7 +98,7 @@ public class SysRoleController {
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ResponseResult edit(SysRoleRequest sysRoleRequest) throws Exception {
-        return sysRoleService.edit(sysRoleRequest);
+        return sysRoleService.update(sysRoleRequest);
     }
 
     /**
@@ -114,15 +115,14 @@ public class SysRoleController {
     /**
      * 角色授权
      * @param roleId
-     * @param menuList
+     * @param authList
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/setAuth",method = RequestMethod.POST)
-    public ResponseResult setMenuList(@RequestParam(value = "roleId",required = true) Long roleId,
-                                    @RequestParam(value = "menuList",required = true) String menuList){
-//        return sysRoleService.setMenuPermission(roleId,menuList);
-        return null;
+    public ResponseResult setAuth(@RequestParam(value = "roleId",required = true) Long roleId,
+                                    @RequestParam(value = "authList",required = true) String authList){
+        return sysRoleService.setAuth(roleId, authList);
     }
     
 }

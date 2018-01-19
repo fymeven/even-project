@@ -50,11 +50,6 @@
 <textarea id="roleDesc" name="roleDesc" class="form-control" autocomplete="off">${detail.roleDesc}</textarea>
 </div>
 </div>
-<div class="form-group">
-    <div class="col-sm-12 text-center">
-        <button class="btn btn-info" type="submit"><i class="fa fa-check-circle-o"></i>&nbsp;提交</button>
-    </div>
-</div>
 </form>
 </div>
 <script src="/static/plugin/hplus/js/jquery.min.js?v=2.1.4"></script>

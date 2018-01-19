@@ -36,7 +36,6 @@
         <table id="jqGrid"></table>
         <div id="pager"></div>
     </div>
-
 </div>
 <script src="/static/plugin/hplus/js/jquery.min.js?v=2.1.4"></script>
 <script src="/static/plugin/hplus/js/bootstrap.min.js?v=3.3.6"></script>
@@ -45,6 +44,29 @@
 <script src="/static/plugin/hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
 <script src="/static/plugin/hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
 <script src="/static/js/evenPack.js"></script>
+<script>
+    //角色管理所有权限
+    var perms={
+        role_auth:false,
+        role_edit:false,
+        role_delete:false
+    };
+</script>
+<shiro:hasPermission name="role:auth">
+    <script>
+        perms.role_auth=true
+    </script>
+</shiro:hasPermission>
+<shiro:hasPermission name="role:edit">
+    <script>
+        perms.role_edit=true
+    </script>
+</shiro:hasPermission>
+<shiro:hasPermission name="role:delete">
+    <script>
+        perms.role_delete=true
+    </script>
+</shiro:hasPermission>
 <script src="/static/js/admin/role/page.js"></script>
 </body>
 </html>

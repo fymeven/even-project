@@ -10,10 +10,31 @@ Target Server Type    : MYSQL
 Target Server Version : 50633
 File Encoding         : 65001
 
-Date: 2018-01-12 20:02:33
+Date: 2018-01-19 10:11:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for day_data
+-- ----------------------------
+DROP TABLE IF EXISTS `day_data`;
+CREATE TABLE `day_data` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `day` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of day_data
+-- ----------------------------
+INSERT INTO `day_data` VALUES ('1', '1', '2018-01-01');
+INSERT INTO `day_data` VALUES ('2', '2', '2018-01-01');
+INSERT INTO `day_data` VALUES ('3', '3', '2018-01-01');
+INSERT INTO `day_data` VALUES ('4', '4', '2018-01-02');
+INSERT INTO `day_data` VALUES ('5', '5', '2018-01-02');
+INSERT INTO `day_data` VALUES ('6', '6', '2018-01-03');
 
 -- ----------------------------
 -- Table structure for sys_auth
@@ -34,7 +55,7 @@ CREATE TABLE `sys_auth` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_auth
@@ -58,16 +79,22 @@ INSERT INTO `sys_auth` VALUES ('77', '32', null, '43', '43', null, '1', '1', '0'
 INSERT INTO `sys_auth` VALUES ('78', '2435', null, '54', '45', null, '1', '1', '0', '1', null, '2018-01-12 13:58:44', '2018-01-12 13:58:44');
 INSERT INTO `sys_auth` VALUES ('79', '23', null, '23', null, null, '1', '1', '0', '1', null, '2018-01-12 13:59:02', '2018-01-12 13:59:02');
 INSERT INTO `sys_auth` VALUES ('80', '34', null, '34', null, null, '1', '1', '0', '1', null, '2018-01-12 13:59:06', '2018-01-12 13:59:06');
-INSERT INTO `sys_auth` VALUES ('81', '4334', null, '434', null, null, '2', '1', '0', '1', null, '2018-01-12 13:59:11', '2018-01-12 13:59:11');
+INSERT INTO `sys_auth` VALUES ('81', '4334', null, '434', null, null, '2', '1', '0', '2', null, '2018-01-12 13:59:11', '2018-01-15 16:58:57');
 INSERT INTO `sys_auth` VALUES ('82', '4334', null, '3434', null, null, '2', '1', '0', '1', null, '2018-01-12 13:59:18', '2018-01-12 13:59:18');
 INSERT INTO `sys_auth` VALUES ('83', '43', null, '54', null, null, '1', '1', '0', '1', null, '2018-01-12 13:59:35', '2018-01-12 13:59:35');
 INSERT INTO `sys_auth` VALUES ('84', '54', null, '54', null, null, '1', '1', '0', '1', null, '2018-01-12 13:59:39', '2018-01-12 13:59:39');
-INSERT INTO `sys_auth` VALUES ('85', '54', null, '5445', null, null, '2', '1', '81', '1', null, '2018-01-12 13:59:46', '2018-01-12 13:59:46');
+INSERT INTO `sys_auth` VALUES ('85', '54', null, '5445', null, null, '2', '1', '81', '2', null, '2018-01-12 13:59:46', '2018-01-15 17:00:34');
 INSERT INTO `sys_auth` VALUES ('86', '5445', null, '5445', null, null, '2', '1', '81', '1', null, '2018-01-12 14:00:03', '2018-01-12 14:00:03');
-INSERT INTO `sys_auth` VALUES ('87', '23', null, '2323', '2323', null, '2', '1', '81', '1', null, '2018-01-12 14:00:12', '2018-01-12 14:00:12');
+INSERT INTO `sys_auth` VALUES ('87', '23', null, '2323', '2323', null, '2', '1', '81', '2', null, '2018-01-12 14:00:12', '2018-01-15 17:00:29');
 INSERT INTO `sys_auth` VALUES ('88', '32', null, '2323', null, null, '1', '1', '83', '1', null, '2018-01-12 14:00:19', '2018-01-12 14:00:19');
 INSERT INTO `sys_auth` VALUES ('89', '3434', null, '432', null, null, '1', '1', '83', '1', null, '2018-01-12 14:00:26', '2018-01-12 14:00:26');
 INSERT INTO `sys_auth` VALUES ('90', '2323', null, '242', null, null, '1', '1', '88', '1', null, '2018-01-12 14:00:33', '2018-01-12 14:00:33');
+INSERT INTO `sys_auth` VALUES ('91', '菜单授权', null, 'role:auth', null, null, '3', '1', '3', '1', null, '2018-01-15 16:28:16', '2018-01-15 16:28:16');
+INSERT INTO `sys_auth` VALUES ('92', '添加用户', null, 'user:add', null, null, '3', '1', '4', '1', null, '2018-01-15 16:30:54', '2018-01-15 16:30:54');
+INSERT INTO `sys_auth` VALUES ('93', '编辑用户', null, 'user:edit', null, null, '3', '1', '4', '1', null, '2018-01-15 16:31:14', '2018-01-15 16:31:14');
+INSERT INTO `sys_auth` VALUES ('94', '删除用户', null, 'user:delete', null, null, '3', '1', '4', '1', null, '2018-01-15 16:31:42', '2018-01-15 16:31:42');
+INSERT INTO `sys_auth` VALUES ('95', '设置角色', null, 'user:role', null, null, '3', '1', '4', '1', null, '2018-01-15 16:32:23', '2018-01-15 16:32:23');
+INSERT INTO `sys_auth` VALUES ('96', 'test', null, 'test', null, null, '2', '1', '1', '1', null, '2018-01-15 16:35:33', '2018-01-15 16:35:33');
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -117,7 +144,7 @@ CREATE TABLE `sys_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
@@ -142,12 +169,13 @@ INSERT INTO `sys_role` VALUES ('17', '6661', '666', '1', null, '2', '2018-01-12 
 INSERT INTO `sys_role` VALUES ('18', '2332', '2332', '1', null, '2', '2018-01-12 10:00:28', '2018-01-12 10:00:28');
 INSERT INTO `sys_role` VALUES ('19', 'fefw', '23', '1', null, '2', '2018-01-12 11:23:15', '2018-01-12 11:23:15');
 INSERT INTO `sys_role` VALUES ('20', 'fewqqqqqqqqqqqqqqqqq', 'eqf', '2', null, '2', '2018-01-12 11:23:41', '2018-01-12 11:23:47');
-INSERT INTO `sys_role` VALUES ('21', '2323', '2323', '1', null, '1', '2018-01-12 15:02:55', '2018-01-12 15:02:55');
+INSERT INTO `sys_role` VALUES ('21', '2323', '2323', '1', null, '2', '2018-01-12 15:02:55', '2018-01-12 15:02:55');
 INSERT INTO `sys_role` VALUES ('22', '2323', '2323', '1', null, '2', '2018-01-12 15:03:05', '2018-01-12 15:03:05');
 INSERT INTO `sys_role` VALUES ('23', '232', '323', '1', null, '2', '2018-01-12 15:18:16', '2018-01-12 15:18:16');
-INSERT INTO `sys_role` VALUES ('24', '2323', '2332', '1', null, '1', '2018-01-12 15:50:39', '2018-01-12 15:50:39');
-INSERT INTO `sys_role` VALUES ('25', '2323', '2323', '1', null, '1', '2018-01-12 15:50:44', '2018-01-12 15:50:44');
-INSERT INTO `sys_role` VALUES ('26', '23111', '2323', '1', null, '1', '2018-01-12 15:51:53', '2018-01-12 15:51:53');
+INSERT INTO `sys_role` VALUES ('24', '2323', '2332', '1', null, '2', '2018-01-12 15:50:39', '2018-01-12 15:50:39');
+INSERT INTO `sys_role` VALUES ('25', '2323', '2323', '1', null, '2', '2018-01-12 15:50:44', '2018-01-12 15:50:44');
+INSERT INTO `sys_role` VALUES ('26', '231112', '2323', '1', null, '2', '2018-01-12 15:51:53', '2018-01-15 11:05:42');
+INSERT INTO `sys_role` VALUES ('27', 'huh', '23r', '1', null, '2', '2018-01-15 14:56:59', '2018-01-15 14:56:59');
 
 -- ----------------------------
 -- Table structure for sys_role_auth
@@ -158,24 +186,95 @@ CREATE TABLE `sys_role_auth` (
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色编号',
   `auth_id` bigint(20) DEFAULT NULL COMMENT '权限编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_auth
 -- ----------------------------
-INSERT INTO `sys_role_auth` VALUES ('1', '1', '1');
-INSERT INTO `sys_role_auth` VALUES ('2', '1', '2');
-INSERT INTO `sys_role_auth` VALUES ('3', '2', '3');
-INSERT INTO `sys_role_auth` VALUES ('4', '1', '3');
-INSERT INTO `sys_role_auth` VALUES ('5', '1', '4');
-INSERT INTO `sys_role_auth` VALUES ('6', '1', '5');
-INSERT INTO `sys_role_auth` VALUES ('7', '1', '6');
-INSERT INTO `sys_role_auth` VALUES ('8', '1', '8');
-INSERT INTO `sys_role_auth` VALUES ('9', '1', '9');
-INSERT INTO `sys_role_auth` VALUES ('10', '1', '10');
-INSERT INTO `sys_role_auth` VALUES ('11', '1', '11');
-INSERT INTO `sys_role_auth` VALUES ('12', '1', '12');
-INSERT INTO `sys_role_auth` VALUES ('13', '1', '7');
+INSERT INTO `sys_role_auth` VALUES ('14', '8', '81');
+INSERT INTO `sys_role_auth` VALUES ('15', '8', '83');
+INSERT INTO `sys_role_auth` VALUES ('16', '8', '85');
+INSERT INTO `sys_role_auth` VALUES ('17', '8', '86');
+INSERT INTO `sys_role_auth` VALUES ('18', '8', '87');
+INSERT INTO `sys_role_auth` VALUES ('19', '8', '88');
+INSERT INTO `sys_role_auth` VALUES ('20', '8', '89');
+INSERT INTO `sys_role_auth` VALUES ('21', '8', '90');
+INSERT INTO `sys_role_auth` VALUES ('22', '9', '75');
+INSERT INTO `sys_role_auth` VALUES ('23', '9', '76');
+INSERT INTO `sys_role_auth` VALUES ('24', '8', '78');
+INSERT INTO `sys_role_auth` VALUES ('25', '8', '79');
+INSERT INTO `sys_role_auth` VALUES ('26', '9', '75');
+INSERT INTO `sys_role_auth` VALUES ('27', '9', '76');
+INSERT INTO `sys_role_auth` VALUES ('28', '9', '79');
+INSERT INTO `sys_role_auth` VALUES ('29', '9', '75');
+INSERT INTO `sys_role_auth` VALUES ('30', '9', '76');
+INSERT INTO `sys_role_auth` VALUES ('31', '16', '75');
+INSERT INTO `sys_role_auth` VALUES ('32', '16', '76');
+INSERT INTO `sys_role_auth` VALUES ('35', '21', '75');
+INSERT INTO `sys_role_auth` VALUES ('36', '21', '76');
+INSERT INTO `sys_role_auth` VALUES ('37', '21', '77');
+INSERT INTO `sys_role_auth` VALUES ('38', '16', '75');
+INSERT INTO `sys_role_auth` VALUES ('39', '16', '76');
+INSERT INTO `sys_role_auth` VALUES ('40', '16', '78');
+INSERT INTO `sys_role_auth` VALUES ('41', '16', '1');
+INSERT INTO `sys_role_auth` VALUES ('42', '16', '3');
+INSERT INTO `sys_role_auth` VALUES ('43', '16', '4');
+INSERT INTO `sys_role_auth` VALUES ('44', '16', '5');
+INSERT INTO `sys_role_auth` VALUES ('45', '16', '7');
+INSERT INTO `sys_role_auth` VALUES ('46', '16', '11');
+INSERT INTO `sys_role_auth` VALUES ('47', '16', '12');
+INSERT INTO `sys_role_auth` VALUES ('48', '16', '75');
+INSERT INTO `sys_role_auth` VALUES ('49', '16', '76');
+INSERT INTO `sys_role_auth` VALUES ('50', '16', '78');
+INSERT INTO `sys_role_auth` VALUES ('51', '16', '1');
+INSERT INTO `sys_role_auth` VALUES ('52', '16', '2');
+INSERT INTO `sys_role_auth` VALUES ('53', '16', '8');
+INSERT INTO `sys_role_auth` VALUES ('54', '16', '9');
+INSERT INTO `sys_role_auth` VALUES ('55', '16', '10');
+INSERT INTO `sys_role_auth` VALUES ('56', '16', '75');
+INSERT INTO `sys_role_auth` VALUES ('57', '16', '76');
+INSERT INTO `sys_role_auth` VALUES ('58', '16', '78');
+INSERT INTO `sys_role_auth` VALUES ('62', '26', '78');
+INSERT INTO `sys_role_auth` VALUES ('63', '26', '83');
+INSERT INTO `sys_role_auth` VALUES ('64', '26', '88');
+INSERT INTO `sys_role_auth` VALUES ('65', '26', '89');
+INSERT INTO `sys_role_auth` VALUES ('66', '26', '90');
+INSERT INTO `sys_role_auth` VALUES ('141', '6', '1');
+INSERT INTO `sys_role_auth` VALUES ('142', '6', '5');
+INSERT INTO `sys_role_auth` VALUES ('143', '15', '2');
+INSERT INTO `sys_role_auth` VALUES ('144', '15', '8');
+INSERT INTO `sys_role_auth` VALUES ('145', '15', '9');
+INSERT INTO `sys_role_auth` VALUES ('146', '15', '10');
+INSERT INTO `sys_role_auth` VALUES ('147', '15', '3');
+INSERT INTO `sys_role_auth` VALUES ('148', '15', '7');
+INSERT INTO `sys_role_auth` VALUES ('149', '15', '11');
+INSERT INTO `sys_role_auth` VALUES ('150', '15', '12');
+INSERT INTO `sys_role_auth` VALUES ('151', '15', '91');
+INSERT INTO `sys_role_auth` VALUES ('152', '5', '2');
+INSERT INTO `sys_role_auth` VALUES ('153', '5', '8');
+INSERT INTO `sys_role_auth` VALUES ('154', '5', '9');
+INSERT INTO `sys_role_auth` VALUES ('155', '5', '10');
+INSERT INTO `sys_role_auth` VALUES ('156', '5', '3');
+INSERT INTO `sys_role_auth` VALUES ('157', '5', '7');
+INSERT INTO `sys_role_auth` VALUES ('158', '5', '11');
+INSERT INTO `sys_role_auth` VALUES ('159', '5', '12');
+INSERT INTO `sys_role_auth` VALUES ('160', '5', '91');
+INSERT INTO `sys_role_auth` VALUES ('161', '1', '1');
+INSERT INTO `sys_role_auth` VALUES ('162', '1', '2');
+INSERT INTO `sys_role_auth` VALUES ('163', '1', '3');
+INSERT INTO `sys_role_auth` VALUES ('164', '1', '4');
+INSERT INTO `sys_role_auth` VALUES ('165', '1', '5');
+INSERT INTO `sys_role_auth` VALUES ('166', '1', '7');
+INSERT INTO `sys_role_auth` VALUES ('167', '1', '8');
+INSERT INTO `sys_role_auth` VALUES ('168', '1', '9');
+INSERT INTO `sys_role_auth` VALUES ('169', '1', '10');
+INSERT INTO `sys_role_auth` VALUES ('170', '1', '11');
+INSERT INTO `sys_role_auth` VALUES ('171', '1', '12');
+INSERT INTO `sys_role_auth` VALUES ('172', '1', '91');
+INSERT INTO `sys_role_auth` VALUES ('173', '1', '92');
+INSERT INTO `sys_role_auth` VALUES ('174', '1', '93');
+INSERT INTO `sys_role_auth` VALUES ('175', '1', '94');
+INSERT INTO `sys_role_auth` VALUES ('176', '1', '95');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -199,7 +298,7 @@ CREATE TABLE `sys_user` (
   `last_login_time` datetime DEFAULT NULL COMMENT '上次登录时间',
   `last_login_ip` varchar(200) DEFAULT NULL COMMENT '上次登陆ip',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
@@ -238,7 +337,8 @@ INSERT INTO `sys_user` VALUES ('33', '4444', '123', null, 'EVEN', '123@qq.com', 
 INSERT INTO `sys_user` VALUES ('34', '5555', '123', null, 'EVEN', '123@qq.com', null, '1', '15212345678', null, '1', '1', '2017-11-08 22:53:38', '2017-11-08 22:53:38', '2017-11-08 21:17:26', '127.0.0.1');
 INSERT INTO `sys_user` VALUES ('35', '6666', '123', null, 'EVEN', '123@qq.com', null, '2', '15212345678', null, '1', '1', '2017-11-08 22:53:58', '2017-11-08 22:53:58', '2017-11-08 21:17:26', '127.0.0.1');
 INSERT INTO `sys_user` VALUES ('36', '8888', '123', null, 'EVEN', '123@qq.com', null, '1', '15212345678', null, '1', '2', '2017-11-08 22:54:19', '2017-11-08 22:54:19', '2017-11-08 21:17:26', '127.0.0.1');
-INSERT INTO `sys_user` VALUES ('38', 'test222', 'hieven', null, 'EVEN', 'test222@qq.com', null, null, null, null, '1', '1', '2017-12-22 17:28:34', '2017-12-22 17:28:34', null, null);
+INSERT INTO `sys_user` VALUES ('38', 'test222', '123', null, 'EVEN', 'test222@qq.com', null, null, null, null, '1', '1', '2017-12-22 17:28:34', '2017-12-22 17:28:34', null, null);
+INSERT INTO `sys_user` VALUES ('39', '111', null, null, '111', '111@qq.com', null, null, null, '1', '1', '1', '2018-01-15 15:03:54', '2018-01-15 15:03:54', null, null);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -249,10 +349,11 @@ CREATE TABLE `sys_user_role` (
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户编号',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2', '2');
+INSERT INTO `sys_user_role` VALUES ('3', '38', '5');

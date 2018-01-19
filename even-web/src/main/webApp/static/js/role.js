@@ -18,7 +18,6 @@ var role={
                 "keep_selected_style": false,//是否默认选中
                 "three_state": true,//父子级别级联选择
                 "tie_selection": false,
-                "cascade":"down"
             }
         });
 

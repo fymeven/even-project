@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -21,12 +22,16 @@
     <link href="/static/plugin/hplus/js/plugins/iosSwitch/lc_switch.css" rel="stylesheet">
     <link href="/static/css/hieven.css" rel="stylesheet">
 </head>
-<body class="gray-bg" onload="user.init()">
+<body class="gray-bg">
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="btn-group-toolbar">
             <a class="btn btn-primary" id="btn_flush"><i class="fa fa-refresh"></i>&nbsp;</a>
+        <shiro:hasPermission name="user:add">
             <a class="btn btn-info" id="btn_add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="user:delete">
             <a class="btn btn-danger" id="btn_delete"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+        </shiro:hasPermission>
     </div>
     <div>
         <table id="jqGrid"></table>
@@ -40,7 +45,30 @@
 <script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
 <script src="/static/plugin/hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
-<script src="/static/plugin/hplus/js/plugins/iosSwitch/js/lc_switch.min.js"></script>
-<script src="/static/js/user.js"></script>
+<script src="/static/js/evenPack.js"></script>
+<script>
+    //管理员管理所有权限
+    var perms={
+        user_role:false,
+        user_edit:false,
+        user_delete:false
+    };
+</script>
+<shiro:hasPermission name="user:role">
+    <script>
+        perms.user_role=true
+    </script>
+</shiro:hasPermission>
+<shiro:hasPermission name="user:edit">
+    <script>
+        perms.user_edit=true
+    </script>
+</shiro:hasPermission>
+<shiro:hasPermission name="user:delete">
+    <script>
+        perms.user_delete=true
+    </script>
+</shiro:hasPermission>
+<script src="/static/js/admin/user/page.js"></script>
 </body>
 </html>

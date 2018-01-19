@@ -11,7 +11,7 @@ import com.even.io.sysUser.request.SysUserRequest;
 public interface ISysUserService {
     SysUser selectByUserName(String userName);
 
-    ResponseResult save(SysUserRequest sysUserRequest) throws Exception;
+    ResponseResult add(SysUserRequest sysUserRequest) throws Exception;
 
     ResponseResult update(SysUserRequest sysUserRequest) throws Exception;
 
@@ -20,4 +20,6 @@ public interface ISysUserService {
     ResponseResult setRole(Long userId, String roleList);
 
     Object list(PageModel pageModel) throws Exception;
+
+    SysUser detail(Long id);
 }

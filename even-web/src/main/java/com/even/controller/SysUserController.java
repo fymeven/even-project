@@ -1,5 +1,7 @@
 package com.even.controller;
 
+import com.even.bean.SysRole;
+import com.even.bean.SysUser;
 import com.even.model.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
@@ -7,10 +9,8 @@ import com.even.service.ISysUserService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,19 +27,21 @@ public class SysUserController {
     //用户管理页面
     @RequestMapping(value = "/page",method = RequestMethod.GET)
     public String page(){
-        return "user_manage";
+        return "user/page";
     }
 
     //添加用户页面
-    @RequestMapping(value = "/page/add",method = RequestMethod.GET)
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
     public String add(){
-        return "user_add";
+        return "user/add";
     }
 
     //编辑用户页面
-    @RequestMapping(value = "/page/update",method = RequestMethod.GET)
-    public String update(){
-        return "user_edit";
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String edit(@PathVariable Long id,ModelMap modelMap){
+        SysUser detail = sysUserService.detail(id);
+        modelMap.put("detail",detail);
+        return "user/edit";
     }
 
     /**
@@ -57,41 +59,26 @@ public class SysUserController {
     @ResponseBody
     @RequestMapping("/save")
     public ResponseResult add(SysUserRequest sysUserRequest) throws Exception {
-        return sysUserService.save(sysUserRequest);
+        return sysUserService.add(sysUserRequest);
     }
 
     @ResponseBody
-    @RequestMapping("/update")
-    public ResponseResult update(SysUserRequest sysUserRequest){
-        try {
-            return sysUserService.update(sysUserRequest);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping("/edit")
+    public ResponseResult update(SysUserRequest sysUserRequest) throws Exception {
+        return sysUserService.update(sysUserRequest);
     }
 
     @ResponseBody
     @RequestMapping("/delete")
     public ResponseResult delete(@RequestParam(value = "idList",required = true) String idList){
-        try {
-            return sysUserService.delete(idList);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+        return sysUserService.delete(idList);
     }
 
     @ResponseBody
     @RequestMapping("/setRole")
     public ResponseResult setRole(@RequestParam(value = "userId",required = true) Long userId,
                                     @RequestParam(value = "roleList",required = true) String roleList){
-        try {
-            return sysUserService.setRole(userId,roleList);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+        return sysUserService.setRole(userId,roleList);
     }
 
 }
