@@ -4,7 +4,6 @@ import com.even.bean.SysAuth;
 import com.even.bean.SysMenu;
 import com.even.bean.SysMenuExample;
 import com.even.common.util.BeanCopyUtil;
-import com.even.common.util.MyPageInfo;
 import com.even.common.util.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysAuthMapper;
@@ -117,8 +116,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
             }
             sysMenuResponseList.add(sysMenuResponse);
         }
-        MyPageInfo pageInfo=new MyPageInfo(sysMenus);
-        System.out.println("pageInfo:"+pageInfo);
         return new PageInfo<SysMenuResponse>(sysMenuResponseList);
     }
 
