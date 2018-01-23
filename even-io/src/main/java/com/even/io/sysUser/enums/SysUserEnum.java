@@ -8,7 +8,7 @@ public class SysUserEnum {
 
         ACCOUNT_ERROR(10002,"用户名/密码错误"),
         ACCOUNT_LOCK(10003,"用户账号已锁定"),
-        ACCOUNT_PASS(1004,"身份已过期");
+        ACCOUNT_PASS(10004,"身份已过期");
 
         private final int intValue;
         private final String desc;
@@ -50,7 +50,7 @@ public class SysUserEnum {
         }
     }
 
-    public enum userStatus{
+    public enum status{
         NOMAL(1,"正常"),
         LOCK(2,"已锁定");
 
@@ -59,7 +59,7 @@ public class SysUserEnum {
         private final String desc;
 
 
-        userStatus(int intValue, String desc) {
+        status(int intValue, String desc) {
             this.intValue = intValue;
             this.desc = desc;
         }

@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysDeptMapper {
-    long countByExample(SysDeptExample example);
+    int countByExample(SysDeptExample example);
 
     int deleteByExample(SysDeptExample example);
 

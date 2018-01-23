@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysLogMapper {
-    long countByExample(SysLogExample example);
+    int countByExample(SysLogExample example);
 
     int deleteByExample(SysLogExample example);
 

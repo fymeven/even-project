@@ -1,0 +1,54 @@
+.layout{
+    height: 93%;position: relative;overflow: hidden;
+}
+.layout-left{
+    border:1px #a9a9a9 solid;height: 100%;
+}
+.layout-right{
+    border:1px #a9a9a9 solid;height: 100%;
+}
+.layout_title{
+    border-bottom:1px #a9a9a9 solid;
+    height: 32px;
+    line-height: 32px;
+    color: #666;
+    font-weight: bold;
+    padding-left: 9px;
+}
+.btn-group-toolbar{
+    line-height: 55px;
+    height: 55px;
+    vertical-align: middle;
+    border-bottom:1px #a9a9a9 solid;
+}
+.btn-group-toolbar .btn-group{top: 25%;padding-left:13px;}
+.btn-primary{
+    color: #fff !important;
+    border-color: #2c3e50 !important;
+    background-color: #2c3e50 !important;
+}
+.btn-default{
+    color: #fff !important;
+    border-color: #c0c0c0 !important;
+    background-color: #c0c0c0 !important;
+}
+textarea.form-control{resize: none;}
+.form-horizontal .input-button {
+    border: none;
+    right: 35px;
+    top: 50%;
+    margin-top: -12px;
+    cursor: pointer;
+    overflow: hidden;
+    position: absolute;
+    z-index: 100;
+}
+table th{
+    text-align: center;
+}
+.footer {
+    position: relative;
+    margin-top: -150px; /* footer高度的负值 */
+    height: 150px;
+    clear:both;
+}

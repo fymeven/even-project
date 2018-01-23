@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SysUserRoleMapper {
-    long countByExample(SysUserRoleExample example);
+    int countByExample(SysUserRoleExample example);
 
     int deleteByExample(SysUserRoleExample example);
 
@@ -29,13 +29,11 @@ public interface SysUserRoleMapper {
 
     int updateByPrimaryKey(SysUserRole record);
 
-
     /**
      * TODO
      * @param userId
      * @param roleArray
      * @return
      */
-    int insertForeach(@Param("userId") String userId,@Param("roleArray") String[] roleArray);
-
+    int insertForeach(@Param("userId") Long userId,@Param("roleArray") String[] roleArray);
 }

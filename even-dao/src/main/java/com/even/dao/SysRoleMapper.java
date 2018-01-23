@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SysRoleMapper {
-    long countByExample(SysRoleExample example);
+    int countByExample(SysRoleExample example);
 
     int deleteByExample(SysRoleExample example);
 
@@ -29,13 +29,13 @@ public interface SysRoleMapper {
 
     int updateByPrimaryKey(SysRole record);
 
-
     /**
      * TODO
-     * @param userName
+     * 通过用户id查询所拥有角色
+     * @param userId
      * @return
      */
-    List<SysRole> selectRolesByUserName(String userName);
+    List<SysRole> selectRolesByUserId(Long userId);
 
     /**
      * TODO
@@ -43,5 +43,5 @@ public interface SysRoleMapper {
      * @param delStatus
      * @return
      */
-    int updateDelForeach(String[] idArray, byte delStatus);
+    int updateDelForeach(@Param("idArray") String[] idArray,@Param("delStatus") byte delStatus);
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SysUserMapper {
-    long countByExample(SysUserExample example);
+    int countByExample(SysUserExample example);
 
     int deleteByExample(SysUserExample example);
 
@@ -28,7 +28,6 @@ public interface SysUserMapper {
     int updateByPrimaryKeySelective(SysUser record);
 
     int updateByPrimaryKey(SysUser record);
-
 
     /**
      * TODO

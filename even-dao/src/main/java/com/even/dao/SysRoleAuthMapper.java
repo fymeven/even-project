@@ -1,15 +1,12 @@
 package com.even.dao;
 
-import com.even.bean.SysRole;
 import com.even.bean.SysRoleAuth;
 import com.even.bean.SysRoleAuthExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-import java.util.Set;
-
 public interface SysRoleAuthMapper {
-    long countByExample(SysRoleAuthExample example);
+    int countByExample(SysRoleAuthExample example);
 
     int deleteByExample(SysRoleAuthExample example);
 
@@ -31,5 +28,5 @@ public interface SysRoleAuthMapper {
 
     int updateByPrimaryKey(SysRoleAuth record);
 
-
+    int insertForeach(@Param("roleId")Long roleId, @Param("authArray")String[] authArray);
 }

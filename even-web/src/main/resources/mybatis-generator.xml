@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="dbconfig.properties"/>
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+        <property name="useActualColumnNames" value="true" />
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="javaFileEncoding" value="UTF-8" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 配置数据库连接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
+		</jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
+			NUMERIC 类型解析为java.math.BigDecimal -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="true" />
+		</javaTypeResolver>
+
+		<!-- 指定javaBean生成的位置 -->
+		<javaModelGenerator targetPackage="com.even.bean"
+			targetProject="even-bean\src\main\java">
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!--指定sql映射文件生成的位置 -->
+		<sqlMapGenerator targetPackage="com.even.dao.mapping" targetProject="even-dao\src\main\java">
+		</sqlMapGenerator>
+
+		<!-- 指定dao接口生成的位置，mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.even.dao" targetProject="even-dao\src\main\java">
+		</javaClientGenerator>
+
+
+		 <!--table指定每个表的生成策略-->
+        <!--<table tableName="sys_user" domainObjectName="SysUser"  />-->
+		<!--<table tableName="sys_role" domainObjectName="SysRole" />-->
+        <!--<table tableName="sys_auth" domainObjectName="SysAuth" />-->
+        <!--<table tableName="sys_user_role" domainObjectName="SysUserRole" />-->
+        <!--<table tableName="sys_role_auth" domainObjectName="SysRoleAuth" />-->
+        <!--<table tableName="sys_dept" domainObjectName="SysDept" />-->
+        <!--<table tableName="sys_log" domainObjectName="SysLog" />-->
+
+
+	</context>
+</generatorConfiguration>

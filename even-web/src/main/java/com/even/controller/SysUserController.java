@@ -1,18 +1,16 @@
 package com.even.controller;
 
-import com.even.common.util.DataTablePage;
+import com.even.bean.SysRole;
+import com.even.bean.SysUser;
+import com.even.model.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.io.sysUser.request.SysUserRequest;
-import com.even.io.sysUser.response.SysUserResponse;
 import com.even.service.ISysUserService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -26,57 +24,61 @@ public class SysUserController {
     @Resource
     private ISysUserService sysUserService;
 
+    //用户管理页面
+    @RequestMapping(value = "/page",method = RequestMethod.GET)
+    public String page(){
+        return "user/page";
+    }
+
+    //添加用户页面
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public String add(){
+        return "user/add";
+    }
+
+    //编辑用户页面
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String edit(@PathVariable Long id,ModelMap modelMap){
+        SysUser detail = sysUserService.detail(id);
+        modelMap.put("detail",detail);
+        return "user/edit";
+    }
+
+    /**
+     * 获取所有用户
+     * @param pageModel
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
-    @RequestMapping("/page")
-    public DataTablePage page(SysUserRequest userRequest){
-        Page<SysUserResponse> page = PageHelper.startPage(userRequest.getStart(), userRequest.getLength());
-        sysUserService.selectPageList(userRequest);
-        return new DataTablePage(page);
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    public Object list(PageModel pageModel) throws Exception {
+        return sysUserService.list(pageModel);
     }
 
     @ResponseBody
-    @RequestMapping("/add")
-    public ResponseResult add(SysUserRequest sysUserRequest){
-        try {
-            return sysUserService.save(sysUserRequest);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping("/save")
+    public ResponseResult add(SysUserRequest sysUserRequest) throws Exception {
+        return sysUserService.add(sysUserRequest);
     }
 
     @ResponseBody
-    @RequestMapping("/update")
-    public ResponseResult update(SysUserRequest sysUserRequest){
-        try {
-            return sysUserService.update(sysUserRequest);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+    @RequestMapping("/edit")
+    public ResponseResult update(SysUserRequest sysUserRequest) throws Exception {
+        return sysUserService.update(sysUserRequest);
     }
 
     @ResponseBody
     @RequestMapping("/delete")
     public ResponseResult delete(@RequestParam(value = "idList",required = true) String idList){
-        try {
-            return sysUserService.delete(idList);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+        return sysUserService.delete(idList);
     }
 
     @ResponseBody
     @RequestMapping("/setRole")
-    public ResponseResult setRole(@RequestParam(value = "userId",required = true) String userId,
+    public ResponseResult setRole(@RequestParam(value = "userId",required = true) Long userId,
                                     @RequestParam(value = "roleList",required = true) String roleList){
-        try {
-            return sysUserService.setRole(userId,roleList);
-        }catch (Exception ex){
-            logger.error("异常信息:"+ex.getMessage());
-            return ResponseResult.ERROR;
-        }
+        return sysUserService.setRole(userId,roleList);
     }
 
 }

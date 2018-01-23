@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SysAuthMapper {
-    long countByExample(SysAuthExample example);
+    int countByExample(SysAuthExample example);
 
     int deleteByExample(SysAuthExample example);
 
@@ -31,8 +31,26 @@ public interface SysAuthMapper {
 
     /**
      * TODO
-     * @param userName
+     * 通过用户id查询权限
+     * @param userId
      * @return
      */
-    List<SysAuth> selectAuthsByUserName(String userName);
+    List<SysAuth> selectAllAuthByUserId(Long userId);
+
+    /**
+     * TODO
+     * 通过角色id查询权限
+     * @param roleId
+     * @return
+     */
+    List<SysAuth> selectAllAuthByRoleId(Long roleId);
+
+    /**
+     * TODO
+     * 通过用户id查询系统菜单
+     * @param userId
+     * @return
+     */
+    List<SysAuth> selectSysMenuByUserId(Long userId);
+
 }

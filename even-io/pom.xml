@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.even</groupId>
-            <artifactId>even-common</artifactId>
+            <artifactId>even-bean</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

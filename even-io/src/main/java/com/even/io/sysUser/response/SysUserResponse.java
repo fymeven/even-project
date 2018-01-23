@@ -1,6 +1,7 @@
 package com.even.io.sysUser.response;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class SysUserResponse implements Serializable {
@@ -22,17 +23,19 @@ public class SysUserResponse implements Serializable {
 
     private String userMobile;
 
-    private Integer userStatus;
+    private Long deptId;
 
-    private List roleList;
+    private Integer status;
 
-    public List getRoleList() {
-        return roleList;
-    }
+    private Byte isDel;
 
-    public void setRoleList(List roleList) {
-        this.roleList = roleList;
-    }
+    private Date createTime;
+
+    private Date updateTime;
+
+    private Date lastLoginTime;
+
+    private String lastLoginIp;
 
     public Long getId() {
         return id;
@@ -106,11 +109,59 @@ public class SysUserResponse implements Serializable {
         this.userMobile = userMobile == null ? null : userMobile.trim();
     }
 
-    public Integer getUserStatus() {
-        return userStatus;
+    public Long getDeptId() {
+        return deptId;
     }
 
-    public void setUserStatus(Integer userStatus) {
-        this.userStatus = userStatus;
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Byte getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Byte isDel) {
+        this.isDel = isDel;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
     }
 }

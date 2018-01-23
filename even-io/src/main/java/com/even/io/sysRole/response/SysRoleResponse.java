@@ -1,6 +1,7 @@
 package com.even.io.sysRole.response;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class SysRoleResponse implements Serializable {
     private Long id;
@@ -9,9 +10,15 @@ public class SysRoleResponse implements Serializable {
 
     private String roleDesc;
 
-    private Integer roleStatus;
+    private Integer status;
 
     private Long parentId;
+
+    private Byte isDel;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     public Long getId() {
         return id;
@@ -37,12 +44,12 @@ public class SysRoleResponse implements Serializable {
         this.roleDesc = roleDesc == null ? null : roleDesc.trim();
     }
 
-    public Integer getRoleStatus() {
-        return roleStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setRoleStatus(Integer roleStatus) {
-        this.roleStatus = roleStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Long getParentId() {
@@ -51,5 +58,29 @@ public class SysRoleResponse implements Serializable {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Byte getIsDel() {
+        return isDel;
+    }
+
+    public void setIsDel(Byte isDel) {
+        this.isDel = isDel;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

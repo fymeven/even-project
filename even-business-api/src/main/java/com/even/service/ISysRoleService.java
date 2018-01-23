@@ -10,13 +10,18 @@ import java.util.List;
  * Created by fymeven on 2017/10/28.
  */
 public interface ISysRoleService {
-    List<String> selectRolesByUserName(String userName);
+    List<String> selectRolesByUserId(Long userId);
 
-    List<SysRole> selectAllRole();
-
-    ResponseResult save(SysRoleRequest sysRoleRequest) throws Exception;
+    ResponseResult add(SysRoleRequest sysRoleRequest) throws Exception;
 
     ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception;
 
     ResponseResult delete(String id);
+
+    Object list(SysRoleRequest sysRoleRequest) throws Exception;
+
+    SysRole detail(Long id);
+
+    ResponseResult setAuth(Long roleId, String authList);
+
 }

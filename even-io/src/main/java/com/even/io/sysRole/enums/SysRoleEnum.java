@@ -26,4 +26,47 @@ public class SysRoleEnum {
             return desc;
         }
     }
+
+    public enum status{
+        NOMAL(1,"正常"),
+        HIDDEN(2,"不可用");
+
+        private final int intValue;
+        private final String desc;
+
+
+        status(int intValue, String desc) {
+            this.intValue = intValue;
+            this.desc = desc;
+        }
+
+        public int getIntValue() {
+            return intValue;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
+
+    public enum parentId{
+
+        NO_PARENT (0L,"无");// 最高级角色 0
+        private final long longValue;
+        private final String desc;
+
+
+        parentId(long byteValue, String desc) {
+            this.longValue = byteValue;
+            this.desc = desc;
+        }
+
+        public long getLongValue() {
+            return longValue;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
 }

@@ -23,15 +23,13 @@ public class    LoginHandlerInterceptor extends HandlerInterceptorAdapter{
     private String loginUrl;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		// TODO Auto-generated method stub
         printRequestInfo(request);
-
         Subject subject = SecurityUtils.getSubject();
         if(subject.isAuthenticated() || subject.isRemembered()){
 			return true;
 		}else{
-				response.sendRedirect(loginUrl);
-				return false;
+            response.sendRedirect(loginUrl);
+            return false;
 		}
 	}
 
