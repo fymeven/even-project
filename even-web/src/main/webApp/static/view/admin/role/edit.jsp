@@ -31,20 +31,6 @@
 </div>
 </div>
 <div class="form-group">
-<label class="col-sm-3 control-label">角色状态：</label>
-<div class="col-sm-8">
-    <div class="switch">
-        <div class="onoffswitch">
-            <input type="checkbox" class="onoffswitch-checkbox" id="status" name="status" <c:if test="${detail.status == 1}">checked</c:if>>
-            <label class="onoffswitch-label" for="status">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-            </label>
-        </div>
-    </div>
-</div>
-</div>
-<div class="form-group">
 <label class="col-sm-3 control-label">角色描述：</label>
 <div class="col-sm-8">
 <textarea id="roleDesc" name="roleDesc" class="form-control" autocomplete="off">${detail.roleDesc}</textarea>

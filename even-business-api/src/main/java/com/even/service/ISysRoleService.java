@@ -12,16 +12,17 @@ import java.util.List;
 public interface ISysRoleService {
     List<String> selectRolesByUserId(Long userId);
 
-    ResponseResult add(SysRoleRequest sysRoleRequest) throws Exception;
+    ResponseResult add(SysRoleRequest sysRoleRequest);
 
-    ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception;
+    ResponseResult update(SysRoleRequest sysRoleRequest);
 
     ResponseResult delete(String id);
 
-    Object list(SysRoleRequest sysRoleRequest) throws Exception;
+    Object list(SysRoleRequest sysRoleRequest);
 
     SysRole detail(Long id);
 
     ResponseResult setAuth(Long roleId, String authList);
 
+    ResponseResult getRolesByUserId(Long userId);
 }

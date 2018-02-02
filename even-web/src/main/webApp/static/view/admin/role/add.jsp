@@ -21,25 +21,11 @@
 </head>
 <body>
 <div class="wrapper wrapper-content  animated fadeInRight">
-<form class="form-horizontal m-t" novalidate="novalidate" action="/sysRole/add">
+<form class="form-horizontal m-t" novalidate="novalidate" action="/sysRole/save">
 <div class="form-group">
 <label class="col-sm-3 control-label">角色名称：</label>
 <div class="col-sm-8">
 <input id="roleName" name="roleName" class="form-control" type="text" autocomplete="off">
-</div>
-</div>
-<div class="form-group">
-<label class="col-sm-3 control-label">角色状态：</label>
-<div class="col-sm-8">
-    <div class="switch">
-        <div class="onoffswitch">
-            <input type="checkbox" checked class="onoffswitch-checkbox" id="status" name="status">
-            <label class="onoffswitch-label" for="status">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-            </label>
-        </div>
-    </div>
 </div>
 </div>
 <div class="form-group">

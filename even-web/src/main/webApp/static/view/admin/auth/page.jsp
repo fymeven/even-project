@@ -25,9 +25,9 @@
 <body class="gray-bg">
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="btn-group-toolbar">
-            <a class="btn btn-primary" id="btn_flush"><i class="fa fa-refresh"></i>&nbsp;</a>
+            <a class="btn btn-primary" id="btn_flush" title="刷新"><i class="fa fa-refresh"></i>&nbsp;</a>
         <shiro:hasPermission name="auth:add">
-            <a class="btn btn-info" id="btn_add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a class="btn btn-white" id="btn_add" title="添加一级菜单"><i class="fa fa-plus"></i>&nbsp;新增</a>
         </shiro:hasPermission>
     </div>
     <div>

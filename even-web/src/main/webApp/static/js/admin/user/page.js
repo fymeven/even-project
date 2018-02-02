@@ -12,8 +12,8 @@ var p={
                 url: '/sysUser/list',
                 colModel: [
                     { name: 'id', hidden:true ,key:true},
-                    { name: 'userName', sortable :false,label:'用户账号', width: 100, align: "center" },
                     { name: 'realName', sortable :false,label:'姓名', width: 100, align: "center" },
+                    { name: 'userName', sortable :false,label:'用户账号', width: 100, align: "center" },
                     { name: 'email', sortable :false,label:'邮箱', width: 100, align: "center" },
                     { name: 'status', sortable :false,label:'用户状态', width: 80, align: "center",
                         formatter: function (value, grid, rows, state){
@@ -29,15 +29,16 @@ var p={
                             return html.join('');
                         }
                     },
-                    { name: 'id', sortable :false,label: '操作', width: 60,align: "center",
+                    { name: 'id', sortable :false,label: '操作', width: 100,align: "center",
                         formatter: function (value, grid, rows, state){
                             var html=[];
+                            html.push('&nbsp;<a class="btn btn-white btn-sm btn_edit" title="查看详细信息" alt="查看详细信息" onclick="p.method.detail('+value+');"><i class="fa fa-eye"></i></a>');
                             if(perms.user_role)
-                                html.push('&nbsp;<a class="btn btn-primary btn-sm btn_role" title="设置角色" alt="设置角色" onclick="p.method.setRole('+value+');"><i class="glyphicon glyphicon-education"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-white btn-sm btn_role" title="设置角色" alt="设置角色" onclick="p.method.setRole('+value+');"><i class="fa fa-street-view"></i></a>');
                             if(perms.user_edit)
-                                html.push('&nbsp;<a class="btn btn-primary btn-sm btn_edit" title="编辑" alt="编辑" onclick="p.method.edit('+value+');"><i class="fa fa-edit"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-white btn-sm btn_edit" title="编辑" alt="编辑" onclick="p.method.edit('+value+');"><i class="fa fa-edit"></i></a>');
                             if(perms.user_delete)
-                            html.push('&nbsp;<a class="btn btn-warning btn-sm btn_delete" title="删除" alt="删除" onclick="p.method.delete('+value+');"><i class="fa fa-remove"></i></a>');
+                            html.push('&nbsp;<a class="btn btn-danger btn-sm btn_delete" title="删除" alt="删除" onclick="p.method.delete('+value+');"><i class="fa fa-remove"></i></a>');
                             return html.join('');
                         }
                     }
@@ -46,6 +47,22 @@ var p={
         },
         flush:function(){
             p.obj.jqGrid.trigger('reloadGrid');
+        },
+        detail:function (id) {
+            Ep.openDialog({
+                title:'用户详情',
+                url:'/sysUser/detail/'+id,
+                height:600
+            });
+        },
+        search:function () {
+            p.obj.jqGrid.jqGrid('setGridParam', {
+                postData: {
+                    realName: $('#search_realName').val(),
+                    userName: $('#search_userName').val(),
+                    email: $('#search_email').val(),
+                }
+            }).trigger('reloadGrid');
         },
         add:function(){
             Ep.openDialog({
@@ -62,10 +79,10 @@ var p={
         setRole:function(id){
             Ep.openDialog({
                 title:'角色授权',
-                url:'/sysUser/setRole/'+id,
+                url:'/sysUser/role/'+id,
                 yes:function(index,layero){
                     var children = window[layero.find('iframe')[0]['name']];
-                    children.a.method.setRole();
+                    children.r.method.setRole();
                 }
             });
         },
@@ -81,10 +98,10 @@ var p={
                 }
             }
             Ep.confirm({
-                msg:'您确定删除该角色吗？',
+                msg:'您确定删除该用户吗？',
                 succFunc:function(){
                     Ep.ajax({
-                        url:'/sysRole/delete/',
+                        url:'/sysUser/delete/',
                         data:{
                             idList:id
                         },
@@ -124,6 +141,9 @@ var p={
                     break;
                 case "btn_delete":
                     p.method.delete();
+                    break;
+                case "btn_search":
+                    p.method.search();
                     break;
             }
         });

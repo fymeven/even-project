@@ -38,7 +38,7 @@ public interface ISysAuthService {
      * 查询所有权限
      * @return
      */
-    List<SysAuth> selectAllAuth() throws Exception;
+    List<SysAuth> selectAllAuth();
 
     /**
      * 根据id获取权限详情
@@ -52,14 +52,14 @@ public interface ISysAuthService {
      * @param sysAuthRequest
      * @return
      */
-    ResponseResult add(SysAuthRequest sysAuthRequest) throws Exception;
+    ResponseResult add(SysAuthRequest sysAuthRequest);
 
     /**
      * 编辑权限
      * @param sysAuthRequest
      * @return
      */
-    ResponseResult update(SysAuthRequest sysAuthRequest) throws Exception;
+    ResponseResult update(SysAuthRequest sysAuthRequest);
 
     /**
      * 删除权限
@@ -73,5 +73,5 @@ public interface ISysAuthService {
      * @param roleId
      * @return
      */
-    JsTree selectAuthTreeByRoleId(Long roleId) throws Exception;
+    JsTree selectAuthTreeByRoleId(Long roleId);
 }

@@ -5,7 +5,7 @@ public class SysDept {
 
     private String deptName;
 
-    private Long deptManageId;
+    private Long deptManagerId;
 
     private Long parentId;
 
@@ -25,12 +25,12 @@ public class SysDept {
         this.deptName = deptName == null ? null : deptName.trim();
     }
 
-    public Long getDeptManageId() {
-        return deptManageId;
+    public Long getDeptManagerId() {
+        return deptManagerId;
     }
 
-    public void setDeptManageId(Long deptManageId) {
-        this.deptManageId = deptManageId;
+    public void setDeptManagerId(Long deptManagerId) {
+        this.deptManagerId = deptManagerId;
     }
 
     public Long getParentId() {

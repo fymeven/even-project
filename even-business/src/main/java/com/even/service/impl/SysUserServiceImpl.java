@@ -4,17 +4,19 @@ import com.even.bean.SysUser;
 import com.even.bean.SysUserExample;
 import com.even.bean.SysUserRoleExample;
 import com.even.common.util.BeanCopyUtil;
+import com.even.common.util.JsTreeBuildFactory;
 import com.even.common.util.MyPageInfo;
-import com.even.model.PageModel;
 import com.even.common.util.ResponseResult;
 import com.even.dao.SysUserMapper;
 import com.even.dao.SysUserRoleMapper;
 import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.io.sysUser.request.SysUserRequest;
+import com.even.io.sysUser.response.SimpleUserInfo;
 import com.even.io.sysUser.response.SysUserResponse;
 import com.even.service.ISysUserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,28 +46,57 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public Object list(PageModel pageModel) throws Exception {
+    public Object list(SysUserRequest sysUserRequest){
         List<SysUserResponse> sysUserResponseList=new ArrayList<>();
-        Page page =null;
-        if (pageModel.getPage()!=null && pageModel.getRows()!=null)
-            page = PageHelper.startPage(pageModel.getPage(), pageModel.getRows(), pageModel.getOrderBy());
+        Page page = null;
+        if (sysUserRequest.getRows() !=null){
+            page= PageHelper.startPage(sysUserRequest.getPage(), sysUserRequest.getRows(), sysUserRequest.getOrderBy());
+        }
         SysUserExample sysUserExample=new SysUserExample();
-        sysUserExample.createCriteria().andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria();
+        criteria.andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
+        if (sysUserRequest.getDeptId()!=null && sysUserRequest.getDeptId()!= JsTreeBuildFactory.RootEnum.DEPT.getId()){
+            criteria.andDeptIdEqualTo(sysUserRequest.getDeptId());
+        }
+        if (StringUtils.isNotBlank(sysUserRequest.getRealName())){
+            criteria.andRealNameEqualTo(sysUserRequest.getRealName());
+        }
+        if (StringUtils.isNotBlank(sysUserRequest.getUserName())){
+            criteria.andUserNameEqualTo(sysUserRequest.getUserName());
+        }
+        if (StringUtils.isNotBlank(sysUserRequest.getEmail())){
+            criteria.andEmailEqualTo(sysUserRequest.getEmail());
+        }
         List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
         for (SysUser sysUser : sysUserList) {
             SysUserResponse sysUserResponse=new SysUserResponse();
             BeanCopyUtil.copyProperties(sysUserResponse,sysUser);
             sysUserResponseList.add(sysUserResponse);
         }
-        if (pageModel.getPage()!=null && pageModel.getRows()!=null){
-            return new MyPageInfo(sysUserResponseList,page);
+        if (sysUserRequest.getRows() !=null) {
+            return new MyPageInfo(sysUserResponseList, page);
         }else {
             return ResponseResult.SUCCESS(sysUserResponseList);
         }
     }
 
     @Override
-    public ResponseResult add(SysUserRequest sysUserRequest) throws Exception {
+    public List<SimpleUserInfo> getUserforSuggest() {
+        List<SimpleUserInfo> simpleUserInfos = new ArrayList<>();
+        SysUserExample sysUserExample=new SysUserExample();
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria();
+        criteria.andIsDelEqualTo(SysUserEnum.isDel.NOMAL.getByteValue());
+        List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
+        for (SysUser sysUser : sysUserList) {
+            SimpleUserInfo simpleUserInfo = new SimpleUserInfo();
+            BeanCopyUtil.copyProperties(simpleUserInfo,sysUser);
+            simpleUserInfos.add(simpleUserInfo);
+        }
+        return simpleUserInfos;
+    }
+
+    @Override
+    public ResponseResult add(SysUserRequest sysUserRequest) {
         SysUser sysUser=new SysUser();
         BeanCopyUtil.copyProperties(sysUser,sysUserRequest);
         sysUser.setCreateTime(new Date());
@@ -82,7 +113,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public ResponseResult update(SysUserRequest sysUserRequest) throws Exception {
+    public ResponseResult update(SysUserRequest sysUserRequest){
         SysUser sysUser=sysUserMapper.selectByPrimaryKey(sysUserRequest.getId());
         BeanCopyUtil.copyProperties(sysUser, sysUserRequest);
         sysUser.setUpdateTime(new Date());
@@ -100,7 +131,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public ResponseResult setRole(Long userId, String roleList) {
         SysUserRoleExample example=new SysUserRoleExample();
-        example.createCriteria().andIdEqualTo(userId);
+        example.createCriteria().andUserIdEqualTo(userId);
         sysUserRoleMapper.deleteByExample(example);
         String[] roleArray = roleList.split(",");
         int result = sysUserRoleMapper.insertForeach(userId, roleArray);

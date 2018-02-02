@@ -26,6 +26,7 @@ public class JsTree implements Serializable{
      * 节点图标
      */
     private String icon;
+
     /**
      * 节点额外属性
      */

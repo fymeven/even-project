@@ -15,7 +15,7 @@ public class PageModel implements Serializable{
 
     public String getOrderBy() {
         if (orderBy==null){
-            this.orderBy=getSidx()+" "+getSord();
+            this.orderBy=getSidx()+"\t"+getSord();
         }
         return orderBy;
     }

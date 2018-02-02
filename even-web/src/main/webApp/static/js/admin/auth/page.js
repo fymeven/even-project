@@ -66,11 +66,11 @@ var p={
                         formatter : function(item, index) {
                             var html=[];
                             if(perms.auth_edit)
-                                html.push('&nbsp;<a class="btn btn-primary btn-sm btn_edit" title="编辑" onclick="p.method.edit('+item.id+')"><i class="fa fa-edit"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-white btn-sm btn_edit" title="编辑" onclick="p.method.edit('+item.id+')"><i class="fa fa-edit"></i></a>');
                             if(perms.auth_add && item.type!=3)
-                                html.push('&nbsp;<a class="btn btn-primary btn-sm btn_add" title="添加下级" onclick="p.method.add('+item.id+')"><i class="fa fa-plus"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-white btn-sm btn_add" title="添加下级" onclick="p.method.add('+item.id+')"><i class="fa fa-plus"></i></a>');
                             if(perms.auth_delete)
-                                html.push('&nbsp;<a class="btn btn-warning btn-sm btn_delete" title="删除" onclick="p.method.delete('+item.id+')"><i class="fa fa-remove"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-danger btn-sm btn_delete" title="删除" onclick="p.method.delete('+item.id+')"><i class="fa fa-remove"></i></a>');
                             return html.join('');
                         }
                     }

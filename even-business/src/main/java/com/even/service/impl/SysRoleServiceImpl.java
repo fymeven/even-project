@@ -15,6 +15,7 @@ import com.even.io.sysUser.enums.SysUserEnum;
 import com.even.service.ISysRoleService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -43,20 +44,24 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public Object list(SysRoleRequest sysRoleRequest) throws Exception {
+    public Object list(SysRoleRequest sysRoleRequest){
         List<SysRoleResponse> sysRoleResponseList=new ArrayList<>();
-        Page page =null;
-        if (sysRoleRequest.getPage()!=null && sysRoleRequest.getRows()!=null)
+        Page page = null;
+        if (sysRoleRequest.getRows() !=null)
             page = PageHelper.startPage(sysRoleRequest.getPage(), sysRoleRequest.getRows(), sysRoleRequest.getOrderBy());
         SysRoleExample sysRoleExample=new SysRoleExample();
-        sysRoleExample.createCriteria().andIsDelEqualTo(SysRoleEnum.isDel.NOMAL.getByteValue());
+        SysRoleExample.Criteria criteria = sysRoleExample.createCriteria();
+        criteria.andIsDelEqualTo(SysRoleEnum.isDel.NOMAL.getByteValue());
+        if (StringUtils.isNotBlank(sysRoleRequest.getRoleName())){
+            criteria.andRoleNameEqualTo(sysRoleRequest.getRoleName());
+        }
         List<SysRole> sysRoleList = sysRoleMapper.selectByExample(sysRoleExample);
         for (SysRole sysRole : sysRoleList) {
             SysRoleResponse sysRoleResponse=new SysRoleResponse();
             BeanCopyUtil.copyProperties(sysRoleResponse,sysRole);
             sysRoleResponseList.add(sysRoleResponse);
         }
-        if (sysRoleRequest.getPage()!=null && sysRoleRequest.getRows()!=null){
+        if (sysRoleRequest.getRows() !=null){
             return new MyPageInfo(sysRoleResponseList,page);
         }else {
             return ResponseResult.SUCCESS(sysRoleResponseList);
@@ -64,7 +69,13 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public ResponseResult add(SysRoleRequest sysRoleRequest) throws Exception {
+    public ResponseResult getRolesByUserId(Long userId) {
+        List<SysRole> sysRoles = sysRoleMapper.selectRolesByUserId(userId);
+        return ResponseResult.SUCCESS(sysRoles);
+    }
+
+    @Override
+    public ResponseResult add(SysRoleRequest sysRoleRequest){
         SysRole sysRole=new SysRole();
         BeanCopyUtil.copyProperties(sysRole, sysRoleRequest);
         sysRole.setCreateTime(new Date());
@@ -75,7 +86,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public ResponseResult update(SysRoleRequest sysRoleRequest) throws Exception {
+    public ResponseResult update(SysRoleRequest sysRoleRequest){
         SysRole sysRole=sysRoleMapper.selectByPrimaryKey(sysRoleRequest.getId());
         BeanCopyUtil.copyProperties(sysRole, sysRoleRequest);
         sysRole.setUpdateTime(new Date());

@@ -337,32 +337,42 @@
   </update>
 
     <!--TODO ******************************************************************************************-->
-
+    <!--根据用户id查询所有有效权限类型-->
     <select id="selectAllAuthByUserId" resultType="com.even.bean.SysAuth">
-        select distinct a.* from sys_auth a
-        left join sys_role_auth ro on ro.auth_id=a.id
-        left join sys_role r on r.id=ro.role_id
-        left join sys_user_role ur on ur.role_id=r.id
-        left join sys_user u on u.id=ur.user_id
-        where u.id=#{userId}
+        select
+            distinct a.*
+        from sys_auth a
+            left join sys_role_auth ro on ro.auth_id=a.id
+            left join sys_role r on r.id=ro.role_id
+            left join sys_user_role ur on ur.role_id=r.id
+            left join sys_user u on u.id=ur.user_id
+        where
+            u.id=#{userId} and r.is_del=1 and a.is_del=1
         order by a.sort_no
     </select>
 
+    <!--根据角色id查询有效权限-->
     <select id="selectAllAuthByRoleId" resultType="com.even.bean.SysAuth">
-        select distinct a.* from sys_auth a
-        left join sys_role_auth ro on ro.auth_id=a.id
-        where ro.role_id=#{roleId}
+        select
+            distinct a.*
+        from sys_auth a
+            left join sys_role_auth ro on ro.auth_id=a.id
+        where
+            ro.role_id=#{roleId} and a.is_del=1
         order by a.sort_no
     </select>
 
+    <!--根据用户id查询有效目录菜单权限（type:1,2）-->
     <select id="selectSysMenuByUserId" resultType="com.even.bean.SysAuth">
-        select distinct a.* from sys_auth a
-        left join sys_role_auth ro on ro.auth_id=a.id
-        left join sys_role r on r.id=ro.role_id
-        left join sys_user_role ur on ur.role_id=r.id
-        left join sys_user u on u.id=ur.user_id
-        where u.id=#{userId}
-        and a.type in (1,2)
+        select
+            distinct a.*
+        from sys_auth a
+            left join sys_role_auth ro on ro.auth_id=a.id
+            left join sys_role r on r.id=ro.role_id
+            left join sys_user_role ur on ur.role_id=r.id
+            left join sys_user u on u.id=ur.user_id
+        where
+            u.id=#{userId} and a.type in (1,2) and r.is_del=1 and a.is_del=1
         order by a.sort_no
     </select>
 

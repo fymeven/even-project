@@ -32,11 +32,11 @@ var p={
                         formatter: function (value, grid, rows, state){
                             var html=[];
                             if(perms.role_edit)
-                                html.push('&nbsp;<a class="btn btn-primary btn-sm btn_edit" title="编辑" alt="编辑" onclick="p.method.edit('+value+');"><i class="fa fa-edit"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-white btn-sm btn_edit" title="编辑" alt="编辑" onclick="p.method.edit('+value+');"><i class="fa fa-edit"></i></a>');
                             if(perms.role_auth)
-                                html.push('&nbsp;<a class="btn btn-primary btn-sm btn_auth" title="授权" alt="授权" onclick="p.method.auth('+value+');"><i class="fa fa-key"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-white btn-sm btn_auth" title="授权" alt="授权" onclick="p.method.auth('+value+');"><i class="fa fa-key"></i></a>');
                             if(perms.role_delete)
-                                html.push('&nbsp;<a class="btn btn-warning btn-sm btn_delete" title="删除" alt="删除" onclick="p.method.delete('+value+');"><i class="fa fa-remove"></i></a>');
+                                html.push('&nbsp;<a class="btn btn-danger btn-sm btn_delete" title="删除" alt="删除" onclick="p.method.delete('+value+');"><i class="fa fa-remove"></i></a>');
                             return html.join('');
                         }
                     }
@@ -46,18 +46,25 @@ var p={
         flush:function(){
             p.obj.jqGrid.trigger('reloadGrid');
         },
+        search:function () {
+            p.obj.jqGrid.jqGrid('setGridParam', {
+                postData: {
+                    roleName: $('#search_roleName').val()
+                }
+            }).trigger('reloadGrid');
+        },
         add:function(){
             Ep.openDialog({
                 title:'添加角色',
                 url:'/sysRole/add',
-                height:400
+                height:300
             });
         },
         edit:function(id){
             Ep.openDialog({
                 title:'编辑角色',
                 url:'/sysRole/edit/'+id,
-                height:400
+                height:300
             });
         },
         auth:function(id){
@@ -125,6 +132,9 @@ var p={
                     break;
                 case "btn_delete":
                     p.method.delete();
+                    break;
+                case "btn_search":
+                    p.method.search();
                     break;
             }
         });

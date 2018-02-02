@@ -17,12 +17,12 @@
     <link href="/static/plugin/hplus/css/animate.min.css" rel="stylesheet">
     <link href="/static/plugin/hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/plugin/hplus/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <link href="/static/plugin/hplus/js/plugins/iosSwitch/lc_switch.css" rel="stylesheet">
+    <link href="/static/plugin/hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="/static/css/hieven.css" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper wrapper-content  animated fadeInRight">
-<form class="form-horizontal m-t" novalidate="novalidate">
+<form class="form-horizontal m-t" novalidate="novalidate" action="/sysUser/save">
 <div class="form-group">
     <label class="col-sm-3 control-label">姓名：</label>
     <div class="col-sm-8">
@@ -39,13 +39,15 @@
     <label class="col-sm-3 control-label">用户密码：</label>
     <div class="col-sm-8">
     <input id="userPwd" name="userPwd" class="form-control" type="text" autocomplete="off">
-    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>默认初始密码：hieven</span>
+    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>默认初始密码：${defaultPwd}</span>
     </div>
 </div>
 <div class="form-group">
     <label class="col-sm-3 control-label">部门：</label>
     <div class="col-sm-8">
-        <input id="deptId" name="deptId" class="form-control" type="text" autocomplete="off">
+        <select id="deptId" name="deptId" class="form-control" autocomplete="off">
+            <option value="0">---请选择---</option>
+        </select>
     </div>
 </div>
 <div class="form-group">
@@ -62,7 +64,11 @@
 <script src="/static/plugin/hplus/js/content.min.js?v=1.0.0"></script>
 <script src="/static/plugin/hplus/js/plugins/toastr/toastr.min.js"></script>
 <script src="/static/plugin/hplus/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/static/plugin/hplus/js/plugins/chosen/chosen.jquery.js"></script>
 <script src="/static/js/evenPack.js"></script>
+<script>
+    var defaultPwd="${defaultPwd}";
+</script>
 <script src="/static/js/admin/user/add.js"></script>
 </body>
 </html>

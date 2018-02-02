@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="wrapper wrapper-content  animated fadeInRight">
-<form class="form-horizontal m-t" novalidate="novalidate" action="/sysAuth/add">
+<form class="form-horizontal m-t" novalidate="novalidate" action="/sysAuth/save">
 <div class="form-group">
 <label class="col-sm-3 control-label">权限名称：</label>
 <div class="col-sm-8">

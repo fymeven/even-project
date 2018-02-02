@@ -1,21 +1,41 @@
 package com.even.common.util;
 
-import com.even.io.sysAuth.enums.SysAuthEnum;
 import com.even.model.JsTree;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JsTreeBuildFactory {
+	public enum RootEnum{
+		AUTH(0L,"本系统"),
+		DEPT(0L,"xx公司");
 
-	public static JsTree buildRoot(List<JsTree> nodes) {
+		private Long id;
+		private String text;
+
+		RootEnum(Long id, String text) {
+			this.id = id;
+			this.text = text;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public String getText() {
+			return text;
+		}
+	}
+
+
+	public static JsTree buildRoot(List<JsTree> nodes,RootEnum rootEnum) {
 		if (nodes == null) {
 			return null;
 		}
 		List<JsTree> topNodes = new ArrayList<>();
 		for (JsTree children : nodes) {
 			String pid = children.getParentId();
-			if (pid == null || String.valueOf(SysAuthEnum.ROOT_ID).equals(pid)) {
+			if (pid == null || String.valueOf(rootEnum.getId()).equals(pid)) {
 				topNodes.add(children);
 				continue;
 			}
@@ -29,26 +49,21 @@ public class JsTreeBuildFactory {
 		}
 
 		JsTree root = new JsTree();
-		if (topNodes.size() == 1) {
-			root = topNodes.get(0);
-		} else {
-			root.setId(String.valueOf(SysAuthEnum.ROOT_ID));
-			root.setChildren(topNodes);
-			root.setText(SysAuthEnum.ROOT_NAME);
-			root.getState().put("opened",true);
-            root.getState().put("checked",true);
-		}
+		root.setId(String.valueOf(rootEnum.getId()));
+		root.setChildren(topNodes);
+		root.setText(rootEnum.getText());
+		root.getState().put("opened",true);
 		return root;
 	}
 
-	public static List<JsTree> buildList(List<JsTree> nodes) {
+	public static List<JsTree> buildList(List<JsTree> nodes,RootEnum rootEnum) {
 		if (nodes == null) {
 			return null;
 		}
 		List<JsTree> topNodes = new ArrayList<>();
 		for (JsTree children : nodes) {
 			String pid = children.getParentId();
-			if (pid == null || String.valueOf(SysAuthEnum.ROOT_ID).equals(pid)) {
+			if (pid == null || String.valueOf(rootEnum.getId()).equals(pid)) {
 				topNodes.add(children);
 				continue;
 			}

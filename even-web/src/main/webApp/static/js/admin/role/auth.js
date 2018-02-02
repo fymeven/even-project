@@ -14,12 +14,7 @@ var a={
                         dataType : "json"
                     }
                 },
-                plugins : ["checkbox"],
-                checkbox: {
-                    "keep_selected_style": false,//是否默认选中
-                    "three_state": true,//父子级别级联选择
-                    "tie_selection": false
-                }
+                plugins : ["checkbox"]
             });
             a.obj.jstree.jstree(true).get_all_checked = function(full) {
                 var tmp=new Array;
@@ -50,9 +45,19 @@ var a={
                 },
                 succFunc:function(result){
                     if(result.status){
-                        Ep.closeDialog();
+                        Ep.alert({
+                            icon:1,
+                            msg:result.msg
+                        });
+                        setTimeout(function () {
+                            parent.p.method.flush();
+                            Ep.closeDialog();
+                        },2000);
                     }else{
-                        Ep.alert(result.msg);
+                        Ep.alert({
+                            icon:2,
+                            msg:result.msg
+                        });
                     }
                 }
             });

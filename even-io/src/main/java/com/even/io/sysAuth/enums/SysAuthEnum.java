@@ -5,9 +5,6 @@ package com.even.io.sysAuth.enums;
  */
 public class SysAuthEnum {
 
-    public static Long ROOT_ID = 0L;  //根节点id
-    public static String ROOT_NAME = "本系统"; //根节点名称
-
     public enum isDel{
         NOMAL((byte)1,"正常"),
         DELED((byte)2,"已删除");

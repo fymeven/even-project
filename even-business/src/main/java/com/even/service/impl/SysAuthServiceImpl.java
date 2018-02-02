@@ -44,7 +44,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
     }
 
     @Override
-    public List<SysAuth> selectAllAuth() throws Exception {
+    public List<SysAuth> selectAllAuth(){
         SysAuthExample sysAuthExample=new SysAuthExample();
         sysAuthExample.createCriteria().andIsDelEqualTo(SysAuthEnum.isDel.NOMAL.getByteValue());
         return sysAuthMapper.selectByExample(sysAuthExample);
@@ -63,13 +63,21 @@ public class SysAuthServiceImpl implements ISysAuthService {
             node.getAttr().put("linkUrl", sysAuth.getLinkUrl());
             nodes.add(node);
         }
-        return JsTreeBuildFactory.buildList(nodes);
+        return JsTreeBuildFactory.buildList(nodes, JsTreeBuildFactory.RootEnum.AUTH);
     }
 
     @Override
-    public JsTree selectAuthTreeByRoleId(Long roleId) throws Exception {
+    public JsTree selectAuthTreeByRoleId(Long roleId){
         List<SysAuth> authList = selectAllAuth();
         List<Long> permsList = selectAuthIdByRoleId(roleId);
+
+        List<Long> temp = permsList;
+        for (SysAuth auth : authList) {
+            if (temp.contains(auth.getParentId())) {
+                permsList.remove(auth.getParentId());
+            }
+        }
+
         List<JsTree> nodes=new ArrayList<>();
         for (SysAuth sysAuth : authList) {
             JsTree node=new JsTree();
@@ -84,7 +92,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
             }
             nodes.add(node);
         }
-        return JsTreeBuildFactory.buildRoot(nodes);
+        return JsTreeBuildFactory.buildRoot(nodes,JsTreeBuildFactory.RootEnum.AUTH);
     }
 
     @Override
@@ -93,7 +101,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
     }
 
     @Override
-    public ResponseResult add(SysAuthRequest sysAuthRequest) throws Exception {
+    public ResponseResult add(SysAuthRequest sysAuthRequest){
         SysAuth sysAuth=new SysAuth();
         BeanCopyUtil.copyProperties(sysAuth,sysAuthRequest);
         sysAuth.setCreateTime(new Date());
@@ -104,7 +112,7 @@ public class SysAuthServiceImpl implements ISysAuthService {
     }
 
     @Override
-    public ResponseResult update(SysAuthRequest sysAuthRequest) throws Exception {
+    public ResponseResult update(SysAuthRequest sysAuthRequest){
         SysAuth sysAuth=sysAuthMapper.selectByPrimaryKey(sysAuthRequest.getId());
         BeanCopyUtil.copyProperties(sysAuth,sysAuthRequest);
         sysAuth.setUpdateTime(new Date());

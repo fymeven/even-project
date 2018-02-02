@@ -24,13 +24,31 @@
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content  animated fadeInRight">
+    <form class="form-horizontal m-t" novalidate="novalidate">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">姓名：</label>
+            <div class="col-sm-2">
+                <input type="text" name="search_realName" id="search_realName" placeholder="请输入用户姓名" class="form-control">
+            </div>
+            <label class="col-sm-1 control-label">账号：</label>
+            <div class="col-sm-2">
+                <input type="text" name="search_userName" id="search_userName" placeholder="请输入用户账号" class="form-control">
+            </div>
+            <label class="col-sm-1 control-label">邮箱：</label>
+            <div class="col-sm-2">
+                <input type="text" name="search_email" id="search_email" placeholder="请输入用户邮箱" class="form-control">
+            </div>
+            <a class="btn btn-info" id="btn_search"><i class="fa fa-search"></i>&nbsp;搜索</a>
+            <button type="reset" class="btn btn-default" id="btn_reset"><i class="fa fa-reply"></i>&nbsp;清除</button>
+        </div>
+    </form>
     <div class="btn-group-toolbar">
-            <a class="btn btn-primary" id="btn_flush"><i class="fa fa-refresh"></i>&nbsp;</a>
+            <a class="btn btn-primary" id="btn_flush" title="刷新"><i class="fa fa-refresh"></i>&nbsp;</a>
         <shiro:hasPermission name="user:add">
-            <a class="btn btn-info" id="btn_add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+            <a class="btn btn-white" id="btn_add" title="添加用户"><i class="fa fa-plus"></i>&nbsp;新增</a>
         </shiro:hasPermission>
         <shiro:hasPermission name="user:delete">
-            <a class="btn btn-danger" id="btn_delete"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+            <a class="btn btn-danger" id="btn_delete" title="删除用户"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
         </shiro:hasPermission>
     </div>
     <div>

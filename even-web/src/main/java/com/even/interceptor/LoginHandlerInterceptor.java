@@ -17,7 +17,7 @@ import java.util.Enumeration;
 * 类描述： 登录过滤，权限验证
 * @author even
  */
-public class    LoginHandlerInterceptor extends HandlerInterceptorAdapter{
+public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
     private static final Logger logger = LogManager.getLogger(LoginHandlerInterceptor.class.getName());
     @Value("${loginUrl}")
     private String loginUrl;
@@ -37,7 +37,7 @@ public class    LoginHandlerInterceptor extends HandlerInterceptorAdapter{
         Enumeration<String> names = request.getParameterNames();
         StringBuilder sb = new StringBuilder("请求参数为{");
         while (names.hasMoreElements()) {
-            String name = (String) names.nextElement();
+            String name = names.nextElement();
             String values = request.getParameter(name);
             sb.append(name + ":" + values + ", ");
         }

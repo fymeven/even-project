@@ -4,7 +4,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
@@ -45,7 +44,7 @@ public class BeanCopyUtil{
      * @param source      　源对象
      * @throws Exception ex
      */
-    public static void copyProperties(Object destination, Object source) throws Exception {
+    public static void copyProperties(Object destination, Object source){
         copyProperties(destination, source, true);
     }
 
@@ -57,33 +56,35 @@ public class BeanCopyUtil{
      * @param keepOnNull 为true时，如果source的值为空，则维持dest的旧值
      * @throws Exception
      */
-    public static void copyProperties(Object dest, Object src, boolean keepOnNull) throws Exception {
-        if (src == null || dest == null) return;
-        BeanInfo info = Introspector.getBeanInfo(src.getClass());
-        PropertyDescriptor[] props = info.getPropertyDescriptors();
-        for (int i = 0; i < props.length; i++) {
-            PropertyDescriptor srcProp = props[i];
-            PropertyDescriptor destProp = findProperty(dest, srcProp.getName());
-            if (destProp != null && destProp.getWriteMethod() != null &&
-                    srcProp.getReadMethod() != null) {
-                try {
-                    Object srcVal = srcProp.getReadMethod().invoke(src, new Object[0]);
-                    Object destVal = destProp.getReadMethod().invoke(dest, new Object[0]);
-                    if (keepOnNull) {
-                        //If keepOnNull is open ,keep the old value if it exist
-                        if (srcVal instanceof String && StringUtils.isEmpty(String.valueOf(srcVal)) && dest != null) {
-                            srcVal = destVal;
+    public static void copyProperties(Object dest, Object src, boolean keepOnNull){
+        try {
+            if (src == null || dest == null) return;
+            BeanInfo info = Introspector.getBeanInfo(src.getClass());
+            PropertyDescriptor[] props = info.getPropertyDescriptors();
+            for (int i = 0; i < props.length; i++) {
+                PropertyDescriptor srcProp = props[i];
+                PropertyDescriptor destProp = findProperty(dest, srcProp.getName());
+                if (destProp != null && destProp.getWriteMethod() != null &&
+                        srcProp.getReadMethod() != null) {
 
-                        } else if (dest != null && srcVal == null) {
-                            srcVal = destVal;
+                        Object srcVal = srcProp.getReadMethod().invoke(src, new Object[0]);
+                        Object destVal = destProp.getReadMethod().invoke(dest, new Object[0]);
+                        if (keepOnNull) {
+                            //If keepOnNull is open ,keep the old value if it exist
+                            if (srcVal instanceof String && StringUtils.isEmpty(String.valueOf(srcVal)) && dest != null) {
+                                srcVal = destVal;
+
+                            } else if (dest != null && srcVal == null) {
+                                srcVal = destVal;
+                            }
                         }
-                    }
-                    //set the property only when the input is the same type as the dest type
-                    destProp.getWriteMethod().invoke(dest, new Object[]{srcVal});
-                } catch (Exception ex) {
-                    //if the property type are not matched, skip this property
+                        //set the property only when the input is the same type as the dest type
+                        destProp.getWriteMethod().invoke(dest, new Object[]{srcVal});
                 }
             }
+        } catch (Exception ex) {
+            //if the property type are not matched, skip this property
+            logger.error("copyProperties has a error",ex);
         }
     }
 
@@ -97,14 +98,19 @@ public class BeanCopyUtil{
      * @throws java.beans.IntrospectionException
      *
      */
-    private static PropertyDescriptor findProperty(Object object, String name) throws IntrospectionException {
-        BeanInfo info = Introspector.getBeanInfo(object.getClass());
-        PropertyDescriptor[] properties = info.getPropertyDescriptors();
-        for (int i = 0; i < properties.length; i++) {
-            PropertyDescriptor property = properties[i];
-            if (property.getName().equals(name)) {
-                return property;
+    private static PropertyDescriptor findProperty(Object object, String name){
+        try {
+            BeanInfo info = Introspector.getBeanInfo(object.getClass());
+            PropertyDescriptor[] properties = info.getPropertyDescriptors();
+            for (int i = 0; i < properties.length; i++) {
+                PropertyDescriptor property = properties[i];
+                if (property.getName().equals(name)) {
+                    return property;
+                }
             }
+        } catch (Exception ex) {
+            //if the property type are not matched, skip this property
+            logger.error("findProperty has a error",ex);
         }
         return null;
     }

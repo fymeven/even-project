@@ -2,8 +2,8 @@ package com.even.controller;
 
 import com.even.bean.SysAuth;
 import com.even.common.util.BeanCopyUtil;
+import com.even.common.util.JsTreeBuildFactory;
 import com.even.common.util.ResponseResult;
-import com.even.io.sysAuth.enums.SysAuthEnum;
 import com.even.io.sysAuth.request.SysAuthRequest;
 import com.even.io.sysAuth.response.SysAuthResponse;
 import com.even.service.ISysAuthService;
@@ -45,10 +45,10 @@ public class SysAuthController {
     @RequestMapping(value = "/add/{id}",method = RequestMethod.GET)
     public String add(@PathVariable("id") Long id,ModelMap modelMap){
         SysAuth parent;
-        if (id == SysAuthEnum.ROOT_ID){
+        if (id == JsTreeBuildFactory.RootEnum.AUTH.getId()){
             parent = new SysAuth();
             parent.setId(id);
-            parent.setAuthName(SysAuthEnum.ROOT_NAME);
+            parent.setAuthName(JsTreeBuildFactory.RootEnum.AUTH.getText());
         }else {
             parent = sysAuthService.detail(id);
         }
@@ -61,12 +61,12 @@ public class SysAuthController {
      * @return
      */
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id,ModelMap modelMap) throws Exception {
+    public String edit(@PathVariable("id") Long id,ModelMap modelMap){
         SysAuth sysAuth = sysAuthService.detail(id);
         SysAuthResponse sysAuthResponse = new SysAuthResponse();
         BeanCopyUtil.copyProperties(sysAuthResponse,sysAuth);
-        if (sysAuth.getParentId() == SysAuthEnum.ROOT_ID){
-            sysAuthResponse.setParentName(SysAuthEnum.ROOT_NAME);
+        if (sysAuth.getParentId() == JsTreeBuildFactory.RootEnum.AUTH.getId()){
+            sysAuthResponse.setParentName(JsTreeBuildFactory.RootEnum.AUTH.getText());
         }else {
             SysAuth parent = sysAuthService.detail(sysAuth.getParentId());
             sysAuthResponse.setParentName(parent.getAuthName());
@@ -82,20 +82,8 @@ public class SysAuthController {
      */
     @ResponseBody
     @RequestMapping(value = "/selectAllAuth",method = RequestMethod.GET)
-    public List<SysAuth> selectAllAuth() throws Exception {
+    public List<SysAuth> selectAllAuth(){
         return sysAuthService.selectAllAuth();
-    }
-
-    /**
-     * 获取权限详情
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/detail/{id}",method = RequestMethod.GET)
-    public ResponseResult detail(@PathVariable("id") Long id){
-        SysAuth sysAuth = sysAuthService.detail(id);
-        return ResponseResult.SUCCESS(sysAuth);
     }
 
     /**
@@ -105,8 +93,8 @@ public class SysAuthController {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ResponseResult add(SysAuthRequest sysAuthRequest) throws Exception {
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public ResponseResult add(SysAuthRequest sysAuthRequest){
         return sysAuthService.add(sysAuthRequest);
     }
 
@@ -118,7 +106,7 @@ public class SysAuthController {
      */
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public ResponseResult edit(SysAuthRequest sysAuthRequest) throws Exception {
+    public ResponseResult edit(SysAuthRequest sysAuthRequest){
         return sysAuthService.update(sysAuthRequest);
     }
 

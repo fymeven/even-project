@@ -11,7 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Created by fymeven on 2017/10/24.
@@ -62,7 +61,7 @@ public class SysRoleController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAuthTree/{roleId}",method = RequestMethod.GET)
-    public JsTree getAuthTree(@PathVariable Long roleId) throws Exception {
+    public JsTree getAuthTree(@PathVariable Long roleId){
         return sysAuthService.selectAuthTreeByRoleId(roleId);
     }
 
@@ -74,8 +73,14 @@ public class SysRoleController {
      */
     @ResponseBody
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public Object list(SysRoleRequest sysRoleRequest) throws Exception {
+    public Object list(SysRoleRequest sysRoleRequest){
         return sysRoleService.list(sysRoleRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getRolesByUserId/{userId}",method = RequestMethod.GET)
+    public ResponseResult getRolesByUserId(@PathVariable Long userId){
+        return sysRoleService.getRolesByUserId(userId);
     }
 
     /**
@@ -84,8 +89,8 @@ public class SysRoleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ResponseResult add(SysRoleRequest sysRoleRequest) throws Exception {
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public ResponseResult add(SysRoleRequest sysRoleRequest){
         return sysRoleService.add(sysRoleRequest);
     }
 
@@ -97,7 +102,7 @@ public class SysRoleController {
      */
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public ResponseResult edit(SysRoleRequest sysRoleRequest) throws Exception {
+    public ResponseResult edit(SysRoleRequest sysRoleRequest){
         return sysRoleService.update(sysRoleRequest);
     }
 

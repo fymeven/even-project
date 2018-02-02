@@ -19,9 +19,11 @@
     line-height: 55px;
     height: 55px;
     vertical-align: middle;
-    border-bottom:1px #a9a9a9 solid;
 }
-.btn-group-toolbar .btn-group{top: 25%;padding-left:13px;}
+.btn-group-toolbar .btn-group{
+    top: 25%;
+    padding-left:13px;
+}
 .btn-primary{
     color: #fff !important;
     border-color: #2c3e50 !important;
@@ -32,7 +34,9 @@
     border-color: #c0c0c0 !important;
     background-color: #c0c0c0 !important;
 }
-textarea.form-control{resize: none;}
+textarea.form-control{
+    resize: none;
+}
 .form-horizontal .input-button {
     border: none;
     right: 35px;
@@ -46,9 +50,15 @@ textarea.form-control{resize: none;}
 table th{
     text-align: center;
 }
-.footer {
-    position: relative;
-    margin-top: -150px; /* footer高度的负值 */
-    height: 150px;
-    clear:both;
+div.feed-group{
+    margin-top: 20px;
+    white-space:nowrap;
+}
+label.feed{
+    width: 15%;
+    text-align: right;
+}
+span.feed{
+    margin-left: 10px;
+    text-align: left;
 }

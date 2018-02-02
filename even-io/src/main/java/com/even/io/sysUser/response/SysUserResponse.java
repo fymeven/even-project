@@ -2,7 +2,6 @@ package com.even.io.sysUser.response;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 public class SysUserResponse implements Serializable {
     private Long id;
@@ -24,6 +23,8 @@ public class SysUserResponse implements Serializable {
     private String userMobile;
 
     private Long deptId;
+
+    private String deptName;
 
     private Integer status;
 
@@ -163,5 +164,13 @@ public class SysUserResponse implements Serializable {
 
     public void setLastLoginIp(String lastLoginIp) {
         this.lastLoginIp = lastLoginIp == null ? null : lastLoginIp.trim();
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }
