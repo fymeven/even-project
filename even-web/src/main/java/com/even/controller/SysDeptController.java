@@ -35,6 +35,15 @@ public class SysDeptController {
         return "dept/page";
     }
 
+    /**
+     * 组织架构图页面
+     * @return
+     */
+    @RequestMapping(value = "/chart",method = RequestMethod.GET)
+    public String charts(){
+        return "dept/chart";
+    }
+
     //添加部门页面
     @RequestMapping(value = "/add/{id}",method = RequestMethod.GET)
     public String add(@PathVariable Long id,ModelMap modelMap){

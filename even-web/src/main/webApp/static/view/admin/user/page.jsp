@@ -19,7 +19,6 @@
     <link href="/static/plugin/hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/plugin/hplus/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="/static/plugin/hplus/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
-    <link href="/static/plugin/hplus/js/plugins/iosSwitch/lc_switch.css" rel="stylesheet">
     <link href="/static/css/hieven.css" rel="stylesheet">
 </head>
 <body class="gray-bg">

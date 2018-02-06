@@ -42,6 +42,7 @@
 
 
 		 <!--table指定每个表的生成策略-->
+		<table tableName="sys_message" domainObjectName="SysMessage"  />
         <!--<table tableName="sys_user" domainObjectName="SysUser"  />-->
 		<!--<table tableName="sys_role" domainObjectName="SysRole" />-->
         <!--<table tableName="sys_auth" domainObjectName="SysAuth" />-->

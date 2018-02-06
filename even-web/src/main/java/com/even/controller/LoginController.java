@@ -51,7 +51,7 @@ public class LoginController {
         return ResponseResult.SUCCESS;
     }
 
-    @RequestMapping("/loginOut")
+    @RequestMapping(value = "/loginOut",method = RequestMethod.GET)
     public String loginOut(){
         ShiroUtil.logout();
         return "login";

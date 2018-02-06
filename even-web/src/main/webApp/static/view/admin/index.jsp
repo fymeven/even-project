@@ -30,29 +30,9 @@
                 <ul class="nav" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <span><img alt="image" class="img-circle" src="" /></span>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold"><shiro:principal property="userName"/></strong></span>
-                                <span class="text-muted text-xs block"><b class="caret"></b></span>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
-                                </li>
-                                <li><a class="J_menuItem" href="profile.html">个人资料</a>
-                                </li>
-                                <li><a class="J_menuItem" href="contacts.html">联系我们</a>
-                                </li>
-                                <li><a class="J_menuItem" href="mailbox.html">信箱</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="/login/loginOut">安全退出</a>
-                                </li>
-                            </ul>
+                            <h2>even后台管理</h2>
                         </div>
-                        <div class="logo-element">even
-                        </div>
+                        <div class="logo-element">even</div>
                     </li>
                     <c:forEach items="${menuList}" var="menu">
                         <c:choose>
@@ -157,24 +137,19 @@
                                 <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="mailbox.html">
-                                        <div>
-                                            <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
-                                            <span class="pull-right text-muted small">4分钟前</span>
-                                        </div>
-                                    </a>
+                                <li id="message">
+                                    <a style="text-align: center;" href="javascript:void(0);">无新消息</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li>
-                                    <a href="profile.html">
-                                        <div>
-                                            <i class="fa fa-qq fa-fw"></i> 3条新回复
-                                            <span class="pull-right text-muted small">12分钟钱</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
+                                <%--<li>--%>
+                                    <%--<a href="profile.html">--%>
+                                        <%--<div>--%>
+                                            <%--<i class="fa fa-qq fa-fw"></i> 3条新回复--%>
+                                            <%--<span class="pull-right text-muted small">12分钟钱</span>--%>
+                                        <%--</div>--%>
+                                    <%--</a>--%>
+                                <%--</li>--%>
+                                <%--<li class="divider"></li>--%>
                                 <li>
                                     <div class="text-center link-block">
                                         <a class="J_menuItem" href="notifications.html">
@@ -217,7 +192,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="/login/loginOut" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+                <a id="btn_loginOut" class="roll-nav roll-right J_tabExit btn"><i class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="/system/welcome" data-id="/system/welcome" frameborder="0" seamless></iframe>
@@ -643,53 +618,13 @@
     <script src="/static/plugin/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/static/plugin/hplus/js/plugins/layer/layer.min.js"></script>
     <script src="/static/plugin/hplus/js/hplus.min.js?v=4.1.0"></script>
+    <script src="/static/plugin/hplus/js/plugins/layer/layer.min.js"></script>
     <script src="/static/plugin/hplus/js/contabs.min.js"></script>
     <script src="/static/plugin/hplus/js/plugins/pace/pace.min.js"></script>
-    <script>
-//        var index={
-//            menu:{
-//                load:function(data){
-//                    var menu=[];
-//                    this.recursionMenu(data,menu);
-//                    $('#side-menu').append(menu.join(''));
-//                },
-//                recursionMenu:function(data,menu){
-//                    var $this=this;
-//                    $.each(data,function(i,o){
-//                        if(o.childMenuSet.length>0){
-//                            menu.push('<li>');
-//                            menu.push('<a href="#"><i class="'+ o.menuIcon+'"></i> <span class="nav-label">'+ o.menuName+'</span><span class="fa arrow"></span></a>')
-//                            menu.push('<ul class="nav nav-second-level">');
-//                            $this.recursionMenu(o.childMenuSet,menu);
-//                            menu.push('</ul>');
-//                            menu.push('</li>');
-//                        }else{
-//                            menu.push('<li><a class="J_menuItem" href="'+ o.menuUrl+'"><i class="'+ o.menuIcon+'"></i><span class="nav-label">'+ o.menuName+'</span></a></li>');
-//                        }
-//                    });
-//                }
-//            },
-//            init:function(){
-//                var $this=this;
-//                $.ajax({
-//                    url:'/login/initSysMenu',
-//                    type:'GET',
-//                    success:function(result){
-//                        if(result.status) {
-//                            $this.menu.load(result.data);
-//                        }else{
-//                            toastr.warning(result.msg);
-//                        }
-//                    }
-//                });
-//            }
-//        }
+    <script src="/static/js/sockjs.js"></script>
+    <script src="/static/js/evenPack.js"></script>
+    <script src="/static/js/admin/message/privateChat.js"></script>
+    <script src="/static/js/admin/index.js"></script>
 
-        $(function(){
-//            index.init();
-        });
-
-
-    </script>
 </body>
 </html>

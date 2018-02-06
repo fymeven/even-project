@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50633
 File Encoding         : 65001
 
-Date: 2018-02-02 17:51:30
+Date: 2018-02-06 18:17:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `sys_auth` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_auth
@@ -58,10 +58,12 @@ INSERT INTO `sys_auth` VALUES ('94', '删除用户', null, 'user:delete', null, 
 INSERT INTO `sys_auth` VALUES ('95', '设置角色', null, 'user:role', null, null, '3', '1', '4', '1', null, '2018-01-15 16:32:23', '2018-01-15 16:32:23');
 INSERT INTO `sys_auth` VALUES ('97', '组织架构', '组织架构目录', 'organization:manage', 'fa fa-sitemap', null, '1', '1', '0', '1', null, '2018-01-31 10:33:53', '2018-01-31 10:46:31');
 INSERT INTO `sys_auth` VALUES ('98', '部门管理', '部门管理菜单', 'department:page', 'fa fa-anchor', '/department/page', '2', '1', '97', '1', null, '2018-01-31 10:36:18', '2018-01-31 10:55:54');
-INSERT INTO `sys_auth` VALUES ('99', '组织架构图', '组织架构图展示页面', 'department:chart', 'fa fa-area-chart', 'department', '2', '1', '97', '1', null, '2018-01-31 10:39:43', '2018-01-31 10:52:01');
+INSERT INTO `sys_auth` VALUES ('99', '组织架构图', '组织架构图展示页面', 'department:chart', 'fa fa-area-chart', '/department/chart', '2', '1', '97', '1', null, '2018-01-31 10:39:43', '2018-02-06 10:06:04');
 INSERT INTO `sys_auth` VALUES ('100', '添加部门', null, 'department:add', null, null, '3', '1', '98', '1', null, '2018-01-31 18:05:10', '2018-01-31 18:05:10');
 INSERT INTO `sys_auth` VALUES ('101', '编辑部门', null, 'department:edit', null, null, '3', '1', '98', '1', null, '2018-01-31 18:05:45', '2018-01-31 18:05:45');
 INSERT INTO `sys_auth` VALUES ('102', '删除部门', null, 'department:delete', null, null, '3', '1', '98', '1', null, '2018-01-31 18:06:13', '2018-02-01 10:01:30');
+INSERT INTO `sys_auth` VALUES ('103', '通信管理', null, 'message:manage', 'fa fa-commenting', null, '1', '1', '0', '1', null, '2018-02-05 18:24:54', '2018-02-06 14:07:49');
+INSERT INTO `sys_auth` VALUES ('104', '即时聊天', null, 'message:privateChat', 'fa fa-qq', '/message/privateChat', '2', '1', '103', '1', null, '2018-02-05 18:27:30', '2018-02-06 14:08:18');
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -73,7 +75,7 @@ CREATE TABLE `sys_dept` (
   `dept_manager_id` bigint(20) DEFAULT NULL COMMENT '部门负责人id',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上级id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -85,6 +87,7 @@ INSERT INTO `sys_dept` VALUES ('4', '业务部', '4', '3');
 INSERT INTO `sys_dept` VALUES ('5', '生产部', '5', '3');
 INSERT INTO `sys_dept` VALUES ('6', '技术部', null, '3');
 INSERT INTO `sys_dept` VALUES ('7', '财务部', '20', '3');
+INSERT INTO `sys_dept` VALUES ('11', '销售部', '2', '3');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -103,6 +106,62 @@ CREATE TABLE `sys_log` (
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_message
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_message`;
+CREATE TABLE `sys_message` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `content` varchar(2000) DEFAULT NULL COMMENT '内容',
+  `from_id` bigint(20) DEFAULT NULL COMMENT '发送人id',
+  `from_name` varchar(255) DEFAULT NULL COMMENT '发送人名称',
+  `type` int(4) DEFAULT NULL COMMENT '消息类型',
+  `to_id` bigint(20) DEFAULT NULL COMMENT '接收人id',
+  `to_name` varchar(255) DEFAULT NULL COMMENT '接收人名称',
+  `send_time` datetime DEFAULT NULL COMMENT '发送时间',
+  `source` varchar(255) DEFAULT NULL COMMENT '来源',
+  `is_read` tinyint(2) DEFAULT NULL COMMENT '是否已读',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of sys_message
+-- ----------------------------
+INSERT INTO `sys_message` VALUES ('1', null, '3232', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:25:32', null, '1');
+INSERT INTO `sys_message` VALUES ('2', null, '23', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:31:48', null, '1');
+INSERT INTO `sys_message` VALUES ('3', null, '2323', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:34:43', null, '1');
+INSERT INTO `sys_message` VALUES ('4', null, '2323\n423423', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:34:46', null, '1');
+INSERT INTO `sys_message` VALUES ('5', null, '2323\n423423\n2323', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:34:51', null, '1');
+INSERT INTO `sys_message` VALUES ('6', null, '32', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:49:02', null, '1');
+INSERT INTO `sys_message` VALUES ('7', null, '332', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:51:45', null, '1');
+INSERT INTO `sys_message` VALUES ('8', null, '332\n24332', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:51:49', null, '1');
+INSERT INTO `sys_message` VALUES ('9', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:54:46', null, '1');
+INSERT INTO `sys_message` VALUES ('10', null, '111\n3223', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:54:47', null, '1');
+INSERT INTO `sys_message` VALUES ('11', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:57:09', null, '1');
+INSERT INTO `sys_message` VALUES ('12', null, '222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 16:57:12', null, '1');
+INSERT INTO `sys_message` VALUES ('13', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:09:00', null, '1');
+INSERT INTO `sys_message` VALUES ('14', null, '222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:09:04', null, '1');
+INSERT INTO `sys_message` VALUES ('15', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:10:52', null, '1');
+INSERT INTO `sys_message` VALUES ('16', null, '111\n222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:10:53', null, '1');
+INSERT INTO `sys_message` VALUES ('17', null, '111\n222\n323', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:10:54', null, '1');
+INSERT INTO `sys_message` VALUES ('18', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:18:26', null, '1');
+INSERT INTO `sys_message` VALUES ('19', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:23:46', null, '1');
+INSERT INTO `sys_message` VALUES ('20', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:27:07', null, '1');
+INSERT INTO `sys_message` VALUES ('21', null, '111\n222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:27:10', null, '1');
+INSERT INTO `sys_message` VALUES ('22', null, '2121', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:32:04', null, '1');
+INSERT INTO `sys_message` VALUES ('23', null, '222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:35:26', null, '1');
+INSERT INTO `sys_message` VALUES ('24', null, '222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:38:27', null, '1');
+INSERT INTO `sys_message` VALUES ('25', null, '121', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:39:26', null, '1');
+INSERT INTO `sys_message` VALUES ('26', null, '111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:42:00', null, '1');
+INSERT INTO `sys_message` VALUES ('27', null, '222', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:43:58', null, '1');
+INSERT INTO `sys_message` VALUES ('28', null, '222\n111', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:44:14', null, '1');
+INSERT INTO `sys_message` VALUES ('29', null, '233', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:45:00', null, '1');
+INSERT INTO `sys_message` VALUES ('30', null, '23', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 17:45:44', null, '1');
+INSERT INTO `sys_message` VALUES ('31', null, '12', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 18:01:54', null, '1');
+INSERT INTO `sys_message` VALUES ('32', null, '12\n233333333333333333333333333333333333333333333333333333', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 18:02:22', null, '1');
+INSERT INTO `sys_message` VALUES ('33', null, '2323', '1', 'ADMIN', null, '1', 'ADMIN', '2018-02-06 18:03:45', null, '1');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -163,7 +222,7 @@ CREATE TABLE `sys_role_auth` (
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色编号',
   `auth_id` bigint(20) DEFAULT NULL COMMENT '权限编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=442 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_auth
@@ -234,32 +293,38 @@ INSERT INTO `sys_role_auth` VALUES ('365', '5', '9');
 INSERT INTO `sys_role_auth` VALUES ('366', '5', '10');
 INSERT INTO `sys_role_auth` VALUES ('367', '5', '11');
 INSERT INTO `sys_role_auth` VALUES ('368', '5', '12');
-INSERT INTO `sys_role_auth` VALUES ('388', '1', '1');
-INSERT INTO `sys_role_auth` VALUES ('389', '1', '2');
-INSERT INTO `sys_role_auth` VALUES ('390', '1', '3');
-INSERT INTO `sys_role_auth` VALUES ('391', '1', '4');
-INSERT INTO `sys_role_auth` VALUES ('392', '1', '5');
-INSERT INTO `sys_role_auth` VALUES ('393', '1', '7');
-INSERT INTO `sys_role_auth` VALUES ('394', '1', '8');
-INSERT INTO `sys_role_auth` VALUES ('395', '1', '9');
-INSERT INTO `sys_role_auth` VALUES ('396', '1', '10');
-INSERT INTO `sys_role_auth` VALUES ('397', '1', '11');
-INSERT INTO `sys_role_auth` VALUES ('398', '1', '12');
-INSERT INTO `sys_role_auth` VALUES ('399', '1', '91');
-INSERT INTO `sys_role_auth` VALUES ('400', '1', '92');
-INSERT INTO `sys_role_auth` VALUES ('401', '1', '93');
-INSERT INTO `sys_role_auth` VALUES ('402', '1', '94');
-INSERT INTO `sys_role_auth` VALUES ('403', '1', '95');
-INSERT INTO `sys_role_auth` VALUES ('404', '1', '97');
-INSERT INTO `sys_role_auth` VALUES ('405', '1', '98');
-INSERT INTO `sys_role_auth` VALUES ('406', '1', '99');
-INSERT INTO `sys_role_auth` VALUES ('407', '1', '100');
-INSERT INTO `sys_role_auth` VALUES ('408', '1', '101');
-INSERT INTO `sys_role_auth` VALUES ('409', '1', '102');
 INSERT INTO `sys_role_auth` VALUES ('410', '13', '78');
 INSERT INTO `sys_role_auth` VALUES ('411', '13', '79');
 INSERT INTO `sys_role_auth` VALUES ('412', '30', '78');
 INSERT INTO `sys_role_auth` VALUES ('413', '30', '79');
+INSERT INTO `sys_role_auth` VALUES ('414', '28', '97');
+INSERT INTO `sys_role_auth` VALUES ('415', '28', '98');
+INSERT INTO `sys_role_auth` VALUES ('416', '28', '100');
+INSERT INTO `sys_role_auth` VALUES ('417', '28', '101');
+INSERT INTO `sys_role_auth` VALUES ('418', '1', '1');
+INSERT INTO `sys_role_auth` VALUES ('419', '1', '2');
+INSERT INTO `sys_role_auth` VALUES ('420', '1', '3');
+INSERT INTO `sys_role_auth` VALUES ('421', '1', '4');
+INSERT INTO `sys_role_auth` VALUES ('422', '1', '5');
+INSERT INTO `sys_role_auth` VALUES ('423', '1', '7');
+INSERT INTO `sys_role_auth` VALUES ('424', '1', '8');
+INSERT INTO `sys_role_auth` VALUES ('425', '1', '9');
+INSERT INTO `sys_role_auth` VALUES ('426', '1', '10');
+INSERT INTO `sys_role_auth` VALUES ('427', '1', '11');
+INSERT INTO `sys_role_auth` VALUES ('428', '1', '12');
+INSERT INTO `sys_role_auth` VALUES ('429', '1', '91');
+INSERT INTO `sys_role_auth` VALUES ('430', '1', '92');
+INSERT INTO `sys_role_auth` VALUES ('431', '1', '93');
+INSERT INTO `sys_role_auth` VALUES ('432', '1', '94');
+INSERT INTO `sys_role_auth` VALUES ('433', '1', '95');
+INSERT INTO `sys_role_auth` VALUES ('434', '1', '97');
+INSERT INTO `sys_role_auth` VALUES ('435', '1', '98');
+INSERT INTO `sys_role_auth` VALUES ('436', '1', '99');
+INSERT INTO `sys_role_auth` VALUES ('437', '1', '100');
+INSERT INTO `sys_role_auth` VALUES ('438', '1', '101');
+INSERT INTO `sys_role_auth` VALUES ('439', '1', '102');
+INSERT INTO `sys_role_auth` VALUES ('440', '1', '103');
+INSERT INTO `sys_role_auth` VALUES ('441', '1', '104');
 
 -- ----------------------------
 -- Table structure for sys_user
