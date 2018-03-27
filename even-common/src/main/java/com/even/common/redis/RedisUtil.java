@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.ValueOperations;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -51,6 +52,42 @@ public final class RedisUtil {
             redisTemplate.delete(key);
         }
     }
+
+    /**
+     * 获取表达式key的size
+     * @param pattern
+     * @return
+     */
+    public int getSize(String pattern){
+        Set<Serializable> keys = redisTemplate.keys(pattern);
+        return keys.size();
+    }
+
+    /**
+     * 获取表达式key的集合
+     * @param pattern
+     * @return
+     */
+    public Set getKeys(String pattern){
+        Set keys = redisTemplate.keys(pattern);
+        return keys;
+    }
+
+    /**
+     * 获取表达式value的集合
+     * @param pattern
+     * @return
+     */
+    public Set getValues(String pattern) {
+        Set values=new HashSet();
+        Set keys = this.getKeys(pattern);
+        for (Object key : keys) {
+            Object value = this.get((String) key);
+            values.add(value);
+        }
+        return values;
+    }
+
 
     /**
      * 判断缓存中是否有对应的value

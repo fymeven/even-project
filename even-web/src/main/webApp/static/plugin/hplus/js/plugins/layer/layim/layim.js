@@ -10,20 +10,20 @@
 ;!function(win, undefined){
 
 var config = {
-    msgurl: 'mailbox.html?msg=',
-    chatlogurl: 'mailbox.html?user=',
+    msgurl: '/static/plugin/hplus/mailbox.html?msg=',
+    chatlogurl: '/static/plugin/hplus/mailbox.html?user=',
     aniTime: 200,
     right: -232,
     api: {
-        friend: 'js/plugins/layer/layim/data/friend.json', //好友列表接口
-        group: 'js/plugins/layer/layim/data/group.json', //群组列表接口
-        chatlog: 'js/plugins/layer/layim/data/chatlog.json', //聊天记录接口
-        groups: 'js/plugins/layer/layim/data/groups.json', //群组成员接口
+        friend: '/static/plugin/hplus/js/plugins/layer/layim/data/friend.json', //好友列表接口
+        group: '/static/plugin/hplus/js/plugins/layer/layim/data/group.json', //群组列表接口
+        chatlog: '/static/plugin/hplus/js/plugins/layer/layim/data/chatlog.json', //聊天记录接口
+        groups: '/static/plugin/hplus/js/plugins/layer/layim/data/groups.json', //群组成员接口
         sendurl: '' //发送消息接口
     },
     user: { //当前用户信息
         name: '游客',
-        face: 'img/a1.jpg'
+        face: '/static/plugin/hplus/img/a1.jpg'
     },
 
     //自动回复内置文案，也可动态读取数据库配置

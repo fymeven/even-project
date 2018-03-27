@@ -27,6 +27,7 @@ var echart= {
                     node.children=[];
                     treeData.push(node);
                 });
+                //载入children子集
                 $.each(treeData,function (i, children) {
                     var pid = children.pid;
                     if (pid==0){

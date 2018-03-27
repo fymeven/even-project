@@ -9,20 +9,33 @@
     http://www.springframework.org/schema/websocket/spring-websocket-4.1.xsd">
 
     <!--******************************************** redis 配置 *****************************************************-->
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory"   ref="connectionFactory" />
     </bean>
 
     <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-     p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"  p:poolConfig-ref="poolConfig"/>
-     
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxIdle" value="${redis.maxIdle}" />
-        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+     p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.password}"  p:poolConfig-ref="redisPoolConfig"/>
+
+    <!--<bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">-->
+        <!--<constructor-arg ref="redisPoolConfig"/>-->
+        <!--<constructor-arg value="${redis.host}"/>-->
+        <!--<constructor-arg type="int" value="${redis.port}"/>-->
+        <!--<constructor-arg type="int" value="${redis.timeout}"/>-->
+        <!--<constructor-arg type="java.lang.String" value="${redis.password}"/>-->
+        <!--<constructor-arg type="int" value="${redis.dbindex}"/>-->
+    <!--</bean>-->
+
+    <bean id="redisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.pool.maxIdle}" />
+        <property name="maxTotal" value="${redis.pool.maxActive}"/>
+        <property name="maxWaitMillis" value="${redis.pool.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
     </bean>
 
-    <bean id="redisUtil" class="com.even.common.redis.RedisUtil">
-        <property name="redisTemplate" ref="redisTemplate"></property>
+    <bean id="redisUtil" class="com.even.common.redis.RedisUtil" />
+
+    <bean id="redisCache" class="com.even.common.redis.RedisCache">
+        <property name="redisUtil" ref="redisUtil" />
     </bean>
 
     <!--********************************************* rocketMq配置 **************************************************-->
